@@ -13,9 +13,30 @@ complete:
 | 00:00:46 | static charge | 2:46 |
 | 00:02:07 | ore (miners' cave): **finish** | **4:07** |
 
+The script's own output, exactly as it printed it (times in UTC; the position it
+tried to print came back empty). The numbers are kwigbo's counts of the item after
+gathering it:
+
+```
+23:56:11 START
+23:58:00 AT PLAZA (start)
+23:58:38 FISH 11
+23:59:45 TOMATO 2
+00:00:33 CABLE 40
+00:00:46 CHARGE 3
+00:02:07 ORE 3
+00:04:07 BACK AT PLAZA
+00:04:07 RUN_DONE
+```
+
+The script waited for each action to finish before starting the next, and set off
+from the start tile at once, with no wait. No game event ids were kept for these
+actions: the city's public event feed holds only the last few seconds.
+
 **How this differs from a runner's time.** Par comes from kwigbo's own action log,
 not from public readings: the recorder in this folder did not exist yet, and the
 city keeps no history to recreate it from. Those logs mark each action as it
 completed, so 4:07 is close to exact. A runner's time comes from readings taken
-seconds apart, timed to the earliest the run can have finished (see
-[RULES.md](RULES.md)), so a gap between readings works for the runner (up to 30 seconds), never against them.
+seconds apart, with both the start and the finish decided in the runner's favour
+(see [RULES.md](RULES.md)), so the gaps between readings work for the runner (up to
+30 seconds at each end), never against them.

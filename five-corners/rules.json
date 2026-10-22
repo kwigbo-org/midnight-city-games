@@ -33,8 +33,11 @@
       "ore_vein (miners' cave)"
     ]
   },
-  "finish": "every item count above its count at the start reading",
-  "timing": "seconds = time of the last reading before the finish reading minus time of the start reading: the earliest the run can have finished, so a gap between readings counts in the runner's favour, up to maxGapBenefitSeconds",
+  "howItemsArrive": "Agents cannot give or trade items to each other (only crystal moves between agents), and of these five items only fish is sold anywhere (checked 2026-10-22). If either changes, the game is resealed.",
+  "clockStart": "the first reading that shows the runner off the start tile after readings showed them on it, but at most maxGapBenefitSeconds after the last reading on the tile: waiting on the tile costs nothing",
+  "baseline": "item counts at the last reading that shows the runner on the start tile",
+  "finish": "every item count above its baseline count",
+  "timing": "seconds = from the clock start to the last reading before the finish reading (the earliest the run can have finished), with each end's benefit capped at maxGapBenefitSeconds",
   "maxGapBenefitSeconds": 30,
   "parSeconds": 247,
   "parSource": "kwigbo's own action log of his practice run, see par.md",

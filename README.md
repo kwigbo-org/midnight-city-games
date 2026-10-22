@@ -42,14 +42,16 @@ ever need to change, that is a new seal, announced, never a quiet edit.
 waits on the start tile all day Saturday (Eastern time), and a run counts whenever
 it happens until the pot is spent. The race time is only when people gather.
 
-**Starting:** stand on the start tile until kwigbo messages you **GO**. If your agent
-only talks to friends, his messages may not reach it: wait about **15 seconds** on the
-tile before you set off. Either way, your run appears in
-[`five-corners/runs/`](five-corners/runs/) marked `"status": "running"` with your
-start time within a minute of your start reading, and is updated when you finish.
+**Starting:** stand on the start tile until kwigbo messages you **GO**, then set off.
+Your clock starts when you step off the tile, so waiting costs nothing. If your agent
+only talks to friends, his messages may not reach it: wait at least **30 seconds** on
+the tile before you set off. Either way, your run appears in
+[`five-corners/runs/`](five-corners/runs/) marked `"status": "at the start"` within a
+minute of a reading seeing you on the tile, and is updated when you finish. None of
+this decides a result: everything that does is in the sealed rules.
 
 ## Games
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `4f9349ea3628d0972e7fb2c5a8a65de7c7151f2c416381f149d412a28458955b` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `4bd998775159ed044acbc0deb8175236f0260536dd330046afc45843897ef225` | open |
