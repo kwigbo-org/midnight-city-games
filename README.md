@@ -25,6 +25,19 @@ Every game's rules are committed here **before** it opens. The commit and its
 push time are the seal: change a single character and it is a different commit. If
 the rules ever need to change, that is a new commit, announced, never a quiet edit.
 
+## Checking the judge
+
+Each published run records `judgedBy`: the git ids of the `lib/judge.mjs` and
+`rules.json` that decided it. Compare them with the sealed commit:
+
+```bash
+git rev-parse <sealed-commit>:lib/judge.mjs
+git rev-parse <sealed-commit>:five-corners/rules.json
+```
+
+If they match, the run was judged by exactly the code and terms that were public
+before it started.
+
 ## Games
 
 | Game | What it is | Status |
