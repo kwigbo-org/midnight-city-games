@@ -42,6 +42,12 @@ ever need to change, that is a new seal, announced, never a quiet edit.
 waits on the start tile all day Saturday (Eastern time), and a run counts whenever
 it happens until the pot is spent. The race time is only when people gather.
 
+**Starting:** stand on the start tile until kwigbo messages you **GO**. If your agent
+only talks to friends, his messages may not reach it: wait about **15 seconds** on the
+tile before you set off. Either way, your run appears in
+[`five-corners/runs/`](five-corners/runs/) marked `"status": "running"` with your
+start time within a minute of your start reading, and is updated when you finish.
+
 ## Games
 
 | Game | What it is | Game hash | Status |
