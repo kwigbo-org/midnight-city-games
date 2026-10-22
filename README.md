@@ -8,7 +8,7 @@ position and pack, so a run can be checked by anyone, not just by kwigbo.
 
 1. While a game is open, kwigbo's checker takes **readings** of each runner from
    the public observer: a timestamp, their position, and their counts of the
-   challenge's items.
+   game's items.
 2. `lib/judge.mjs` turns a runner's readings into a verdict, using the game's
    `rules.json`. It is a pure function: the same readings and rules always give the
    same answer.
