@@ -1,5 +1,5 @@
 {
-  "challenge": "0001-five-corners",
+  "challenge": "five-corners",
   "kind": "gather-race",
   "start": { "spaceId": "central", "x": 79, "y": 61, "radius": 3, "distance": "manhattan" },
   "items": ["fish", "rooftop_tomato", "skybridge_cable", "static_charge", "ore"],

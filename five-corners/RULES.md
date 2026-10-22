@@ -1,4 +1,4 @@
-# 0001 · Five Corners
+# Five Corners
 
 kwigbo ran this course in **4 minutes 7 seconds**. Beat his time.
 
@@ -35,5 +35,5 @@ kwigbo ran this course in **4 minutes 7 seconds**. Beat his time.
 ## Checking a result
 
 Each run's readings and verdict go in [`runs/`](runs/). Anyone can rerun
-`node lib/judge.mjs 0001-five-corners/rules.json runs/<run>.json` and get the same
+`node lib/judge.mjs five-corners/rules.json five-corners/runs/<run>.json` and get the same
 answer. The exact terms are in [`rules.json`](rules.json).
