@@ -1,0 +1,309 @@
+{
+  "format": "qdl-intent",
+  "version": 1,
+  "name": "Five Corners judge",
+  "thought": {
+    "observations": [
+      {
+        "id": "ob_lastOn",
+        "text": "Time of the last public reading that shows the runner on the start tile (Central 79,61, within 1).",
+        "input": "lastOn",
+        "path": [],
+        "basis": "open"
+      },
+      {
+        "id": "ob_firstOff",
+        "text": "Time of the first public reading after that which shows the runner off the start tile.",
+        "input": "firstOff",
+        "path": [],
+        "basis": "open"
+      },
+      {
+        "id": "ob_before",
+        "text": "Time of the reading just before the finish reading.",
+        "input": "before",
+        "path": [],
+        "basis": "open"
+      },
+      {
+        "id": "ob_finish",
+        "text": "Time of the first reading where all five counts (fish, rooftop_tomato, skybridge_cable, static_charge, ore) are above the last on-tile reading.",
+        "input": "finish",
+        "path": [],
+        "basis": "open"
+      }
+    ],
+    "evidence": [],
+    "goals": [
+      {
+        "id": "goal",
+        "text": "Decide kwigbo's Five Corners race: the shortest possible time, never more than 30 seconds below the longest possible time, beats par if under 4:07.",
+        "outputs": [
+          "verdict",
+          "beat"
+        ],
+        "completion": "beat"
+      }
+    ],
+    "decisions": [
+      {
+        "id": "decision",
+        "text": "Beat par when the judged time is under 247 seconds.",
+        "guard": "beat",
+        "evidence": []
+      }
+    ],
+    "plans": [
+      {
+        "id": "plan",
+        "text": "Bound the run between its readings, give the runner the gaps up to 30 seconds in total, and compare with par.",
+        "tasks": [
+          "task"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task",
+        "text": "Bound the run between its readings, give the runner the gaps up to 30 seconds in total, and compare with par.",
+        "nodes": [
+          "lastOn",
+          "firstOff",
+          "before",
+          "finish",
+          "cap",
+          "par",
+          "safeLastOn",
+          "atMost",
+          "safeFirstOff",
+          "atLeast",
+          "safeCap",
+          "capped",
+          "time",
+          "beat",
+          "verdict"
+        ],
+        "outputs": [
+          "verdict",
+          "beat"
+        ]
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "id": "lastOn",
+      "name": "lastOn",
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "firstOff",
+      "name": "firstOff",
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "before",
+      "name": "before",
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "finish",
+      "name": "finish",
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "cap",
+      "value": 30000,
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "par",
+      "value": 247000,
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "safeLastOn",
+      "op": "arithmetic",
+      "inputs": [
+        "lastOn",
+        "finish"
+      ],
+      "params": {
+        "kind": "min"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "atMost",
+      "op": "arithmetic",
+      "inputs": [
+        "finish",
+        "safeLastOn"
+      ],
+      "params": {
+        "kind": "sub"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "safeFirstOff",
+      "op": "arithmetic",
+      "inputs": [
+        "firstOff",
+        "before"
+      ],
+      "params": {
+        "kind": "min"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "atLeast",
+      "op": "arithmetic",
+      "inputs": [
+        "before",
+        "safeFirstOff"
+      ],
+      "params": {
+        "kind": "sub"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "safeCap",
+      "op": "arithmetic",
+      "inputs": [
+        "cap",
+        "atMost"
+      ],
+      "params": {
+        "kind": "min"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "capped",
+      "op": "arithmetic",
+      "inputs": [
+        "atMost",
+        "safeCap"
+      ],
+      "params": {
+        "kind": "sub"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "time",
+      "op": "arithmetic",
+      "inputs": [
+        "atLeast",
+        "capped"
+      ],
+      "params": {
+        "kind": "max"
+      },
+      "type": {
+        "kind": "number",
+        "unit": "ms",
+        "integer": true,
+        "min": 0
+      }
+    },
+    {
+      "id": "beat",
+      "op": "compareValues",
+      "inputs": [
+        "time",
+        "par"
+      ],
+      "params": {
+        "operator": "lt"
+      }
+    },
+    {
+      "id": "verdict",
+      "op": "report",
+      "inputs": [
+        "time",
+        "atLeast",
+        "atMost",
+        "beat"
+      ],
+      "params": {
+        "labels": [
+          "milliseconds",
+          "atLeast",
+          "atMost",
+          "beat"
+        ]
+      }
+    }
+  ],
+  "outputs": [
+    "verdict",
+    "beat"
+  ]
+}
