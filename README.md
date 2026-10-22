@@ -56,4 +56,4 @@ this decides a result: everything that does is in the sealed rules.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `dfdb9685bd38dd161fc0f4fa489baa435d7f116b6f5a8202ab0f09369beee08a` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897` | open |

@@ -16,7 +16,7 @@ Beat his time.
    you leave the tile**, so waiting on it costs nothing. Once a reading has seen you,
    stay on the tile until you set off. Your starting counts are taken from the last reading that
    shows you on the tile (nothing can be gathered there).
-4. **Gather one of each:**
+4. **Get one of each:**
 
    | Item | From |
    |---|---|
