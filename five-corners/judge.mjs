@@ -12,36 +12,35 @@ export function judge(rules, readings) {
   const s = rules.start;
   const atStart = (r) => r.position?.spaceId === s.spaceId
     && Math.abs(r.position.x - s.x) + Math.abs(r.position.y - s.y) <= s.radius;
-  const cap = (rules.maxGapBenefitSeconds ?? Infinity) * 1000;
+  const cap = (rules.maxTotalGapBenefitSeconds ?? Infinity) * 1000;
   const i = readings.findIndex(atStart);
   if (i < 0) return { started: false, finished: false };
   // The clock starts when the runner LEAVES the start tile, so waiting there (for
   // kwigbo's GO, or for a reading) costs nothing. They left after the last reading on
-  // the tile and by the first reading off it; the clock starts at the later one (in
-  // the runner's favour), at most `cap` after the last reading on the tile.
+  // the tile and by the first reading off it.
   let j = i;
   while (j + 1 < readings.length && atStart(readings[j + 1])) j++;
   const lastOn = readings[j];
   const firstOff = readings[j + 1];
   if (!firstOff) return { started: false, onStartTile: true, finished: false };
-  const startMs = Math.min(Date.parse(firstOff.t), Date.parse(lastOn.t) + cap);
-  const startedAt = new Date(startMs).toISOString();
   // Nothing can be gathered on the start tile, so the baseline is the last reading there.
   const base = lastOn.counts || {};
   const k = readings.findIndex((r, n) => n > j
     && rules.items.every((item) => (r.counts?.[item] ?? 0) > (base[item] ?? 0)));
-  if (k < 0) return { started: true, startedAt, finished: false };
-  // The run finished somewhere between the reading before the finish reading and the
-  // finish reading itself. It is timed to the earlier one: the earliest it can have
-  // finished, so the gap counts in the runner's favour, up to `cap`. The later bound
-  // is published too.
+  if (k < 0) return { started: true, startedAfter: lastOn.t, startedBy: firstOff.t, finished: false };
+  // They finished after the reading before the finish reading and by the finish
+  // reading. So the run lasted at most (finish reading - last reading on the tile) and
+  // at least (reading before the finish - first reading off the tile). The runner gets
+  // the shortest possible time, but the gaps can take off at most `cap` in total, so an
+  // observer outage can't turn into a free win.
   const fin = readings[k];
   const before = readings[k - 1];
-  const secondsAtLatest = (Date.parse(fin.t) - startMs) / 1000;
-  const earliest = Math.max(Date.parse(before.t), startMs);
-  const seconds = Math.max((earliest - startMs) / 1000, secondsAtLatest - cap / 1000);
-  return { started: true, startedAt, finished: true, finishedBy: fin.t, finishedAfter: before.t,
-    seconds, secondsAtLatest, beat: seconds < rules.parSeconds };
+  const secondsAtMost = (Date.parse(fin.t) - Date.parse(lastOn.t)) / 1000;
+  const secondsAtLeast = Math.max(0, (Date.parse(before.t) - Date.parse(firstOff.t)) / 1000);
+  const seconds = Math.max(secondsAtLeast, secondsAtMost - cap / 1000);
+  return { started: true, startedAfter: lastOn.t, startedBy: firstOff.t, finished: true,
+    finishedAfter: before.t, finishedBy: fin.t, seconds, secondsAtLeast, secondsAtMost,
+    beat: seconds < rules.parSeconds };
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {

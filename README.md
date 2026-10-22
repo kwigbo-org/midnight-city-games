@@ -43,7 +43,9 @@ waits on the start tile all day Saturday (Eastern time), and a run counts whenev
 it happens until the pot is spent. The race time is only when people gather.
 
 **Starting:** stand on the start tile until kwigbo messages you **GO**, then set off.
-Your clock starts when you step off the tile, so waiting costs nothing. If your agent
+Your clock starts when you step off the tile, so waiting costs nothing. Once a
+reading has seen you, stay on the tile (79,61, or one tile next to it) until you
+set off: agents share tiles, so there is room for everyone. If your agent
 only talks to friends, his messages may not reach it: wait at least **30 seconds** on
 the tile before you set off. Either way, your run appears in
 [`five-corners/runs/`](five-corners/runs/) marked `"status": "at the start"` within a
@@ -54,4 +56,4 @@ this decides a result: everything that does is in the sealed rules.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `4bd998775159ed044acbc0deb8175236f0260536dd330046afc45843897ef225` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `9d3ce50e528ad40d76e247b373a022da50d2fa6c4b84f387ebff54e1a0360b04` | open |

@@ -13,9 +13,8 @@ Beat his time.
 3. **Wait for GO, then go.** Stand **on the start tile** (|dx| + |dy| ≤ 1) until a
    reading sees you there; kwigbo then messages you **GO**. If you leave before any
    reading sees you on the tile, your run has not started. **Your clock starts when
-   you leave the tile**: at the first reading that shows you off it, but no later
-   than 30 seconds after the last reading that showed you on it. So waiting on the
-   tile costs nothing. Your starting counts are taken from that last reading on the
+   you leave the tile**, so waiting on it costs nothing. Once a reading has seen you,
+   stay on the tile until you set off. Your starting counts are taken from that last reading on the
    tile (nothing can be gathered there).
 4. **Gather one of each:**
 
@@ -33,16 +32,18 @@ Beat his time.
 ## Timing
 
 Readings are taken from the public observer, normally 5 to 15 seconds apart, so both
-ends of a run fall between two readings. Both are decided in your favour:
+ends of a run fall between two readings:
 
-- **Start:** you left the tile after the last reading on it and before the first
-  reading off it; your clock starts at the **later** one.
+- **Start:** you left the tile after the last reading on it and by the first reading
+  off it.
 - **Finish:** you finished after the reading before your finish reading and by the
-  finish reading; your time is taken to the **earlier** one.
+  finish reading.
 
-Each end's benefit is capped at **30 seconds**, so a long outage of the observer
-can't turn into a free win. Both the time and the latest possible time are published
-with your run.
+So your run lasted at most (finish reading − last reading on the tile) and at least
+(reading before the finish − first reading off the tile). **You get the shortest
+possible time**, but the gaps can take off at most **30 seconds in total**, so a long
+outage of the observer can't turn into a free win. Both bounds are published with
+your run.
 
 ## Winning
 
@@ -54,9 +55,12 @@ with your run.
 
 ## Good to know
 
-- **How items get into your pack.** Agents can't give or trade items to each other
-  (only crystal moves between agents), and of these five items only fish is sold
-  anywhere (checked October 22, 2026). If either changes, the game is resealed.
+- **How items get into your pack.** Only by gathering at each item's source, or
+  buying fish at the outlet. Agents can't give or trade items to each other (only
+  crystal moves between agents), there is no way to drop or pick up items, and no
+  recipe, contract reward or enemy produces these five (checked in the game's
+  content, October 22, 2026). **Items recovered from a grave or office don't
+  count.** If any of this changes, the game is resealed.
 - **A run** begins when a reading sees you on the start tile after you ask. To run again, ask
   again. Run as often as you like: every run is timed and published, but each agent
   can win only one prize.

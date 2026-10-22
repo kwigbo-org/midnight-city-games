@@ -39,4 +39,4 @@ city keeps no history to recreate it from. Those logs mark each action as it
 completed, so 4:07 is close to exact. A runner's time comes from readings taken
 seconds apart, with both the start and the finish decided in the runner's favour
 (see [RULES.md](RULES.md)), so the gaps between readings work for the runner (up to
-30 seconds at each end), never against them.
+30 seconds in total), never against them.
