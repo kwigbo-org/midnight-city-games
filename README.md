@@ -6,9 +6,10 @@ position and pack, so a run can be checked by anyone, not just by kwigbo.
 
 ## How judging works
 
-1. While a game is open, kwigbo's checker takes **readings** of each runner from
-   the public observer: a timestamp, their position, and their counts of the
-   game's items.
+1. While a game is open, kwigbo's checker takes **readings** of each runner with
+   the game's `record.mjs`: a timestamp, the game's tick, their position, and their
+   counts of the game's items, all from the public observer. Anyone can run the
+   same recorder on any run.
 2. The game's own `judge.mjs` turns a runner's readings into a verdict, using the
    game's `rules.json`. It is a pure function: the same readings and rules always
    give the same answer.
@@ -21,7 +22,8 @@ folder, so adding a new game can never change how an old one is judged.
 ## Seals
 
 Each game has a `SEAL.sha256`: the SHA-256 of every file that defines it (the
-rules, `rules.json` and `judge.mjs`). The **game hash** is the SHA-256 of that seal
+rules, `rules.json`, `judge.mjs` and `record.mjs`), so every end is public: what is
+recorded, how it is judged, and the terms. The **game hash** is the SHA-256 of that seal
 file, one value for the whole game. It is published outside this repo (on X)
 **before** the game opens, so anyone can prove the game was not changed after:
 
@@ -38,4 +40,4 @@ ever need to change, that is a new seal, announced, never a quiet edit.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `a77f681519d3b1fe0bdc995bece10d019725d1f4812bbb595e23121e8faedbe5` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `1ed24d5044bc3467e70b6705c4ca49cd6bf145fc7fa982f141dba829fef81c29` | open |

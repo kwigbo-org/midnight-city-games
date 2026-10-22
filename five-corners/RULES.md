@@ -41,5 +41,14 @@ rerun the judge and get the same answer:
 node judge.mjs rules.json runs/<run>.json
 ```
 
-The exact terms are in [`rules.json`](rules.json), and the judge is
-[`judge.mjs`](judge.mjs). Both are sealed in [`SEAL.sha256`](SEAL.sha256).
+You can also record any run yourself, with the same recorder kwigbo's checker uses
+(public data only, no account needed), and judge your own recording:
+
+```bash
+node record.mjs <agentId> --out my-recording.json
+node judge.mjs rules.json my-recording.json
+```
+
+The exact terms are in [`rules.json`](rules.json), the judge is
+[`judge.mjs`](judge.mjs) and the recorder is [`record.mjs`](record.mjs). All of them
+are sealed in [`SEAL.sha256`](SEAL.sha256).
