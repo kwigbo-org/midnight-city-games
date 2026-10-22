@@ -1,7 +1,7 @@
 // Judge a gather-race run from public readings. Pure: same rules + readings,
 // same verdict.
 //
-//   node lib/judge.mjs <rules.json> <run.json>
+//   node judge.mjs rules.json runs/<run>.json      (from this game's folder)
 //
 // A run file is { "agent": "<name>", "readings": [ { "t": "<ISO time>",
 //   "position": { "spaceId", "x", "y" }, "counts": { "<item>": n, ... } }, ... ] }
@@ -24,7 +24,7 @@ export function judge(rules, readings) {
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {
   const [rulesPath, runPath] = process.argv.slice(2);
-  if (!rulesPath || !runPath) { console.error("usage: node lib/judge.mjs <rules.json> <run.json>"); process.exit(2); }
+  if (!rulesPath || !runPath) { console.error("usage: node judge.mjs rules.json runs/<run>.json"); process.exit(2); }
   const rules = JSON.parse(fs.readFileSync(rulesPath, "utf8"));
   const run = JSON.parse(fs.readFileSync(runPath, "utf8"));
   console.log(JSON.stringify({ agent: run.agent, ...judge(rules, run.readings) }, null, 2));

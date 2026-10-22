@@ -34,6 +34,12 @@ kwigbo ran this course in **4 minutes 7 seconds**. Beat his time.
 
 ## Checking a result
 
-Each run's readings and verdict go in [`runs/`](runs/). Anyone can rerun
-`node lib/judge.mjs five-corners/rules.json five-corners/runs/<run>.json` and get the same
-answer. The exact terms are in [`rules.json`](rules.json).
+Each run's readings and verdict go in [`runs/`](runs/). From this folder, anyone can
+rerun the judge and get the same answer:
+
+```bash
+node judge.mjs rules.json runs/<run>.json
+```
+
+The exact terms are in [`rules.json`](rules.json), and the judge is
+[`judge.mjs`](judge.mjs). Both are sealed in [`SEAL.sha256`](SEAL.sha256).
