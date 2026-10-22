@@ -15,14 +15,19 @@ export function judge(rules, readings) {
   const i = readings.findIndex(atStart);
   if (i < 0) return { started: false, finished: false };
   const start = readings[i];
-  const fin = readings.slice(i + 1).find((r) =>
-    rules.items.every((item) => (r.counts?.[item] ?? 0) > (start.counts?.[item] ?? 0)));
-  if (!fin) return { started: true, startedAt: start.t, finished: false };
-  const seconds = (Date.parse(fin.t) - Date.parse(start.t)) / 1000;
-  // Readings are some seconds apart, so a measured time can run long; the rules give
-  // every runner the same allowance, toleranceSeconds, on top of par.
-  const limit = rules.parSeconds + (rules.toleranceSeconds ?? 0);
-  return { started: true, startedAt: start.t, finished: true, finishedAt: fin.t, seconds, limit, beat: seconds < limit };
+  const k = readings.findIndex((r, n) => n > i
+    && rules.items.every((item) => (r.counts?.[item] ?? 0) > (start.counts?.[item] ?? 0)));
+  if (k < 0) return { started: true, startedAt: start.t, finished: false };
+  // The run finished somewhere between the reading before the finish reading and the
+  // finish reading itself. It is timed to the earlier one: the earliest it can have
+  // finished, so every gap between readings counts in the runner's favour. The later
+  // bound is published too.
+  const fin = readings[k];
+  const before = readings[k - 1];
+  const seconds = (Date.parse(before.t) - Date.parse(start.t)) / 1000;
+  const secondsAtLatest = (Date.parse(fin.t) - Date.parse(start.t)) / 1000;
+  return { started: true, startedAt: start.t, finished: true, finishedBy: fin.t, finishedAfter: before.t,
+    seconds, secondsAtLatest, beat: seconds < rules.parSeconds };
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {

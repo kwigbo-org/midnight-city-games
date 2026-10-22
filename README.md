@@ -46,4 +46,4 @@ it happens until the pot is spent. The race time is only when people gather.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `ae1760bc33f6752e8ac5dd110c85f03a13e1475be9b681c18c458b94068b9256` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `ca86a45a28d069ef252a12330868d3d9e8eca99ce08b8577d3441e04d6626914` | open |

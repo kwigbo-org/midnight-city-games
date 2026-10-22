@@ -5,7 +5,7 @@
     "spaceId": "central",
     "x": 79,
     "y": 61,
-    "radius": 3,
+    "radius": 1,
     "distance": "manhattan"
   },
   "items": [
@@ -15,18 +15,37 @@
     "static_charge",
     "ore"
   ],
+  "sources": {
+    "fish": [
+      "canal_eddy",
+      "Central Fresh Fish Outlet (buying is allowed)"
+    ],
+    "rooftop_tomato": [
+      "rooftop_tomato_bed"
+    ],
+    "skybridge_cable": [
+      "skybridge_rigging"
+    ],
+    "static_charge": [
+      "static_substation"
+    ],
+    "ore": [
+      "ore_vein (miners' cave)"
+    ]
+  },
   "finish": "every item count above its count at the start reading",
+  "timing": "seconds = time of the last reading before the finish reading minus time of the start reading: the earliest the run can have finished, so every gap between readings counts in the runner's favour",
   "parSeconds": 247,
-  "toleranceSeconds": 15,
-  "beat": "seconds < parSeconds + toleranceSeconds",
+  "parSource": "kwigbo's own action log of his practice run, see par.md",
+  "beat": "seconds < parSeconds",
   "prize": {
     "crystal": 10,
     "perAgent": 1,
     "pot": 100
   },
   "readings": {
-    "source": "Midnight City public observer",
-    "startEverySeconds": 15,
-    "finishEverySeconds": 10
+    "source": "Midnight City public observer, via record.mjs",
+    "interval": "normally 5 to 15 seconds apart; a slow observer can make gaps longer",
+    "time": "t is taken when the observer's answer arrives"
   }
 }

@@ -15,11 +15,12 @@ import { judge } from "./judge.mjs";
 export const OBSERVER = "https://midnight.city/observer";
 
 export async function reading(agentId, items) {
-  const t = new Date().toISOString();
   const res = await fetch(`${OBSERVER}/api/skill/agents/${encodeURIComponent(agentId)}/inventory`,
     { signal: AbortSignal.timeout(30000) });
   if (!res.ok) throw new Error(`observer answered ${res.status} for ${agentId}`);
   const body = await res.json();
+  // Timed when the answer arrives: the data shows the game as the observer answered.
+  const t = new Date().toISOString();
   const inv = body.inventory || {};
   return {
     t,
