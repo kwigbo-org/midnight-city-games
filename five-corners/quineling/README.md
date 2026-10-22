@@ -46,6 +46,13 @@ readings. The work is split:
   observer, a run exactly at par, a run too slow) and on a recorded run, it gave the
   same time, to the millisecond, and the same verdict as `judge.mjs`.
 
+## On every run
+
+Each finished run is also judged by this Quineling, and the result is published next to the run as
+`runs/<run>.quineling.json`: the four inputs, both verdicts, the Quineling's fingerprint
+(checked each time against the one above) and whether the two judges agree. It is a
+second opinion only: the run file's verdict is the one that counts.
+
 To judge a run yourself, in a copy of the quinelings repository:
 
 ```js
