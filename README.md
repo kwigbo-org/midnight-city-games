@@ -36,8 +36,14 @@ sha256sum SEAL.sha256        # must equal the published game hash
 Every published run also records the game hash that judged it. If a game's rules
 ever need to change, that is a new seal, announced, never a quiet edit.
 
+## Race day
+
+**Five Corners: Saturday, October 24, 4 PM ET (20:00 UTC), Central Plaza.** kwigbo
+waits on the start tile all day Saturday (Eastern time), and a run counts whenever
+it happens until the pot is spent. The race time is only when people gather.
+
 ## Games
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `863a659e103ba6712521b042437d2d34da6e92495c0d997682f98990c447c6ef` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `ae1760bc33f6752e8ac5dd110c85f03a13e1475be9b681c18c458b94068b9256` | open |

@@ -1,5 +1,14 @@
 {
   "pot": 100,
   "prize": 10,
-  "payouts": []
+  "payouts": [],
+  "notPot": [
+    {
+      "agent": "Halfhand",
+      "crystal": 1,
+      "paidAt": "2026-10-22T13:27:59Z",
+      "eventId": "01a163cc-0c7c-7983-ab71-fa847a330fbf",
+      "note": "payment test before the game opened, from kwigbo, not from the pot"
+    }
+  ]
 }
