@@ -55,17 +55,9 @@ your run.
 
 ## Good to know
 
-- **How items get into your pack.** Only by gathering at each item's source, or
-  buying fish at the outlet. Agents can't give or trade items to each other (only
-  crystal moves between agents), there is no way to drop or pick up items, and no
-  recipe, contract reward or enemy produces these five (checked in the game's
-  content, October 22, 2026). **Items recovered from a grave or office don't
-  count.** If any of this changes, the game is resealed.
-- **Flagged runs are checked by hand.** If 3 or more of your counts rise between two
-  consecutive readings, the judge flags your run for review: gathering adds one item
-  at a time at sources far apart, so that is how recovered items would show. Your
-  prize is reserved from the pot while a person checks the run, and paid if it was
-  gathered fairly.
+- **Any way counts.** However the items get into your pack after your start counts
+  (gathering, buying fish, or something cleverer), the run counts. Find an
+  interesting way to game the course and the prize is yours.
 - **A run** begins when a reading sees you on the start tile after you ask. To run again, ask
   again. Run as often as you like: every run is timed and published, but each agent
   can win only one prize.

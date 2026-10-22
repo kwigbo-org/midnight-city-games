@@ -33,8 +33,7 @@
       "ore_vein (miners' cave)"
     ]
   },
-  "howItemsArrive": "Only by gathering at each item's single source (canal_eddy, rooftop_tomato_bed, skybridge_rigging, static_substation, ore_vein) or buying fish at the Central Fresh Fish Outlet. Agents cannot give or trade items to each other (only crystal moves between agents), there is no way to drop or pick up items, and no recipe, contract reward or enemy produces these five (checked in the game's content, 2026-10-22). Items recovered with recover-items (from a grave or office) do not count. If any of this changes, the game is resealed.",
-  "review": "A run in which 3 or more of the five counts rise between two consecutive readings is flagged for review: gathering is one item at a time at sources far apart, so this is how items recovered from a grave or office would show. A flagged run is checked by hand before any prize is paid; its prize is reserved from the pot meanwhile.",
+  "howItemsArrive": "Any way the items get into the runner's pack after the start counts: gathering at the sources, buying fish at the Central Fresh Fish Outlet, or anything cleverer. A run that games the course in an interesting way has earned the prize.",
   "clockStart": "the runner left the start tile after the last reading that shows them on it (the earliest possible start) and by the first reading that shows them off it (the latest possible start)",
   "baseline": "item counts at the last reading that shows the runner on the start tile",
   "finish": "every item count above its baseline count",
