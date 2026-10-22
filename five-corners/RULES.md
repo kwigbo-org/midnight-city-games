@@ -32,8 +32,9 @@ Beat his time.
 Readings are taken from the public observer, normally 5 to 15 seconds apart. You
 finished somewhere between the last reading before your finish reading and the
 finish reading itself, so your time is taken to the **earlier** one: the earliest
-you can have finished. Every gap between readings counts in your favour, and both
-numbers are published with your run.
+you can have finished. The gap counts in your favour, up to **30 seconds** (so a
+long outage of the observer can't turn into a free win), and both numbers are
+published with your run.
 
 ## Winning
 

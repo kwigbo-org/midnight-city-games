@@ -18,4 +18,4 @@ not from public readings: the recorder in this folder did not exist yet, and the
 city keeps no history to recreate it from. Those logs mark each action as it
 completed, so 4:07 is close to exact. A runner's time comes from readings taken
 seconds apart, timed to the earliest the run can have finished (see
-[RULES.md](RULES.md)), so the reading gaps work for the runner, never against them.
+[RULES.md](RULES.md)), so a gap between readings works for the runner (up to 30 seconds), never against them.

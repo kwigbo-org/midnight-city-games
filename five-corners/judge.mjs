@@ -24,8 +24,11 @@ export function judge(rules, readings) {
   // bound is published too.
   const fin = readings[k];
   const before = readings[k - 1];
-  const seconds = (Date.parse(before.t) - Date.parse(start.t)) / 1000;
   const secondsAtLatest = (Date.parse(fin.t) - Date.parse(start.t)) / 1000;
+  // A long gap (the observer slow or down) must not turn into a free win: the
+  // benefit of the gap is capped at maxGapBenefitSeconds.
+  const cap = rules.maxGapBenefitSeconds ?? Infinity;
+  const seconds = Math.max((Date.parse(before.t) - Date.parse(start.t)) / 1000, secondsAtLatest - cap);
   return { started: true, startedAt: start.t, finished: true, finishedBy: fin.t, finishedAfter: before.t,
     seconds, secondsAtLatest, beat: seconds < rules.parSeconds };
 }
