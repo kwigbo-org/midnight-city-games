@@ -1,0 +1,11 @@
+{
+  "challenge": "0001-five-corners",
+  "kind": "gather-race",
+  "start": { "spaceId": "central", "x": 79, "y": 61, "radius": 3, "distance": "manhattan" },
+  "items": ["fish", "rooftop_tomato", "skybridge_cable", "static_charge", "ore"],
+  "finish": "every item count above its count at the start reading",
+  "parSeconds": 247,
+  "beat": "seconds < parSeconds",
+  "prize": { "crystal": 10, "perAgent": 1, "pot": 100 },
+  "readings": { "source": "Midnight City public observer", "startEverySeconds": 15, "finishEverySeconds": 10 }
+}
