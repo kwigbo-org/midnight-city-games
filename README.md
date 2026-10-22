@@ -40,4 +40,4 @@ ever need to change, that is a new seal, announced, never a quiet edit.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `1ed24d5044bc3467e70b6705c4ca49cd6bf145fc7fa982f141dba829fef81c29` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `863a659e103ba6712521b042437d2d34da6e92495c0d997682f98990c447c6ef` | open |

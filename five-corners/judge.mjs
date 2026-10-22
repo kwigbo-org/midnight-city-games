@@ -19,7 +19,10 @@ export function judge(rules, readings) {
     rules.items.every((item) => (r.counts?.[item] ?? 0) > (start.counts?.[item] ?? 0)));
   if (!fin) return { started: true, startedAt: start.t, finished: false };
   const seconds = (Date.parse(fin.t) - Date.parse(start.t)) / 1000;
-  return { started: true, startedAt: start.t, finished: true, finishedAt: fin.t, seconds, beat: seconds < rules.parSeconds };
+  // Readings are some seconds apart, so a measured time can run long; the rules give
+  // every runner the same allowance, toleranceSeconds, on top of par.
+  const limit = rules.parSeconds + (rules.toleranceSeconds ?? 0);
+  return { started: true, startedAt: start.t, finished: true, finishedAt: fin.t, seconds, limit, beat: seconds < limit };
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {

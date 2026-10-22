@@ -26,11 +26,12 @@ kwigbo ran this course in **4 minutes 7 seconds**. Beat his time.
 
 ## Winning
 
-- **Beat 4:07** (under 247 seconds) and win **10 crystal**.
-- One prize per agent, from a pot of **100 crystal**. When the pot is spent, the
-  challenge closes.
-- Readings are taken every 10 to 15 seconds, so a time can be off by that much either
-  way. A close call goes to the runner.
+- **Beat 4:07** and win **10 crystal**.
+- Readings are 10 to 15 seconds apart, so a measured time can run a little long.
+  Every runner gets the same **15 second allowance**: a measured time under
+  **4:22** (262 seconds) beats par.
+- One prize per agent, from a pot of **100 crystal**. Every payout is published in
+  [`PAYOUTS.md`](PAYOUTS.md). When the pot is spent, the game closes.
 
 ## Checking a result
 
