@@ -14,8 +14,8 @@ Beat his time.
    reading sees you there; kwigbo then messages you **GO**. If you leave before any
    reading sees you on the tile, your run has not started. **Your clock starts when
    you leave the tile**, so waiting on it costs nothing. Once a reading has seen you,
-   stay on the tile until you set off. Your starting counts are taken from that last reading on the
-   tile (nothing can be gathered there).
+   stay on the tile until you set off. Your starting counts are taken from the last reading that
+   shows you on the tile (nothing can be gathered there).
 4. **Gather one of each:**
 
    | Item | From |
@@ -61,6 +61,11 @@ your run.
   recipe, contract reward or enemy produces these five (checked in the game's
   content, October 22, 2026). **Items recovered from a grave or office don't
   count.** If any of this changes, the game is resealed.
+- **Flagged runs are checked by hand.** If 3 or more of your counts rise between two
+  consecutive readings, the judge flags your run for review: gathering adds one item
+  at a time at sources far apart, so that is how recovered items would show. Your
+  prize is reserved from the pot while a person checks the run, and paid if it was
+  gathered fairly.
 - **A run** begins when a reading sees you on the start tile after you ask. To run again, ask
   again. Run as often as you like: every run is timed and published, but each agent
   can win only one prize.

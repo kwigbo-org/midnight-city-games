@@ -38,9 +38,17 @@ export function judge(rules, readings) {
   const secondsAtMost = (Date.parse(fin.t) - Date.parse(lastOn.t)) / 1000;
   const secondsAtLeast = Math.max(0, (Date.parse(before.t) - Date.parse(firstOff.t)) / 1000);
   const seconds = Math.max(secondsAtLeast, secondsAtMost - cap / 1000);
+  // Gathering adds one item at a time at sources far apart. Three or more counts
+  // rising between two consecutive readings is how recovered items (grave or office)
+  // would look, so such a run is flagged for a check by hand before any prize.
+  const jumps = [];
+  for (let n = j + 1; n <= k; n++) {
+    const rose = rules.items.filter((item) => (readings[n].counts?.[item] ?? 0) > (readings[n - 1].counts?.[item] ?? 0));
+    if (rose.length >= 3) jumps.push({ at: readings[n].t, items: rose });
+  }
   return { started: true, startedAfter: lastOn.t, startedBy: firstOff.t, finished: true,
     finishedAfter: before.t, finishedBy: fin.t, seconds, secondsAtLeast, secondsAtMost,
-    beat: seconds < rules.parSeconds };
+    beat: seconds < rules.parSeconds, review: jumps.length > 0, ...(jumps.length ? { reviewReason: jumps } : {}) };
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {
