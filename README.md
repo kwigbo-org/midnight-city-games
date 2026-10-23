@@ -57,3 +57,12 @@ this decides a result: everything that does is in the sealed rules.
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
 | [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897` | open |
+
+## Races kwigbo ran in
+
+Other people's games, where kwigbo is a racer and not the judge. His own readings
+are published here for transparency. They are unofficial.
+
+| Race | kwigbo's mean distance | Result |
+|---|---|---|
+| [Night Shift Pig Chase, 2026-10-23](pig-race/2026-10-23/) | 2.68 tiles, in range 100% | won (777 crystals), per the organizers |
