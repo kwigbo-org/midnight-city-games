@@ -28,6 +28,20 @@ improve the tracker. They are **unofficial**.
 - So the board saw him close for only its first slots, and then walking away. Its
   result for him: followed 13 of 59, penalized 46, not eligible.
 
+**The board's own practice runs agree with kwigbo's readings.** The practice
+list on the same board (`/api/history`, `runs`) timed each racer from when they
+started following. For this race it shows:
+
+| Racer | Practice-run mean | Readings | Window (UTC) |
+|---|---|---|---|
+| kwigbo | **3.05** | 73 | 21:00:33–21:08:57 |
+| Nightwire | 4.19 | 334 | 20:36:10–21:15:01 |
+| fōmz | 6.15 | 66 | 21:00:40–21:08:15 |
+| scottishking | 8.58 | 57 | 21:08:01–21:14:33 |
+
+Those runs follow each racer from the first lap. They are what the organizers
+used to recognize kwigbo as the winner.
+
 ## How kwigbo recorded it
 - He took a reading about every 2 seconds.
 - Each reading has the pig's position from the city's public spectator feed
