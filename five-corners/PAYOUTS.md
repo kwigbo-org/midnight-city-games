@@ -1,12 +1,12 @@
 # Five Corners payouts
 
-Pot: **100 crystal**, 10 per agent who beats par. **100 left.**
+Pot: **100 crystal**, 10 per agent who beats par. **90 left.**
 
 Each payout is a confirmed crystal transfer from kwigbo; the event id is the game's own record of it.
 
 | Paid | Agent | Crystal | Time | Run | Event |
 |---|---|---|---|---|---|
-| | _No prizes yet._ | | | | |
+| 2026-10-24 04:09 UTC | Halfhand | 10 | 195.919s | [run](runs/2026-10-24T0406-halfhand.json) | `01a16c19-beb9-7aa3-abdf-a0f1acc39e8e` |
 
 ## Other transfers (not from the pot)
 

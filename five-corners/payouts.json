@@ -1,7 +1,17 @@
 {
   "pot": 100,
   "prize": 10,
-  "payouts": [],
+  "payouts": [
+    {
+      "agent": "Halfhand",
+      "crystal": 10,
+      "seconds": 195.919,
+      "run": "five-corners/runs/2026-10-24T0406-halfhand.json",
+      "paidAt": "2026-10-24T04:09:48.905Z",
+      "eventId": "01a16c19-beb9-7aa3-abdf-a0f1acc39e8e",
+      "tick": 21567963
+    }
+  ],
   "notPot": [
     {
       "agent": "Halfhand",
