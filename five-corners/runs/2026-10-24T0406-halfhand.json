@@ -1,10 +1,17 @@
 {
   "agent": "Halfhand",
-  "status": "at the start",
+  "status": "finished",
   "result": {
-    "started": false,
-    "onStartTile": true,
-    "finished": false
+    "started": true,
+    "startedAfter": "2026-10-24T04:06:00.791Z",
+    "startedBy": "2026-10-24T04:07:25.834Z",
+    "finished": true,
+    "finishedAfter": "2026-10-24T04:09:35.528Z",
+    "finishedBy": "2026-10-24T04:09:46.710Z",
+    "seconds": 195.919,
+    "secondsAtLeast": 129.694,
+    "secondsAtMost": 225.919,
+    "beat": true
   },
   "gameHash": "1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897",
   "readings": [
@@ -23,6 +30,244 @@
         "skybridge_cable": 5702,
         "static_charge": 454,
         "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:07:25.834Z",
+      "tick": 21567678,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 90,
+        "y": 55
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 20,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:07:36.615Z",
+      "tick": 21567699,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 69,
+        "y": 55
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 20,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:07:47.327Z",
+      "tick": 21567720,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 49,
+        "y": 56
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 20,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:07:58.252Z",
+      "tick": 21567742,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 34,
+        "y": 63
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 20,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:08:09.129Z",
+      "tick": 21567764,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 79
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:08:20.132Z",
+      "tick": 21567785,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 60
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:08:30.846Z",
+      "tick": 21567807,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 23,
+        "y": 48
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:08:41.585Z",
+      "tick": 21567828,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 17,
+        "y": 40
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:08:52.276Z",
+      "tick": 21567849,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 3,
+        "y": 41
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5702,
+        "static_charge": 455,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:09:03.110Z",
+      "tick": 21567871,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 7,
+        "y": 31
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5703,
+        "static_charge": 455,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:09:13.772Z",
+      "tick": 21567892,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 19,
+        "y": 26
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5703,
+        "static_charge": 455,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:09:24.831Z",
+      "tick": 21567914,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 31,
+        "y": 16
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5703,
+        "static_charge": 455,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:09:35.528Z",
+      "tick": 21567935,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 20,
+        "y": 7
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5703,
+        "static_charge": 455,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T04:09:46.710Z",
+      "tick": 21567957,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 19,
+        "y": 22
+      },
+      "counts": {
+        "fish": 6,
+        "rooftop_tomato": 21,
+        "skybridge_cable": 5703,
+        "static_charge": 455,
+        "ore": 48
       }
     }
   ]
