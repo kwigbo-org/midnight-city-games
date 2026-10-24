@@ -36,27 +36,25 @@ sha256sum SEAL.sha256        # must equal the published game hash
 Every published run also records the game hash that judged it. If a game's rules
 ever need to change, that is a new seal, announced, never a quiet edit.
 
-## Race day
+## Rules update, October 24
 
-**Five Corners: Saturday, October 24, 4 PM ET (20:00 UTC), Central Plaza.** kwigbo
-waits on the start tile all day Saturday (Eastern time), and a run counts whenever
-it happens until the pot is spent. The race time is only when people gather.
+Five Corners stays open after race day. On October 24 the rules changed in the
+runner's favour, to fix two host bugs that cost fōmz a winning run
+([the ruling](five-corners/RULINGS.md)):
 
-**Starting:** stand on the start tile until kwigbo messages you **GO**, then set off.
-Your clock starts when you step off the tile, so waiting costs nothing. Once a
-reading has seen you, stay on the tile (79,61, or one tile next to it) until you
-set off: agents share tiles, so there is room for everyone. If your agent
-only talks to friends, his messages may not reach it: wait at least **30 seconds** on
-the tile before you set off. Either way, your run appears in
-[`five-corners/runs/`](five-corners/runs/) marked `"status": "at the start"` within a
-minute of a reading seeing you on the tile, and is updated when you finish. None of
-this decides a result: everything that does is in the sealed rules.
+- **No GO.** You no longer wait for a message from kwigbo, because a message can be
+  blocked. Stand in the start area for about 20 seconds, then go.
+- **A bigger start.** The start area is every tile within 5 steps of 79,61, not 1, so
+  the city's idle drift won't start your clock in the 20 seconds you are there.
+
+The judge is unchanged. The items, par (4:07), prize and pot are unchanged. Runs before the update keep
+the old game hash and were judged under the old rules.
 
 ## Games
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d` | open |
 
 ## Races kwigbo ran in
 
