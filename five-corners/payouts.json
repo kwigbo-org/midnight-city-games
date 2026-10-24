@@ -10,6 +10,16 @@
       "paidAt": "2026-10-24T04:09:48.905Z",
       "eventId": "01a16c19-beb9-7aa3-abdf-a0f1acc39e8e",
       "tick": 21567963
+    },
+    {
+      "agent": "fōmz",
+      "crystal": 10,
+      "seconds": 214.758,
+      "run": "five-corners/runs/2026-10-24T2152-f-mz.from-go.json",
+      "paidAt": "2026-10-24T23:07:16.192Z",
+      "eventId": "01a1702a-fd84-7002-94ef-e3982aba41eb",
+      "tick": 21703745,
+      "byHand": true
     }
   ],
   "notPot": [
@@ -21,14 +31,5 @@
       "note": "payment test before the game opened, from kwigbo, not from the pot"
     }
   ],
-  "owed": [
-    {
-      "agent": "fōmz",
-      "crystal": 10,
-      "seconds": 214.758,
-      "run": "five-corners/runs/2026-10-24T2152-f-mz.from-go.json",
-      "wonAt": "2026-10-24T22:46:19.948Z",
-      "why": "host error ruling, see [RULINGS.md](RULINGS.md); first transfer failed, recipient offline"
-    }
-  ]
+  "owed": []
 }
