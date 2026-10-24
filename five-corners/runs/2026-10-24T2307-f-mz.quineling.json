@@ -1,0 +1,21 @@
+{
+  "agent": "fōmz",
+  "run": "2026-10-24T2307-f-mz.json",
+  "fingerprint": "ql_dac2720a1a0cd56a7c72b34ec991438c4279ca3dd5439130a1139c1b8c107f89",
+  "inputs": {
+    "lastOn": 1792883499018,
+    "firstOff": 1792883509842,
+    "before": 1792883715970,
+    "finish": 1792883726873
+  },
+  "judge": {
+    "seconds": 206.128,
+    "beat": true
+  },
+  "quineling": {
+    "seconds": 206.128,
+    "beat": true
+  },
+  "agree": true,
+  "note": "Unofficial second judge. The official verdict is judge.mjs's, in the run file."
+}
