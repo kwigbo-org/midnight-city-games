@@ -1,10 +1,17 @@
 {
   "agent": "fōmz",
-  "status": "at the start",
+  "status": "finished",
   "result": {
-    "started": false,
-    "onStartTile": true,
-    "finished": false
+    "started": true,
+    "startedAfter": "2026-10-24T23:11:39.018Z",
+    "startedBy": "2026-10-24T23:11:49.842Z",
+    "finished": true,
+    "finishedAfter": "2026-10-24T23:15:15.970Z",
+    "finishedBy": "2026-10-24T23:15:26.873Z",
+    "seconds": 206.128,
+    "secondsAtLeast": 206.128,
+    "secondsAtMost": 227.855,
+    "beat": true
   },
   "gameHash": "1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897",
   "readings": [
@@ -23,6 +30,380 @@
         "skybridge_cable": 28103,
         "static_charge": 4001,
         "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:11:39.018Z",
+      "tick": 21704284,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 78,
+        "y": 61
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:11:49.842Z",
+      "tick": 21704305,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 71,
+        "y": 61
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:00.761Z",
+      "tick": 21704327,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 76,
+        "y": 61
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:11.473Z",
+      "tick": 21704348,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 68,
+        "y": 61
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:23.084Z",
+      "tick": 21704371,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 79,
+        "y": 61
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:33.964Z",
+      "tick": 21704393,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 82,
+        "y": 55
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:44.749Z",
+      "tick": 21704414,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 103,
+        "y": 55
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:12:55.383Z",
+      "tick": 21704435,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 124,
+        "y": 55
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:13:06.192Z",
+      "tick": 21704457,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 127,
+        "y": 40
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:13:16.892Z",
+      "tick": 21704478,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 125,
+        "y": 54
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:13:27.659Z",
+      "tick": 21704500,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 104,
+        "y": 55
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:13:38.484Z",
+      "tick": 21704521,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 83,
+        "y": 55
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:13:49.107Z",
+      "tick": 21704542,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 63,
+        "y": 56
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:00.048Z",
+      "tick": 21704564,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 48,
+        "y": 63
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:10.985Z",
+      "tick": 21704585,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 69
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1001,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:21.654Z",
+      "tick": 21704606,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 32,
+        "y": 78
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:32.774Z",
+      "tick": 21704628,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 32,
+        "y": 56
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:43.405Z",
+      "tick": 21704649,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 21,
+        "y": 46
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28103,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:14:54.118Z",
+      "tick": 21704671,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 12,
+        "y": 42
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28104,
+        "static_charge": 4001,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:15:04.970Z",
+      "tick": 21704692,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 12,
+        "y": 30
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28104,
+        "static_charge": 4002,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:15:15.970Z",
+      "tick": 21704714,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 18,
+        "y": 26
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28104,
+        "static_charge": 4002,
+        "ore": 46
+      }
+    },
+    {
+      "t": "2026-10-24T23:15:26.873Z",
+      "tick": 21704735,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 18,
+        "y": 16
+      },
+      "counts": {
+        "fish": 2096,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28104,
+        "static_charge": 4002,
+        "ore": 47
       }
     }
   ]
