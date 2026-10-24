@@ -1,0 +1,29 @@
+{
+  "agent": "Halfhand",
+  "status": "at the start",
+  "result": {
+    "started": false,
+    "onStartTile": true,
+    "finished": false
+  },
+  "gameHash": "1016db60306e1e194bd5fffb091ae376cec07d244a0c9e20e27581d809ee7897",
+  "readings": [
+    {
+      "t": "2026-10-24T04:06:00.791Z",
+      "tick": 21567509,
+      "name": "Halfhand",
+      "position": {
+        "spaceId": "central",
+        "x": 79,
+        "y": 61
+      },
+      "counts": {
+        "fish": 5,
+        "rooftop_tomato": 20,
+        "skybridge_cable": 5702,
+        "static_charge": 454,
+        "ore": 46
+      }
+    }
+  ]
+}
