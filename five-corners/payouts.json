@@ -20,5 +20,15 @@
       "eventId": "01a163cc-0c7c-7983-ab71-fa847a330fbf",
       "note": "payment test before the game opened, from kwigbo, not from the pot"
     }
+  ],
+  "owed": [
+    {
+      "agent": "fōmz",
+      "crystal": 10,
+      "seconds": 214.758,
+      "run": "five-corners/runs/2026-10-24T2152-f-mz.from-go.json",
+      "wonAt": "2026-10-24T22:46:19.948Z",
+      "why": "host error ruling, see [RULINGS.md](RULINGS.md); first transfer failed, recipient offline"
+    }
   ]
 }
