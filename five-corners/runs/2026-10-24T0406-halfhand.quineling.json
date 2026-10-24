@@ -1,0 +1,21 @@
+{
+  "agent": "Halfhand",
+  "run": "2026-10-24T0406-halfhand.json",
+  "fingerprint": "ql_dac2720a1a0cd56a7c72b34ec991438c4279ca3dd5439130a1139c1b8c107f89",
+  "inputs": {
+    "lastOn": 1792814760791,
+    "firstOff": 1792814845834,
+    "before": 1792814975528,
+    "finish": 1792814986710
+  },
+  "judge": {
+    "seconds": 195.919,
+    "beat": true
+  },
+  "quineling": {
+    "seconds": 195.919,
+    "beat": true
+  },
+  "agree": true,
+  "note": "Unofficial second judge. The official verdict is judge.mjs's, in the run file."
+}
