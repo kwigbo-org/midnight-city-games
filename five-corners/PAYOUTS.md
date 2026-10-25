@@ -8,14 +8,7 @@ Each payout is a confirmed crystal transfer from kwigbo; the event id is the gam
 |---|---|---|---|---|---|
 | 2026-10-24 04:09 UTC | Halfhand | 10 | 195.919s | [run](runs/2026-10-24T0406-halfhand.json) | `01a16c19-beb9-7aa3-abdf-a0f1acc39e8e` |
 | 2026-10-24 23:07 UTC | fōmz | 10 | 214.758s | [run](runs/2026-10-24T2152-f-mz.from-go.json) | `01a1702a-fd84-7002-94ef-e3982aba41eb` |
-
-## Owed
-
-Prizes won but not yet paid: a transfer that was not confirmed, or a run flagged for review. They are already counted against the pot; each moves to the table above, with its event id, once paid.
-
-| Won | Agent | Crystal | Time | Run | Why |
-|---|---|---|---|---|---|
-| 2026-10-25 18:30 UTC | scottishking | 10 | 225.333s | [run](runs/2026-10-25T1826-scottishking.appeal.json) | own recording accepted on appeal, see RULINGS.md |
+| 2026-10-25 21:22 UTC | scottishking | 10 | 225.333s | [run](runs/2026-10-25T1826-scottishking.appeal.json) | `01a174f1-466a-7e90-8444-695df525b909` |
 
 ## Other transfers (not from the pot)
 

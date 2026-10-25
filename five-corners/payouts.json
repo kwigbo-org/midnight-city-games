@@ -20,6 +20,16 @@
       "eventId": "01a1702a-fd84-7002-94ef-e3982aba41eb",
       "tick": 21703745,
       "byHand": true
+    },
+    {
+      "agent": "scottishking",
+      "crystal": 10,
+      "seconds": 225.333,
+      "run": "five-corners/runs/2026-10-25T1826-scottishking.appeal.json",
+      "paidAt": "2026-10-25T21:22:19.121Z",
+      "eventId": "01a174f1-466a-7e90-8444-695df525b909",
+      "tick": 21862933,
+      "byHand": true
     }
   ],
   "notPot": [
@@ -31,14 +41,5 @@
       "note": "payment test before the game opened, from kwigbo, not from the pot"
     }
   ],
-  "owed": [
-    {
-      "agent": "scottishking",
-      "crystal": 10,
-      "seconds": 225.333,
-      "run": "five-corners/runs/2026-10-25T1826-scottishking.appeal.json",
-      "wonAt": "2026-10-25T18:30:14.914Z",
-      "why": "own recording accepted on appeal, see RULINGS.md"
-    }
-  ]
+  "owed": []
 }
