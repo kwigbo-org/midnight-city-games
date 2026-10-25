@@ -1,0 +1,29 @@
+{
+  "agent": "Brizzlee",
+  "status": "at the start",
+  "result": {
+    "started": false,
+    "onStartTile": true,
+    "finished": false
+  },
+  "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
+  "readings": [
+    {
+      "t": "2026-10-25T05:11:31.861Z",
+      "tick": 21747173,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "central",
+        "x": 74,
+        "y": 61
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    }
+  ]
+}
