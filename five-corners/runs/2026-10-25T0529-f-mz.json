@@ -1,0 +1,28 @@
+{
+  "agent": "fōmz",
+  "status": "at the start",
+  "result": {
+    "started": false,
+    "finished": false
+  },
+  "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
+  "readings": [
+    {
+      "t": "2026-10-25T05:29:41.224Z",
+      "tick": 21749336,
+      "name": "fōmz",
+      "position": {
+        "spaceId": "central",
+        "x": 80,
+        "y": 56
+      },
+      "counts": {
+        "fish": 2095,
+        "rooftop_tomato": 1002,
+        "skybridge_cable": 28104,
+        "static_charge": 4002,
+        "ore": 31
+      }
+    }
+  ]
+}
