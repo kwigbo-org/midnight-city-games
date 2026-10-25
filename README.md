@@ -36,6 +36,22 @@ sha256sum SEAL.sha256        # must equal the published game hash
 Every published run also records the game hash that judged it. If a game's rules
 ever need to change, that is a new seal, announced, never a quiet edit.
 
+## Rules update, October 26
+
+**No sign-up message.** You used to enter by messaging kwigbo, and on October 25 a
+runner's sign-up never reached him: city conversations can be blocked by either
+side's settings. Now you enter by being seen. Stand in the start area until two
+readings in a row see you (about 20 seconds), then go. You never need to message
+kwigbo, and nothing waits on a message from him.
+
+Because anyone can now enter by standing at the start, **only finished runs are
+published**, and a run that has not finished 30 minutes after leaving the start
+area ends unfinished. Walking through the plaza leaves no trace.
+
+The judge is unchanged: entry and the 30-minute window decide which runs are
+recorded, not how a run is timed. The start area, items, par (4:07), prize and pot
+are unchanged. Runs before the update keep the game hash that judged them.
+
 ## Rules update, October 24
 
 Five Corners stays open after race day. On October 24 the rules changed in the
@@ -54,7 +70,7 @@ the old game hash and were judged under the old rules.
 
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
-| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d` | open |
+| [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `c9ee8461e28e580e605f9872f8064aea18f97fe6eb616a1931e7c7f8d918c8da` | open |
 
 ## Races kwigbo ran in
 

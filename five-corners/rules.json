@@ -8,6 +8,7 @@
     "radius": 5,
     "distance": "manhattan"
   },
+  "entry": "two readings in a row that show the runner in the start area; no message to or from kwigbo is needed",
   "items": [
     "fish",
     "rooftop_tomato",
@@ -37,6 +38,8 @@
   "clockStart": "the runner left the start area after the last reading that shows them in it (the earliest possible start) and by the first reading that shows them out of it (the latest possible start)",
   "baseline": "item counts at the last reading that shows the runner in the start area",
   "finish": "every item count above its baseline count",
+  "maxRunSeconds": 1800,
+  "maxRun": "a run not finished within maxRunSeconds of leaving the start area ends unfinished and is not published",
   "timing": "the run lasted at most (finish reading - last reading in the start area) and at least (reading before the finish reading - first reading out of it). seconds = the shortest possible time, but never more than maxTotalGapBenefitSeconds below the longest possible time",
   "maxTotalGapBenefitSeconds": 30,
   "parSeconds": 247,
