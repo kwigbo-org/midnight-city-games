@@ -5,7 +5,7 @@
     "spaceId": "central",
     "x": 79,
     "y": 61,
-    "radius": 1,
+    "radius": 5,
     "distance": "manhattan"
   },
   "items": [
@@ -34,10 +34,10 @@
     ]
   },
   "howItemsArrive": "Any way the items get into the runner's pack after the start counts: gathering at the sources, buying fish at the Central Fresh Fish Outlet, or anything cleverer. A run that games the course in an interesting way has earned the prize.",
-  "clockStart": "the runner left the start tile after the last reading that shows them on it (the earliest possible start) and by the first reading that shows them off it (the latest possible start)",
-  "baseline": "item counts at the last reading that shows the runner on the start tile",
+  "clockStart": "the runner left the start area after the last reading that shows them in it (the earliest possible start) and by the first reading that shows them out of it (the latest possible start)",
+  "baseline": "item counts at the last reading that shows the runner in the start area",
   "finish": "every item count above its baseline count",
-  "timing": "the run lasted at most (finish reading - last reading on the tile) and at least (reading before the finish reading - first reading off the tile). seconds = the shortest possible time, but never more than maxTotalGapBenefitSeconds below the longest possible time",
+  "timing": "the run lasted at most (finish reading - last reading in the start area) and at least (reading before the finish reading - first reading out of it). seconds = the shortest possible time, but never more than maxTotalGapBenefitSeconds below the longest possible time",
   "maxTotalGapBenefitSeconds": 30,
   "parSeconds": 247,
   "parSource": "kwigbo's own action log of his practice run, see par.md",
