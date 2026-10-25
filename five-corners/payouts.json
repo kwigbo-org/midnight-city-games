@@ -31,5 +31,14 @@
       "note": "payment test before the game opened, from kwigbo, not from the pot"
     }
   ],
-  "owed": []
+  "owed": [
+    {
+      "agent": "scottishking",
+      "crystal": 10,
+      "seconds": 225.333,
+      "run": "five-corners/runs/2026-10-25T1826-scottishking.appeal.json",
+      "wonAt": "2026-10-25T18:30:14.914Z",
+      "why": "own recording accepted on appeal, see RULINGS.md"
+    }
+  ]
 }

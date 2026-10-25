@@ -1,0 +1,1058 @@
+{
+  "agent": "scottishking",
+  "status": "finished",
+  "source": "the runner's own recording (record.mjs), accepted on appeal: see RULINGS.md",
+  "result": {
+    "agent": "scottishking",
+    "started": true,
+    "startedAfter": "2026-10-25T18:26:19.215Z",
+    "startedBy": "2026-10-25T18:26:24.399Z",
+    "finished": true,
+    "finishedAfter": "2026-10-25T18:30:09.732Z",
+    "finishedBy": "2026-10-25T18:30:14.914Z",
+    "seconds": 225.333,
+    "secondsAtLeast": 225.333,
+    "secondsAtMost": 235.699,
+    "beat": true
+  },
+  "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
+  "readings": [
+    {
+      "t": "2026-10-25T18:25:01.113Z",
+      "tick": 21841786,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 4,
+        "y": 18
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:06.307Z",
+      "tick": 21841796,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 5,
+        "y": 27
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:11.510Z",
+      "tick": 21841806,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 11,
+        "y": 31
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:16.700Z",
+      "tick": 21841817,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 14,
+        "y": 26
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:21.888Z",
+      "tick": 21841827,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 24,
+        "y": 26
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:27.200Z",
+      "tick": 21841838,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 32,
+        "y": 29
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:32.386Z",
+      "tick": 21841848,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 32,
+        "y": 39
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:37.573Z",
+      "tick": 21841858,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 32,
+        "y": 49
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:42.758Z",
+      "tick": 21841868,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 42,
+        "y": 49
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:48.055Z",
+      "tick": 21841879,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 48,
+        "y": 54
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:53.237Z",
+      "tick": 21841889,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 57,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:25:58.415Z",
+      "tick": 21841899,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 67,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:03.596Z",
+      "tick": 21841910,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 76,
+        "y": 57
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:08.775Z",
+      "tick": 21841920,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 79,
+        "y": 61
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:14.045Z",
+      "tick": 21841931,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 77,
+        "y": 61
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:19.215Z",
+      "tick": 21841941,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 75,
+        "y": 61
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:24.399Z",
+      "tick": 21841951,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 74,
+        "y": 60
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:29.615Z",
+      "tick": 21841962,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 80,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:34.805Z",
+      "tick": 21841972,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 90,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:39.991Z",
+      "tick": 21841982,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 100,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:45.288Z",
+      "tick": 21841993,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 111,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:50.467Z",
+      "tick": 21842003,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 121,
+        "y": 55
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:26:55.677Z",
+      "tick": 21842013,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 126,
+        "y": 52
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:01.092Z",
+      "tick": 21842024,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 126,
+        "y": 41
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:06.560Z",
+      "tick": 21842035,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 117,
+        "y": 39
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:11.733Z",
+      "tick": 21842045,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 111,
+        "y": 35
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:16.922Z",
+      "tick": 21842055,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 111,
+        "y": 25
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:22.113Z",
+      "tick": 21842065,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 121,
+        "y": 25
+      },
+      "counts": {
+        "fish": 23009,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:27.299Z",
+      "tick": 21842076,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 127,
+        "y": 25
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:32.731Z",
+      "tick": 21842087,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 119,
+        "y": 26
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:37.906Z",
+      "tick": 21842097,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 109,
+        "y": 26
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:43.104Z",
+      "tick": 21842108,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 98,
+        "y": 26
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:48.285Z",
+      "tick": 21842118,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 91,
+        "y": 23
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:53.491Z",
+      "tick": 21842128,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 88,
+        "y": 30
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:27:58.705Z",
+      "tick": 21842139,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 81,
+        "y": 34
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:03.899Z",
+      "tick": 21842149,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 72,
+        "y": 35
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:09.243Z",
+      "tick": 21842160,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 61,
+        "y": 35
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:14.437Z",
+      "tick": 21842170,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 52,
+        "y": 36
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:19.611Z",
+      "tick": 21842180,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 50,
+        "y": 44
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:24.777Z",
+      "tick": 21842190,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 49,
+        "y": 53
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:29.954Z",
+      "tick": 21842201,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 48,
+        "y": 63
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:35.136Z",
+      "tick": 21842211,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 38,
+        "y": 63
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:40.306Z",
+      "tick": 21842221,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 68
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:45.610Z",
+      "tick": 21842232,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 79
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:50.791Z",
+      "tick": 21842242,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 39,
+        "y": 80
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 2,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:28:55.962Z",
+      "tick": 21842252,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 35,
+        "y": 79
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:01.452Z",
+      "tick": 21842263,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 70
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:06.705Z",
+      "tick": 21842274,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 59
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:11.904Z",
+      "tick": 21842284,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 49
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:17.242Z",
+      "tick": 21842295,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 23,
+        "y": 48
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:22.406Z",
+      "tick": 21842305,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 19,
+        "y": 42
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:27.871Z",
+      "tick": 21842316,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 10,
+        "y": 42
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 5,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:33.069Z",
+      "tick": 21842326,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 11,
+        "y": 39
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 4,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:38.384Z",
+      "tick": 21842337,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 8,
+        "y": 37
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:43.558Z",
+      "tick": 21842347,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "central",
+        "x": 8,
+        "y": 27
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:48.734Z",
+      "tick": 21842357,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 12,
+        "y": 28
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:53.982Z",
+      "tick": 21842368,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 19,
+        "y": 24
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:29:59.176Z",
+      "tick": 21842378,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 20,
+        "y": 15
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:30:04.362Z",
+      "tick": 21842388,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 30,
+        "y": 15
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:30:09.732Z",
+      "tick": 21842399,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 39,
+        "y": 13
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 92
+      }
+    },
+    {
+      "t": "2026-10-25T18:30:14.914Z",
+      "tick": 21842409,
+      "name": "scottishking",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 40,
+        "y": 10
+      },
+      "counts": {
+        "fish": 23010,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 6,
+        "static_charge": 5,
+        "ore": 93
+      }
+    }
+  ]
+}
