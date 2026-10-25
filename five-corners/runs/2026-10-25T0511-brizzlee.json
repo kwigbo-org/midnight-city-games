@@ -1,9 +1,10 @@
 {
   "agent": "Brizzlee",
-  "status": "at the start",
+  "status": "did not finish",
   "result": {
-    "started": false,
-    "onStartTile": true,
+    "started": true,
+    "startedAfter": "2026-10-25T05:11:31.861Z",
+    "startedBy": "2026-10-25T05:11:55.831Z",
     "finished": false
   },
   "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
@@ -16,6 +17,4052 @@
         "spaceId": "central",
         "x": 74,
         "y": 61
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:11:55.831Z",
+      "tick": 21747221,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "central",
+        "x": 94,
+        "y": 79
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:12:06.484Z",
+      "tick": 21747242,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "central",
+        "x": 107,
+        "y": 87
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:12:17.405Z",
+      "tick": 21747264,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 19,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:12:28.078Z",
+      "tick": 21747285,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:12:38.739Z",
+      "tick": 21747306,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 29,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:12:49.659Z",
+      "tick": 21747328,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 32,
+        "y": 12
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:00.740Z",
+      "tick": 21747350,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 50,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:11.394Z",
+      "tick": 21747371,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 71,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:22.286Z",
+      "tick": 21747393,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 93,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:32.914Z",
+      "tick": 21747414,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 108,
+        "y": 9
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:43.787Z",
+      "tick": 21747435,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 107,
+        "y": 29
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:13:54.531Z",
+      "tick": 21747456,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 95,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:05.170Z",
+      "tick": 21747477,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 74,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:15.961Z",
+      "tick": 21747499,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 52,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:26.676Z",
+      "tick": 21747520,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 31,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:37.530Z",
+      "tick": 21747542,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 9,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:48.164Z",
+      "tick": 21747563,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 9,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:14:58.943Z",
+      "tick": 21747584,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 9,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:15:09.971Z",
+      "tick": 21747606,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:15:20.611Z",
+      "tick": 21747627,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 49,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:15:31.533Z",
+      "tick": 21747649,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 71,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:15:42.118Z",
+      "tick": 21747670,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 80,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:15:53.110Z",
+      "tick": 21747692,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 96,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:03.711Z",
+      "tick": 21747713,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 117,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:14.495Z",
+      "tick": 21747735,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 139,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:25.119Z",
+      "tick": 21747756,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 138,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:35.767Z",
+      "tick": 21747777,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 117,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:46.361Z",
+      "tick": 21747798,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 96,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:16:56.980Z",
+      "tick": 21747819,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 83,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:17:07.877Z",
+      "tick": 21747841,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 92,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:17:18.490Z",
+      "tick": 21747862,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 113,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:17:29.418Z",
+      "tick": 21747884,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 135,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:17:40.012Z",
+      "tick": 21747905,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 154,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:17:50.804Z",
+      "tick": 21747926,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 152,
+        "y": 42
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:01.663Z",
+      "tick": 21747948,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 132,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:12.323Z",
+      "tick": 21747969,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 119,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:23.227Z",
+      "tick": 21747991,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 115,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:33.830Z",
+      "tick": 21748012,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 94,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:44.437Z",
+      "tick": 21748033,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 87,
+        "y": 39
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:18:55.382Z",
+      "tick": 21748055,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 84,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:05.997Z",
+      "tick": 21748076,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 74,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:16.694Z",
+      "tick": 21748097,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 74,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:27.304Z",
+      "tick": 21748118,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 92,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:38.086Z",
+      "tick": 21748140,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 114,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:48.716Z",
+      "tick": 21748160,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 134,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:19:59.436Z",
+      "tick": 21748182,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:20:10.471Z",
+      "tick": 21748204,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 107,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:20:21.113Z",
+      "tick": 21748225,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 102,
+        "y": 28
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:20:31.712Z",
+      "tick": 21748246,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 109,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:20:42.303Z",
+      "tick": 21748267,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:20:52.921Z",
+      "tick": 21748288,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:03.595Z",
+      "tick": 21748309,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 127,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:14.226Z",
+      "tick": 21748330,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 106,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:24.826Z",
+      "tick": 21748351,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 104,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:35.779Z",
+      "tick": 21748373,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 107,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:46.387Z",
+      "tick": 21748394,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 122,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:21:57.363Z",
+      "tick": 21748416,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 144,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:22:07.979Z",
+      "tick": 21748437,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 159,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:22:18.879Z",
+      "tick": 21748459,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 159,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:22:29.758Z",
+      "tick": 21748480,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 150,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:22:40.640Z",
+      "tick": 21748502,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 128,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:22:51.607Z",
+      "tick": 21748524,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 106,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:23:02.629Z",
+      "tick": 21748546,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 97,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:23:45.519Z",
+      "tick": 21748631,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 94,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:23:56.234Z",
+      "tick": 21748652,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 88,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:24:07.058Z",
+      "tick": 21748674,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 91,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:24:17.688Z",
+      "tick": 21748694,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 87,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:24:28.508Z",
+      "tick": 21748715,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 83,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:24:39.175Z",
+      "tick": 21748737,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 85,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:24:49.778Z",
+      "tick": 21748758,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 73,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:00.665Z",
+      "tick": 21748780,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 73,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:11.565Z",
+      "tick": 21748801,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 61,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:22.447Z",
+      "tick": 21748823,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 54,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:33.079Z",
+      "tick": 21748844,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 44,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:44.270Z",
+      "tick": 21748866,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 38,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:25:55.149Z",
+      "tick": 21748887,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 37,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:06.003Z",
+      "tick": 21748909,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 35,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:16.635Z",
+      "tick": 21748930,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 40,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:27.369Z",
+      "tick": 21748952,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 36,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:38.115Z",
+      "tick": 21748973,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 31,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:48.833Z",
+      "tick": 21748994,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:26:59.443Z",
+      "tick": 21749015,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:27:10.376Z",
+      "tick": 21749037,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:27:21.011Z",
+      "tick": 21749058,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 27,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:27:31.714Z",
+      "tick": 21749079,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:27:42.502Z",
+      "tick": 21749101,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:27:53.245Z",
+      "tick": 21749122,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:03.973Z",
+      "tick": 21749143,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 27,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:15.182Z",
+      "tick": 21749166,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:26.085Z",
+      "tick": 21749187,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:36.972Z",
+      "tick": 21749209,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:47.772Z",
+      "tick": 21749230,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:28:58.587Z",
+      "tick": 21749251,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 28,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:29:09.302Z",
+      "tick": 21749273,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 29,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:29:20.025Z",
+      "tick": 21749294,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 30,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:29:30.629Z",
+      "tick": 21749315,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 30,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:30:29.889Z",
+      "tick": 21749433,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 27,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:30:40.525Z",
+      "tick": 21749454,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 24,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:30:51.283Z",
+      "tick": 21749476,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 23,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:02.154Z",
+      "tick": 21749497,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 23,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:13.011Z",
+      "tick": 21749518,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 24,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:24.276Z",
+      "tick": 21749541,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 25,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:35.110Z",
+      "tick": 21749563,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 25,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:45.879Z",
+      "tick": 21749584,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 25,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:31:56.687Z",
+      "tick": 21749605,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 24,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:32:07.442Z",
+      "tick": 21749627,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 23,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:32:18.096Z",
+      "tick": 21749648,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 23,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:32:28.762Z",
+      "tick": 21749669,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 23,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:32:39.662Z",
+      "tick": 21749691,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:32:50.405Z",
+      "tick": 21749712,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:01.443Z",
+      "tick": 21749734,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 24
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:12.046Z",
+      "tick": 21749755,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 18,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:23.082Z",
+      "tick": 21749777,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 16,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:34.039Z",
+      "tick": 21749799,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 14,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:44.653Z",
+      "tick": 21749820,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 6,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:33:55.402Z",
+      "tick": 21749842,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 10,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:06.114Z",
+      "tick": 21749863,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 31,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:17.172Z",
+      "tick": 21749885,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 39,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:27.831Z",
+      "tick": 21749906,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 37,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:38.506Z",
+      "tick": 21749927,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 37,
+        "y": 35
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:49.309Z",
+      "tick": 21749948,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 34,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:34:59.953Z",
+      "tick": 21749969,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 37,
+        "y": 27
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:35:11.313Z",
+      "tick": 21749992,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 47,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:35:21.932Z",
+      "tick": 21750013,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 68,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:35:32.677Z",
+      "tick": 21750034,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 89,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:35:43.389Z",
+      "tick": 21750056,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 111,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:35:54.176Z",
+      "tick": 21750077,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:05.043Z",
+      "tick": 21750098,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:15.717Z",
+      "tick": 21750119,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 128,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:26.467Z",
+      "tick": 21750140,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 127,
+        "y": 21
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:37.104Z",
+      "tick": 21750161,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 123,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:47.899Z",
+      "tick": 21750183,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 101,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:36:58.560Z",
+      "tick": 21750204,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 80,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:37:09.252Z",
+      "tick": 21750225,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 59,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:37:20.001Z",
+      "tick": 21750246,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 44,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:37:31.042Z",
+      "tick": 21750268,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 49,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:37:42.096Z",
+      "tick": 21750290,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 71,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:37:52.740Z",
+      "tick": 21750311,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 92,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:03.608Z",
+      "tick": 21750333,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 114,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:14.239Z",
+      "tick": 21750354,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 135,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:25.151Z",
+      "tick": 21750376,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 157,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:36.034Z",
+      "tick": 21750398,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 162,
+        "y": 29
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:46.861Z",
+      "tick": 21750419,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 156,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:38:57.857Z",
+      "tick": 21750441,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 134,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:39:08.701Z",
+      "tick": 21750462,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 113,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:39:19.410Z",
+      "tick": 21750483,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 92,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:39:30.078Z",
+      "tick": 21750504,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 71,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:39:40.987Z",
+      "tick": 21750526,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 49,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:39:51.841Z",
+      "tick": 21750548,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 47,
+        "y": 27
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:02.553Z",
+      "tick": 21750569,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 43,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:13.576Z",
+      "tick": 21750591,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 21,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:24.273Z",
+      "tick": 21750612,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 17,
+        "y": 36
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:35.037Z",
+      "tick": 21750633,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:45.922Z",
+      "tick": 21750655,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 44,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:40:56.649Z",
+      "tick": 21750676,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 65,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:41:07.326Z",
+      "tick": 21750698,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 87,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:41:18.631Z",
+      "tick": 21750720,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 106,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:41:29.385Z",
+      "tick": 21750742,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 116,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:41:40.206Z",
+      "tick": 21750763,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 137,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:41:51.084Z",
+      "tick": 21750785,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 144,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:01.857Z",
+      "tick": 21750806,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 144,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:12.834Z",
+      "tick": 21750828,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 144,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:23.534Z",
+      "tick": 21750849,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 144,
+        "y": 9
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:34.467Z",
+      "tick": 21750871,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 142,
+        "y": 29
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:45.065Z",
+      "tick": 21750892,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 124,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:42:55.682Z",
+      "tick": 21750913,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 103,
+        "y": 32
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:06.366Z",
+      "tick": 21750935,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 97,
+        "y": 43
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:17.166Z",
+      "tick": 21750956,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 77,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:27.800Z",
+      "tick": 21750977,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 56,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:38.733Z",
+      "tick": 21750999,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 39,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:49.371Z",
+      "tick": 21751020,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 42,
+        "y": 30
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:43:59.987Z",
+      "tick": 21751041,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 47,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:44:10.625Z",
+      "tick": 21751062,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 68,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:44:21.839Z",
+      "tick": 21751085,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 91,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:44:32.581Z",
+      "tick": 21751106,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 104,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:44:43.412Z",
+      "tick": 21751128,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 89,
+        "y": 21
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:44:54.060Z",
+      "tick": 21751149,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 68,
+        "y": 21
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:04.717Z",
+      "tick": 21751170,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 47,
+        "y": 21
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:15.700Z",
+      "tick": 21751192,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 27,
+        "y": 23
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:26.465Z",
+      "tick": 21751213,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 9,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:37.159Z",
+      "tick": 21751234,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 4,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:47.938Z",
+      "tick": 21751256,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 7,
+        "y": 15
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:45:58.577Z",
+      "tick": 21751277,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 12,
+        "y": 10
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:46:09.402Z",
+      "tick": 21751298,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 22,
+        "y": 21
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:46:20.526Z",
+      "tick": 21751320,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 39,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:46:31.150Z",
+      "tick": 21751342,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 61,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:46:42.141Z",
+      "tick": 21751363,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 82,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:46:52.992Z",
+      "tick": 21751385,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 82,
+        "y": 37
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:03.711Z",
+      "tick": 21751406,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 62,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:14.320Z",
+      "tick": 21751427,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 44,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:25.168Z",
+      "tick": 21751449,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 42,
+        "y": 23
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:35.914Z",
+      "tick": 21751470,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 24,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:46.881Z",
+      "tick": 21751492,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 8,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:47:57.568Z",
+      "tick": 21751513,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 4,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:48:08.194Z",
+      "tick": 21751534,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 19,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:48:18.834Z",
+      "tick": 21751555,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 34,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:48:29.913Z",
+      "tick": 21751577,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 56,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:01.998Z",
+      "tick": 21751641,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 74,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:12.772Z",
+      "tick": 21751663,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 64,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:23.702Z",
+      "tick": 21751684,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 60,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:34.348Z",
+      "tick": 21751705,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 60,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:45.258Z",
+      "tick": 21751727,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 61,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:49:56.030Z",
+      "tick": 21751748,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 62,
+        "y": 16
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:50:06.699Z",
+      "tick": 21751770,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 80,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:50:17.440Z",
+      "tick": 21751791,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 97,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:50:28.478Z",
+      "tick": 21751813,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 119,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:50:39.238Z",
+      "tick": 21751834,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 124,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:50:49.910Z",
+      "tick": 21751855,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 124,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:00.933Z",
+      "tick": 21751877,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 119,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:11.929Z",
+      "tick": 21751899,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 99,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:22.588Z",
+      "tick": 21751920,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 102,
+        "y": 12
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:33.226Z",
+      "tick": 21751941,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 121,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:44.090Z",
+      "tick": 21751963,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 143,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:51:54.720Z",
+      "tick": 21751984,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 164,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:05.354Z",
+      "tick": 21752005,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 164,
+        "y": 14
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:16.113Z",
+      "tick": 21752027,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 156,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:26.989Z",
+      "tick": 21752048,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 135,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:37.982Z",
+      "tick": 21752070,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 113,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:48.627Z",
+      "tick": 21752091,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 92,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:52:59.287Z",
+      "tick": 21752112,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 71,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:53:10.196Z",
+      "tick": 21752134,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 49,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:53:21.120Z",
+      "tick": 21752156,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 27,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:53:31.766Z",
+      "tick": 21752177,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 14,
+        "y": 8
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:53:42.413Z",
+      "tick": 21752198,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 17,
+        "y": 26
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:53:53.042Z",
+      "tick": 21752219,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 20,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:54:04.298Z",
+      "tick": 21752241,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 42,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:54:15.316Z",
+      "tick": 21752263,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 64,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:54:25.992Z",
+      "tick": 21752284,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 85,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:54:37.034Z",
+      "tick": 21752306,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 107,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:54:58.459Z",
+      "tick": 21752349,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 129,
+        "y": 44
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:55:09.108Z",
+      "tick": 21752370,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 143,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:55:19.885Z",
+      "tick": 21752392,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 137,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:55:30.948Z",
+      "tick": 21752414,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 115,
+        "y": 38
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:55:42.065Z",
+      "tick": 21752436,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 112,
+        "y": 23
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:55:52.827Z",
+      "tick": 21752457,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 94,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:56:03.660Z",
+      "tick": 21752479,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 72,
+        "y": 20
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:56:14.358Z",
+      "tick": 21752500,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 67,
+        "y": 30
+      },
+      "counts": {
+        "fish": 745,
+        "rooftop_tomato": 1033,
+        "skybridge_cable": 39,
+        "static_charge": 0,
+        "ore": 53
+      }
+    },
+    {
+      "t": "2026-10-25T05:56:25.028Z",
+      "tick": 21752521,
+      "name": "Brizzlee",
+      "position": {
+        "spaceId": "hacker-house-interior",
+        "x": 54,
+        "y": 38
       },
       "counts": {
         "fish": 745,
