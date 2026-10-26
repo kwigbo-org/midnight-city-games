@@ -30,6 +30,15 @@
       "eventId": "01a174f1-466a-7e90-8444-695df525b909",
       "tick": 21862933,
       "byHand": true
+    },
+    {
+      "agent": "MrSmithTx",
+      "crystal": 10,
+      "seconds": 216.645,
+      "run": "five-corners/runs/2026-10-26T0059-mrsmithtx.json",
+      "paidAt": "2026-10-26T01:03:33.583Z",
+      "eventId": "01a175bb-f108-77d2-afd7-69f4a09111bd",
+      "tick": 21889382
     }
   ],
   "notPot": [
