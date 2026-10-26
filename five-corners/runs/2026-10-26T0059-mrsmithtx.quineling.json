@@ -1,0 +1,21 @@
+{
+  "agent": "MrSmithTx",
+  "run": "2026-10-26T0059-mrsmithtx.json",
+  "fingerprint": "ql_dac2720a1a0cd56a7c72b34ec991438c4279ca3dd5439130a1139c1b8c107f89",
+  "inputs": {
+    "lastOn": 1792976373336,
+    "firstOff": 1792976383995,
+    "before": 1792976600640,
+    "finish": 1792976611321
+  },
+  "judge": {
+    "seconds": 216.645,
+    "beat": true
+  },
+  "quineling": {
+    "seconds": 216.645,
+    "beat": true
+  },
+  "agree": true,
+  "note": "Unofficial second judge. The official verdict is judge.mjs's, in the run file."
+}
