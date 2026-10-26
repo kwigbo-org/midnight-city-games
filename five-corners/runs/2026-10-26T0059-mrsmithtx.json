@@ -1,0 +1,29 @@
+{
+  "agent": "MrSmithTx",
+  "status": "at the start",
+  "result": {
+    "started": false,
+    "onStartTile": true,
+    "finished": false
+  },
+  "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
+  "readings": [
+    {
+      "t": "2026-10-26T00:59:16.891Z",
+      "tick": 21888870,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 79,
+        "y": 61
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    }
+  ]
+}
