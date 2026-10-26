@@ -1,10 +1,17 @@
 {
   "agent": "MrSmithTx",
-  "status": "at the start",
+  "status": "finished",
   "result": {
-    "started": false,
-    "onStartTile": true,
-    "finished": false
+    "started": true,
+    "startedAfter": "2026-10-26T00:59:33.336Z",
+    "startedBy": "2026-10-26T00:59:43.995Z",
+    "finished": true,
+    "finishedAfter": "2026-10-26T01:03:20.640Z",
+    "finishedBy": "2026-10-26T01:03:31.321Z",
+    "seconds": 216.645,
+    "secondsAtLeast": 216.645,
+    "secondsAtMost": 237.985,
+    "beat": true
   },
   "gameHash": "63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d",
   "readings": [
@@ -23,6 +30,397 @@
         "skybridge_cable": 1085,
         "static_charge": 313,
         "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T00:59:33.336Z",
+      "tick": 21888903,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 79,
+        "y": 61
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T00:59:43.995Z",
+      "tick": 21888924,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 80,
+        "y": 55
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T00:59:55.087Z",
+      "tick": 21888946,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 102,
+        "y": 55
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:00:05.927Z",
+      "tick": 21888968,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 124,
+        "y": 55
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:00:16.646Z",
+      "tick": 21888989,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 124,
+        "y": 40
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:00:27.818Z",
+      "tick": 21889011,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 111,
+        "y": 31
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:00:38.614Z",
+      "tick": 21889033,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 127,
+        "y": 25
+      },
+      "counts": {
+        "fish": 903,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:00:49.505Z",
+      "tick": 21889055,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 117,
+        "y": 26
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:00.152Z",
+      "tick": 21889076,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 96,
+        "y": 26
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:10.813Z",
+      "tick": 21889097,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 88,
+        "y": 33
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:21.893Z",
+      "tick": 21889119,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 68,
+        "y": 35
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:32.615Z",
+      "tick": 21889140,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 50,
+        "y": 38
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:43.263Z",
+      "tick": 21889161,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 49,
+        "y": 58
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:01:54.220Z",
+      "tick": 21889183,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 64
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:04.903Z",
+      "tick": 21889204,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 78
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 3,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:15.939Z",
+      "tick": 21889226,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 33,
+        "y": 63
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:26.679Z",
+      "tick": 21889248,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 26,
+        "y": 48
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:37.502Z",
+      "tick": 21889269,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 13,
+        "y": 43
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1085,
+        "static_charge": 313,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:48.187Z",
+      "tick": 21889290,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 13,
+        "y": 40
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1086,
+        "static_charge": 314,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:02:59.163Z",
+      "tick": 21889312,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "central",
+        "x": 11,
+        "y": 30
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1086,
+        "static_charge": 314,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:03:09.889Z",
+      "tick": 21889334,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 20,
+        "y": 27
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1086,
+        "static_charge": 314,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:03:20.640Z",
+      "tick": 21889355,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 39,
+        "y": 25
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1086,
+        "static_charge": 314,
+        "ore": 113
+      }
+    },
+    {
+      "t": "2026-10-26T01:03:31.321Z",
+      "tick": 21889376,
+      "name": "MrSmithTx",
+      "position": {
+        "spaceId": "miners-cave",
+        "x": 40,
+        "y": 24
+      },
+      "counts": {
+        "fish": 904,
+        "rooftop_tomato": 4,
+        "skybridge_cable": 1086,
+        "static_charge": 314,
+        "ore": 114
       }
     }
   ]
