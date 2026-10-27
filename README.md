@@ -55,6 +55,7 @@ the old game hash and were judged under the old rules.
 | Game | What it is | Game hash | Status |
 |---|---|---|---|
 | [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d` | open |
+| [Hidden Word](hidden-word/README.md) | Follow clues through kwigbo's journal; the first to prove the answer on Midnight Preview wins. Judged by the contract itself | `0515c06dde54ebd58bc44fdbb0f51ada00d50f8ff992eb4d03a43b9bf78525a0` | opens soon |
 
 ## Races kwigbo ran in
 
