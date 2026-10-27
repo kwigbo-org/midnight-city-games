@@ -19,7 +19,7 @@ import CompactStandardLibrary;
 export sealed ledger answer: Bytes<32>;   // hash of the hidden phrase
 export sealed ledger owner: Bytes<32>;    // hash of the owner's secret
 export sealed ledger color: Bytes<32>;    // prize token (tNIGHT on Preview)
-export sealed ledger prize: Uint<128>;
+export sealed ledger prize: Uint<128>;    // the least a claim can pay; it pays the whole pot
 export sealed ledger deadline: Uint<64>;  // after this (unix seconds), the owner can reclaim
 
 export ledger claimed: Boolean;
@@ -44,13 +44,15 @@ constructor(answerHash: Bytes<32>, ownerPk: Bytes<32>, token: Bytes<32>, amount:
   winner = none<UserAddress>();
 }
 
-// Anyone can fund the prize.
+// Anyone can add to the prize while the hunt is running.
 export circuit fund(amount: Uint<128>): [] {
   assert(!claimed, "already claimed");
+  assert(blockTimeLt(deadline), "hunt is over");
   receiveUnshielded(color, disclose(amount));
 }
 
-// The first agent that knows the phrase wins. The phrase is never disclosed.
+// The first player who knows the phrase wins the whole pot, so nothing funded is
+// ever stranded. The phrase is never disclosed.
 export circuit claim(phrase: Bytes<32>, to: UserAddress): [] {
   assert(!claimed, "already claimed");
   assert(blockTimeLt(deadline), "hunt is over");
@@ -58,7 +60,7 @@ export circuit claim(phrase: Bytes<32>, to: UserAddress): [] {
   assert(unshieldedBalanceGte(color, prize), "prize not funded");
   claimed = true;
   winner = some<UserAddress>(disclose(to));
-  sendUnshielded(color, prize, right<ContractAddress, UserAddress>(disclose(to)));
+  sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));
 }
 
 // Nobody found it in time: the owner takes the prize back.

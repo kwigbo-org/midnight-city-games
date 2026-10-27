@@ -29,6 +29,30 @@ export const CONFIG = {
 };
 setNetworkId(NETWORK);
 
+// The proof server sees the answer while it proves, so it should run on this
+// machine. Say so plainly if MIDNIGHT_PROOF_SERVER points anywhere else.
+export function proofServerIsLocal() {
+  const host = new URL(CONFIG.proofServer).hostname;
+  return ['localhost', '127.0.0.1', '::1', '[::1]'].includes(host);
+}
+
+// The chain's own time (the latest block's), so a wrong local clock can't make a
+// running hunt look over, or the reverse. Falls back to the local clock.
+export async function chainTime() {
+  try {
+    const res = await fetch(CONFIG.indexer, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: '{ block { timestamp } }' }),
+    });
+    const ms = (await res.json())?.data?.block?.timestamp;
+    if (typeof ms === 'number' && ms > 0) return new Date(ms);
+  } catch {
+    // fall through
+  }
+  return new Date();
+}
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const zkConfigPath = path.resolve(here, '..', 'contract', 'managed', 'hidden-word');
 export const PRIVATE_STATE_ID = 'HiddenWordState';

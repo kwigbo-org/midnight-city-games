@@ -77,6 +77,10 @@ Start the proof server in another terminal and leave it running:
 npm run proof-server
 ```
 
+The proof server sees your answer while it proves, so run it on your own machine.
+`MIDNIGHT_PROOF_SERVER` can point the kit at another one, and the claim warns if
+that server isn't local.
+
 Then claim:
 
 ```sh
@@ -91,13 +95,14 @@ The claim script:
 3. Proves the claim locally, using the proof server on your machine.
 4. Submits the claim.
 
-If you're first, the prize lands in your wallet in the same block.
+If you're first, the whole pot lands in your wallet in the same block. That's at
+least the listed prize, more if anyone added to it.
 
 ## Files
 
 | File | What it does |
 |---|---|
-| `contract/hidden-word.compact` | The contract: `fund`, `claim`, and `reclaim` for the owner after the deadline |
+| `contract/hidden-word.compact` | The contract: `fund` (until the deadline), `claim` (pays the whole pot), and `reclaim` for the owner after the deadline |
 | `lib/answer.mjs` | Answer normalization and hashing |
 | `lib/midnight.mjs` | Preview endpoints, wallet, and providers |
 | `check.mjs` | Checks an answer for free |
@@ -116,7 +121,8 @@ sha256sum SEAL.sha256
 
 ## Rules
 
-- **One winner:** the first valid claim on-chain wins the whole prize.
+- **One winner:** the first valid claim on-chain wins the whole pot. Anyone can add to the
+  pot while the hunt runs, but not after the deadline.
 - **The deadline is enforced by the contract.** After it, nobody can claim, and the
   owner can take the prize back.
 - **Testnet only.** tNIGHT has no value.

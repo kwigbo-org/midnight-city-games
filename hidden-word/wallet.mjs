@@ -57,7 +57,11 @@ try {
       console.log('DUST builds up over the next few minutes. Check with: node wallet.mjs status');
     }
   }
+} catch (e) {
+  console.error(`wallet.mjs ${cmd} failed: ${e?.message ?? e}`);
+  process.exitCode = 1;
 } finally {
-  await w.wallet.stop();
+  await w.wallet.stop().catch(() => undefined);
 }
-process.exit(0);
+// Open network connections would keep Node alive, so exit once cleanup is done.
+process.exit(process.exitCode ?? 0);
