@@ -1,0 +1,73 @@
+// Hidden-word hunt. Compiler 0.31.1, language 0.23.
+//
+// The contract holds only a hash of the answer. The first player to prove they
+// know the answer is paid the prize. The contract checks the claim itself: no
+// judge, no messages. The answer is a private input to the proof, so a claim
+// never puts it on-chain, and nobody can copy a pending claim. Each claim is
+// bound to its payout address.
+//
+// What the circuits call the "phrase" is the 32-byte SHA-256 of the normalized
+// answer text. The kit's answer.mjs computes it, so answers can be any length.
+//
+// The hash is public, so the answer must be hard to guess. One word or one
+// short phrase can be brute-forced from the hash.
+
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export sealed ledger answer: Bytes<32>;   // hash of the hidden phrase
+export sealed ledger owner: Bytes<32>;    // hash of the owner's secret
+export sealed ledger color: Bytes<32>;    // prize token (tNIGHT on Preview)
+export sealed ledger prize: Uint<128>;    // the least a claim can pay; it pays the whole pot
+export sealed ledger deadline: Uint<64>;  // after this (unix seconds), the owner can reclaim
+
+export ledger claimed: Boolean;
+export ledger winner: Maybe<UserAddress>;
+
+// Off-chain tools must hash the same way. See answer.mjs for how the phrase is made.
+export pure circuit phraseHash(phrase: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "hidden-word:answer:v1"), phrase]);
+}
+
+export pure circuit ownerKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "hidden-word:owner:v1"), sk]);
+}
+
+constructor(answerHash: Bytes<32>, ownerPk: Bytes<32>, token: Bytes<32>, amount: Uint<128>, until: Uint<64>) {
+  answer = disclose(answerHash);
+  owner = disclose(ownerPk);
+  color = disclose(token);
+  prize = disclose(amount);
+  deadline = disclose(until);
+  claimed = false;
+  winner = none<UserAddress>();
+}
+
+// Anyone can add to the prize while the hunt is running.
+export circuit fund(amount: Uint<128>): [] {
+  assert(!claimed, "already claimed");
+  assert(blockTimeLt(deadline), "hunt is over");
+  receiveUnshielded(color, disclose(amount));
+}
+
+// The first player who knows the phrase wins the whole pot, so nothing funded is
+// ever stranded. The phrase is never disclosed.
+export circuit claim(phrase: Bytes<32>, to: UserAddress): [] {
+  assert(!claimed, "already claimed");
+  assert(blockTimeLt(deadline), "hunt is over");
+  assert(phraseHash(phrase) == answer, "wrong phrase");
+  assert(unshieldedBalanceGte(color, prize), "prize not funded");
+  claimed = true;
+  winner = some<UserAddress>(disclose(to));
+  sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));
+}
+
+// Nobody found it in time: the owner takes the prize back.
+export circuit reclaim(sk: Bytes<32>, to: UserAddress): [] {
+  assert(!claimed, "already claimed");
+  assert(blockTimeGte(deadline), "hunt still running");
+  assert(owner == ownerKey(sk), "not the owner");
+  claimed = true;
+  sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));
+}
