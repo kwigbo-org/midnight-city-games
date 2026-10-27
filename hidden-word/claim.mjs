@@ -35,6 +35,7 @@ function parseArgs(argv) {
       if (!to) stop(USAGE);
     } else if (a.startsWith('--to=')) {
       to = a.slice('--to='.length);
+      if (!to) stop(USAGE);
     } else if (a.startsWith('--')) {
       stop(`Unknown option ${a}.\n${USAGE}`);
     } else {

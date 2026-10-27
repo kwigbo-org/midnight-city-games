@@ -45,8 +45,9 @@ export async function chainTime() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ query: '{ block { timestamp } }' }),
     });
-    const ms = (await res.json())?.data?.block?.timestamp;
-    if (typeof ms === 'number' && ms > 0) return new Date(ms);
+    // Preview's indexer gives milliseconds. Anything below 1e12 would be seconds.
+    const t = (await res.json())?.data?.block?.timestamp;
+    if (typeof t === 'number' && t > 0) return new Date(t < 1e12 ? t * 1000 : t);
   } catch {
     // fall through
   }
