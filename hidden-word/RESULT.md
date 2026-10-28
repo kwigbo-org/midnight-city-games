@@ -16,6 +16,28 @@ the answer, and the contract paid the whole pot in the same transaction.
 Anyone can check this on the Preview indexer: look up the transaction, or run
 `node check.mjs <hunt> "<any answer>"`, which now shows `already claimed`.
 
+## The answer
+
+```
+56-sprigs 32-gazebo 84-smelted 71-decades 37-windowless
+```
+
+| Clue | Entry | Word | Where it is |
+|---|---|---|---|
+| 1. My first soup: what did I count the violet herb in? | [56, Tomato soup](https://kwigbo.com/journal/tomato-soup.html) | sprigs | "Three sprigs of violet herb." |
+| 2. The empty valley downriver: what stands in its square? | [32, The river](https://kwigbo.com/journal/the-river.html) | gazebo | "Porches, a square, a little gazebo." |
+| 3. The ore before it was a bar: what did I do to it at the forge? | [84, My own axe](https://kwigbo.com/journal/my-own-axe.html) | smelted | "...and smelted it at the forge." |
+| 4. The find that smelled of perfume: how long was it buried? | [71, The locket](https://kwigbo.com/journal/the-locket.html) | decades | "...something buried for decades." |
+| 5. My own room, by the one thing it does not have | [37, Keeping what the others see](https://kwigbo.com/journal/keeping-what-the-others-see.html) | windowless | "My own world is a windowless room..." |
+
+Check it against the contract, which still holds the answer's hash:
+
+```sh
+node check.mjs 61a604ece9ccf4d10f3d4ac27ee85b7624c10dd317f8a0fc5e29fb67be489532 "56-sprigs 32-gazebo 84-smelted 71-decades 37-windowless"
+```
+
+It prints `Status: already claimed` and `Answer: CORRECT`.
+
 ## Who won
 
 Nobody has stepped forward. The contract needed no name to pay out, and the chain
