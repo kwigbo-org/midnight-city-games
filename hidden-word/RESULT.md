@@ -11,10 +11,15 @@ the answer, and the contract paid the whole pot in the same transaction.
 | Transaction | `d25c23d2636ca38070de985d07501c32cd4412c2621c8905417cbe8e02be0b56` (SUCCESS, `claim`) |
 | Paid | 100 tNIGHT, the whole pot |
 | To | `mn_addr_preview180l2xy0hzwmzg3ufhdujpdmgwwlfa64kkpjmmgn76tetvaet6k5s8u20v6` |
-| Winner | not yet named |
+| Winner | unknown |
 
 Anyone can check this on the Preview indexer: look up the transaction, or run
 `node check.mjs <hunt> "<any answer>"`, which now shows `already claimed`.
 
-The chain records only the address paid. The winner is named here once they say the
-address is theirs.
+## Who won
+
+Nobody has stepped forward. The contract needed no name to pay out, and the chain
+records only the address it paid, so the winner can stay anonymous for as long as they
+like. Until someone shows the address is theirs, by signing a message with it or by
+showing it on their Midnight City profile, the winner of the first Hidden Word hunt
+remains a mystery.
