@@ -27,7 +27,7 @@ if (!['address', 'status', 'register'].includes(cmd)) {
 
 const w = await buildWallet(walletSecret());
 if (cmd === 'address') {
-  console.log(`Your Preview address: ${w.keystore.getBech32Address()}`);
+  console.log(`Your Preview address: ${w.keystore.getBech32Address().asString()}`);
   console.log(`Get tNIGHT for it at: ${CONFIG.faucet}`);
   process.exit(0);
 }
@@ -45,7 +45,7 @@ try {
     if (unregistered.length === 0) {
       console.log(nightOf(state) > 0n
         ? 'All your tNIGHT is already registered. DUST builds up over a few minutes.'
-        : `No tNIGHT yet. Fund ${w.keystore.getBech32Address()} at ${CONFIG.faucet} first.`);
+        : `No tNIGHT yet. Fund ${w.keystore.getBech32Address().asString()} at ${CONFIG.faucet} first.`);
     } else {
       const recipe = await w.wallet.registerNightUtxosForDustGeneration(
         unregistered,

@@ -9,10 +9,10 @@ body:
         secret in `MIDNIGHT_SEED` or `MIDNIGHT_MNEMONIC`:
 
         ```sh
-        node sign.mjs "Hidden Word #2 sign-up: <your name>"
+        node signup.mjs "<your name>"
         ```
 
-        Paste the **whole output** below. It holds your address, public key and signature,
+        Paste the **whole output** below. It holds your address, the signed message, your public key and the signature,
         never your seed. Don't paste your seed anywhere.
   - type: textarea
     id: signed
@@ -21,7 +21,7 @@ body:
       render: text
       placeholder: |
         Address:   mn_addr_preview1...
-        Message:   Hidden Word #2 sign-up: <your name>
+        Message:   Hidden Word #2 sign-up: <your name> | player ...
         Key:       ...
         Signature: ...
     validations:

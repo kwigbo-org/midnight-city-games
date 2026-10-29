@@ -1,7 +1,7 @@
 // Network config, the compiled contract, and wallet plumbing shared by the scripts.
 // Midnight Preview (testnet) only.
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { WebSocket } from 'ws';
@@ -85,7 +85,24 @@ export async function readHunt(address) {
   const { ledger } = await loadContract();
   const state = await publicData().queryContractState(address);
   if (!state) throw new Error(`No contract found at ${address} on ${NETWORK}.`);
-  return ledger(state.data);
+  // The ledger decodes each field when it's read, so touch the newest one here.
+  try {
+    const hunt = ledger(state.data);
+    hunt.players.size();
+    return hunt;
+  } catch {
+    throw new Error(`The contract at ${address} isn't a hunt this kit can read. Hunt #1 needs the kit at this repo's hidden-word-1 tag.`);
+  }
+}
+
+// What players sign to sign up for the current hunt. The issue template's title matches.
+export const SIGNUP = 'Hidden Word #2 sign-up';
+
+// A player's secret, derived from their wallet's own key, so there's nothing extra to
+// keep. Only its commitment (the contract's playerKey) is ever published; a claim
+// proves the secret without revealing it.
+export function playerSecret(keystore) {
+  return new Uint8Array(createHash('sha256').update('hidden-word:player-secret:v1').update(keystore.getSecretKey()).digest());
 }
 
 // The wallet secret comes from the environment, never from the command line,
@@ -191,6 +208,7 @@ export async function saveWalletState(w) {
       dust: await w.wallet.dust.serializeState(),
     };
     mkdirSync(stateDir, { recursive: true, mode: 0o700 });
+    chmodSync(stateDir, 0o700); // mkdir leaves an existing directory's mode alone
     const tmp = `${w.stateFile}.tmp`;
     writeFileSync(tmp, JSON.stringify(saved), { mode: 0o600 });
     renameSync(tmp, w.stateFile);

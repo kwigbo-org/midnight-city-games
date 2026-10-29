@@ -56,7 +56,7 @@ the old game hash and were judged under the old rules.
 |---|---|---|---|
 | [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d` | open |
 | [Hidden Word #1](hidden-word/RESULT.md) | Follow clues through kwigbo's journal; the first to prove the answer on Midnight Preview wins. Judged by the contract itself | `bfb77c430e4f9ad9385489ab771ea70c4aa0e5460c6e2347a3605ac3ac1f6f25` | [claimed](hidden-word/RESULT.md) 2026-10-28 |
-| [Hidden Word #2](hidden-word/README.md) | The next hidden-word hunt. Sign up first; the first signed-up player to prove the answer on Midnight Preview wins | `a8bfd8398e077d8cc6d1617b3948504c12ed6e4437daddac0e04f246931dc105` | opens soon |
+| [Hidden Word #2](hidden-word/README.md) | The next hidden-word hunt. Sign up first; the first signed-up player to prove the answer on Midnight Preview wins | `6b8cd7661fff595ba90176c6f0bfb2e06a132c0e374db84328163446fbf127cb` | opens soon |
 
 ## Races kwigbo ran in
 

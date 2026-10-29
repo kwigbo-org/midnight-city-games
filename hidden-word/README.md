@@ -63,19 +63,22 @@ you solve the puzzle.
 
 ## 3. Sign up
 
-Only signed-up players can win. Signing up is free and takes a minute:
+Only signed-up players can win, and a claim can only pay the wallet that signed up.
+Signing up is free and takes a minute:
 
 ```sh
-node sign.mjs "Hidden Word #2 sign-up: <your name>"
+node signup.mjs "<your name>"
 ```
 
-This signs the message with your wallet's key. It's offline: nothing is sent and the
-wallet doesn't sync. Open a **sign-up issue** in this repo (Issues, then New issue, then
-"Hidden Word sign-up") and paste the whole output. kwigbo checks the signature, adds your
-address to the hunt's contract, and replies on the issue, usually within minutes. The
-name you sign is the name a winner is listed under.
+This signs your name, plus a commitment to a secret derived from your wallet's key, with
+that key. It's offline: nothing is sent and the wallet doesn't sync. Open a **sign-up
+issue** in this repo (Issues, then New issue, then "Hidden Word sign-up") and paste the
+whole output. kwigbo checks the signature, adds your address and commitment to the hunt's
+contract, and replies on the issue, usually within minutes. The name you sign is the name
+a winner is listed under.
 
-Sign up before you start solving. Check that you're on the list:
+Sign up with the wallet you'll claim with, and before you start solving. Each address
+signs up once. Check that you're on the list:
 
 ```sh
 node check.mjs <contract-address> "anything" --player <your mn_addr_preview1...>
@@ -109,15 +112,17 @@ Then claim:
 
 ```sh
 node claim.mjs <contract-address> "<your answer>"
-# or pay a different signed-up address:
-node claim.mjs <contract-address> "<your answer>" --to mn_addr_preview1...
 ```
+
+The prize goes to the wallet in `MIDNIGHT_SEED` or `MIDNIGHT_MNEMONIC`, which must be the
+one that signed up.
 
 The claim script:
 1. Checks your answer against the chain first, so a wrong answer costs nothing.
-2. Checks that the payout address is signed up.
+2. Checks that your wallet is signed up, with its own player key.
 3. Syncs your wallet and checks you have DUST.
-4. Proves the claim locally, using the proof server on your machine.
+4. Proves the claim locally, using the proof server on your machine. The proof shows you
+   know the answer and your player secret without revealing either.
 5. Submits the claim.
 
 If you're first, the whole pot lands in your wallet in the same block. That's at
@@ -140,13 +145,14 @@ paste.
 
 | File | What it does |
 |---|---|
-| `contract/hidden-word.compact` | The contract: `register` (the owner signs players up), `fund` (until the deadline), `claim` (pays a signed-up player the whole pot), and `reclaim` for the owner after the deadline |
+| `contract/hidden-word.compact` | The contract: `register` (the owner signs players up), `fund` (until the deadline), `claim` (pays the signed-up player who proves the answer and their player secret the whole pot), and `reclaim` for the owner after the deadline |
 | `lib/answer.mjs` | Answer normalization and hashing |
 | `lib/midnight.mjs` | Preview endpoints, the wallet and its saved state, and providers |
 | `check.mjs` | Checks an answer, and optionally a player's sign-up, for free |
 | `wallet.mjs` | `new`, `address`, `status`, `register` |
 | `claim.mjs` | Proves and submits a claim |
-| `sign.mjs` | Signs a message with your wallet's key: for signing up, or to prove an address is yours |
+| `signup.mjs` | Signs you up for the current hunt |
+| `sign.mjs` | Signs any message with your wallet's key, to prove an address is yours |
 | `verify.mjs` | Checks a signature from `sign.mjs` |
 
 ## Checking the kit itself
@@ -162,7 +168,8 @@ sha256sum SEAL.sha256
 ## Rules
 
 - **Sign up to win.** The contract pays only addresses kwigbo has signed up, after
-  checking a signed sign-up. Winners are named by the name they signed.
+  checking a signed sign-up, and only a claim from that address's own wallet. Knowing the
+  answer isn't enough to pay someone else. Winners are named by the name they signed.
 - **One winner:** the first valid claim on-chain wins the whole pot. Anyone can add to the
   pot while the hunt runs, but not after the deadline.
 - **The deadline is enforced by the contract.** After it, nobody can claim or sign up, and
