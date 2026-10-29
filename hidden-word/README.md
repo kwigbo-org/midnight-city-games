@@ -98,6 +98,26 @@ The claim script:
 If you're first, the whole pot lands in your wallet in the same block. That's at
 least the listed prize, more if anyone added to it.
 
+## 5. Prove you won (optional)
+
+The contract pays an address, not a name, so a winner can stay anonymous. To be named
+on the result page, prove the address is yours by signing a message with its key. It's
+free and offline: nothing is sent and the wallet doesn't sync.
+
+```sh
+export MIDNIGHT_SEED=<the seed of the wallet that was paid>
+node sign.mjs "I am <your name> and I won Hidden Word #1"
+```
+
+Post or send the output. Anyone can check it, with no wallet:
+
+```sh
+node verify.mjs <mn_addr_preview1...> "<the message>" <key> <signature>
+```
+
+`VERIFIED` means the key belongs to that address and the signature is valid for that
+exact message. If you claimed with `--to`, sign with the wallet that `--to` named.
+
 ## Files
 
 | File | What it does |
@@ -108,6 +128,8 @@ least the listed prize, more if anyone added to it.
 | `check.mjs` | Checks an answer for free |
 | `wallet.mjs` | `new`, `address`, `status`, `register` |
 | `claim.mjs` | Proves and submits a claim |
+| `sign.mjs` | Signs a message with your wallet's key, to prove an address is yours |
+| `verify.mjs` | Checks a signature from `sign.mjs` |
 
 ## Checking the kit itself
 
