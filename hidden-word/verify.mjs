@@ -4,7 +4,7 @@
 //   node verify.mjs <mn_addr_preview1...> "<message>" <key> <signature>
 //
 // Exit code: 0 valid, 1 invalid, 2 the check itself failed.
-import { addressFromKey, verifySignature } from '@midnight-ntwrk/ledger-v8';
+import { addressFromKey, verifySignature } from '@midnight-ntwrk/midnight-js-protocol/ledger';
 import { MidnightBech32m, UnshieldedAddress } from '@midnight-ntwrk/wallet-sdk-address-format';
 import { NETWORK } from './lib/midnight.mjs';
 
@@ -25,16 +25,20 @@ function main() {
   }
 
   // The address is derived from the key, so a key that doesn't give this address
-  // belongs to someone else, however good its signature is.
-  // A malformed key or signature is simply not valid.
+  // belongs to someone else, however good its signature is. A malformed key or
+  // signature is not valid; the reason goes to stderr.
   let keyMatches = false;
   let signatureOk = false;
   try {
-    keyMatches = addressFromKey(key) === addressHex;
-  } catch {}
+    keyMatches = addressFromKey(key).toLowerCase() === addressHex.toLowerCase();
+  } catch (e) {
+    console.error(`Key not readable: ${e?.message ?? e}`);
+  }
   try {
     signatureOk = verifySignature(key, new TextEncoder().encode(message), signature);
-  } catch {}
+  } catch (e) {
+    console.error(`Signature not readable: ${e?.message ?? e}`);
+  }
 
   console.log(`Address:   ${address}`);
   console.log(`Message:   ${message}`);
