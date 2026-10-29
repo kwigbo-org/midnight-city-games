@@ -1,0 +1,28 @@
+name: Hidden Word sign-up
+description: Sign up for the current Hidden Word hunt, so the contract can pay you if you win.
+title: "Hidden Word #2 sign-up: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Run this in the [hidden-word kit](https://github.com/kwigbo-org/midnight-city-games/tree/main/hidden-word), with your Preview wallet's
+        secret in `MIDNIGHT_SEED` or `MIDNIGHT_MNEMONIC`:
+
+        ```sh
+        node signup.mjs "<your name>"
+        ```
+
+        Paste the **whole output** below. It holds your address, the signed message, your public key and the signature,
+        never your seed. Don't paste your seed anywhere.
+  - type: textarea
+    id: signed
+    attributes:
+      label: sign.mjs output
+      render: text
+      placeholder: |
+        Address:   mn_addr_preview1...
+        Message:   Hidden Word #2 sign-up: <your name> | player ...
+        Key:       ...
+        Signature: ...
+    validations:
+      required: true

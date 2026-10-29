@@ -11,6 +11,12 @@
 //
 // The hash is public, so the answer must be hard to guess. One word or one
 // short phrase can be brute-forced from the hash.
+//
+// Only signed-up players can win, and only to their own address. A player signs up
+// off-chain with a signed message (signup.mjs) holding a commitment to a secret
+// derived from their wallet's key. The owner verifies the signature and registers the
+// address with that commitment. A claim must prove the secret, so the answer alone
+// can't pay a player who didn't claim it themselves, and every winner is a named player.
 
 pragma language_version 0.23;
 
@@ -24,6 +30,7 @@ export sealed ledger deadline: Uint<64>;  // after this (unix seconds), the owne
 
 export ledger claimed: Boolean;
 export ledger winner: Maybe<UserAddress>;
+export ledger players: Map<UserAddress, Bytes<32>>;  // signed-up address -> playerKey(secret)
 
 // Off-chain tools must hash the same way. See answer.mjs for how the phrase is made.
 export pure circuit phraseHash(phrase: Bytes<32>): Bytes<32> {
@@ -32,6 +39,10 @@ export pure circuit phraseHash(phrase: Bytes<32>): Bytes<32> {
 
 export pure circuit ownerKey(sk: Bytes<32>): Bytes<32> {
   return persistentHash<Vector<2, Bytes<32>>>([pad(32, "hidden-word:owner:v1"), sk]);
+}
+
+export pure circuit playerKey(secret: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "hidden-word:player:v1"), secret]);
 }
 
 constructor(answerHash: Bytes<32>, ownerPk: Bytes<32>, token: Bytes<32>, amount: Uint<128>, until: Uint<64>) {
@@ -51,13 +62,26 @@ export circuit fund(amount: Uint<128>): [] {
   receiveUnshielded(color, disclose(amount));
 }
 
-// The first player who knows the phrase wins the whole pot, so nothing funded is
-// ever stranded. The phrase is never disclosed.
-export circuit claim(phrase: Bytes<32>, to: UserAddress): [] {
+// The owner registers a player whose signed sign-up checked out, with the
+// commitment the player signed. A player signs up once.
+export circuit register(sk: Bytes<32>, player: UserAddress, commitment: Bytes<32>): [] {
+  assert(!claimed, "already claimed");
+  assert(blockTimeLt(deadline), "hunt is over");
+  assert(owner == ownerKey(sk), "not the owner");
+  assert(!players.member(disclose(player)), "already signed up");
+  players.insert(disclose(player), disclose(commitment));
+}
+
+// The first signed-up player who knows the phrase wins the whole pot, so nothing
+// funded is ever stranded. The claim proves the player's secret, so only the player
+// can be paid. The phrase and the secret are never disclosed.
+export circuit claim(phrase: Bytes<32>, to: UserAddress, secret: Bytes<32>): [] {
   assert(!claimed, "already claimed");
   assert(blockTimeLt(deadline), "hunt is over");
   assert(phraseHash(phrase) == answer, "wrong phrase");
   assert(unshieldedBalanceGte(color, prize), "prize not funded");
+  assert(players.member(disclose(to)), "not signed up");
+  assert(players.lookup(disclose(to)) == playerKey(secret), "not this player");
   claimed = true;
   winner = some<UserAddress>(disclose(to));
   sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));
