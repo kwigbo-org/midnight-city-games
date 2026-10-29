@@ -6,6 +6,8 @@
 // is checked against the chain first, so a wrong answer costs nothing. The answer
 // stays on your machine: the proof shows you know it without revealing it.
 //
+// Only a signed-up address can be paid (see the README's "Sign up").
+//
 // Needs: the wallet secret in MIDNIGHT_SEED or MIDNIGHT_MNEMONIC, DUST in that
 // wallet for the fee (see wallet.mjs), and a proof server on localhost:6300.
 import { submitCallTx } from '@midnight-ntwrk/midnight-js-contracts';
@@ -86,7 +88,12 @@ async function main() {
       }
     }
     const to = { bytes: encodeUserAddress(toHex) };
-    console.log(`The prize goes to: ${toArg ?? w.keystore.getBech32Address()}`);
+    const toAddress = toArg ?? w.keystore.getBech32Address().asString();
+    if (!hunt.players.member(to)) {
+      stop(`${toAddress} is not signed up for this hunt, so the contract can't pay it.\n` +
+        'Sign up first (see the README), or claim to a signed-up address with --to.');
+    }
+    console.log(`The prize goes to: ${toAddress} (signed up)`);
 
     // 3. Sync the wallet and make sure it can pay the fee.
     const state = await startAndSync(w);

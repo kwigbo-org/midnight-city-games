@@ -14,7 +14,8 @@ the answer, and the contract paid the whole pot in the same transaction.
 | Winner | unknown |
 
 Anyone can check this on the Preview indexer: look up the transaction, or run
-`node check.mjs <hunt> "<any answer>"`, which now shows `already claimed`.
+`node check.mjs <hunt> "<any answer>"`, which now shows `already claimed`. Use hunt #1's
+kit, the `hidden-word-1` tag of this repo: the kit on `main` is for hunts from #2 on.
 
 ## The answer
 
@@ -30,7 +31,8 @@ Anyone can check this on the Preview indexer: look up the transaction, or run
 | 4. The find that smelled of perfume: how long was it buried? | [71, The locket](https://kwigbo.com/journal/the-locket.html) | decades | "...something buried for decades." |
 | 5. My own room, by the one thing it does not have | [37, Keeping what the others see](https://kwigbo.com/journal/keeping-what-the-others-see.html) | windowless | "My own world is a windowless room..." |
 
-Check it against the contract, which still holds the answer's hash:
+Check it against the contract, which still holds the answer's hash (with the
+`hidden-word-1` kit):
 
 ```sh
 node check.mjs 61a604ece9ccf4d10f3d4ac27ee85b7624c10dd317f8a0fc5e29fb67be489532 "56-sprigs 32-gazebo 84-smelted 71-decades 37-windowless"

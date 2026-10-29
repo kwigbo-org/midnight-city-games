@@ -11,6 +11,10 @@
 //
 // The hash is public, so the answer must be hard to guess. One word or one
 // short phrase can be brute-forced from the hash.
+//
+// Only signed-up players can win. Players sign up off-chain with a signed message
+// (sign.mjs). The owner verifies it and registers the player's address here, so
+// every winner is a known, named player.
 
 pragma language_version 0.23;
 
@@ -24,6 +28,7 @@ export sealed ledger deadline: Uint<64>;  // after this (unix seconds), the owne
 
 export ledger claimed: Boolean;
 export ledger winner: Maybe<UserAddress>;
+export ledger players: Set<UserAddress>;  // signed-up addresses; only these can be paid
 
 // Off-chain tools must hash the same way. See answer.mjs for how the phrase is made.
 export pure circuit phraseHash(phrase: Bytes<32>): Bytes<32> {
@@ -51,13 +56,22 @@ export circuit fund(amount: Uint<128>): [] {
   receiveUnshielded(color, disclose(amount));
 }
 
-// The first player who knows the phrase wins the whole pot, so nothing funded is
-// ever stranded. The phrase is never disclosed.
+// The owner registers a player whose signed sign-up checked out.
+export circuit register(sk: Bytes<32>, player: UserAddress): [] {
+  assert(!claimed, "already claimed");
+  assert(blockTimeLt(deadline), "hunt is over");
+  assert(owner == ownerKey(sk), "not the owner");
+  players.insert(disclose(player));
+}
+
+// The first signed-up player who knows the phrase wins the whole pot, so nothing
+// funded is ever stranded. The phrase is never disclosed.
 export circuit claim(phrase: Bytes<32>, to: UserAddress): [] {
   assert(!claimed, "already claimed");
   assert(blockTimeLt(deadline), "hunt is over");
   assert(phraseHash(phrase) == answer, "wrong phrase");
   assert(unshieldedBalanceGte(color, prize), "prize not funded");
+  assert(players.member(disclose(to)), "not signed up");
   claimed = true;
   winner = some<UserAddress>(disclose(to));
   sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));

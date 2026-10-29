@@ -1,5 +1,7 @@
 // Network config, the compiled contract, and wallet plumbing shared by the scripts.
 // Midnight Preview (testnet) only.
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { WebSocket } from 'ws';
@@ -13,6 +15,10 @@ import { NodeZkConfigProvider } from '@midnight-ntwrk/midnight-js-node-zk-config
 import { levelPrivateStateProvider } from '@midnight-ntwrk/midnight-js-level-private-state-provider';
 import { ttlOneHour } from '@midnight-ntwrk/midnight-js-utils';
 import { FluentWalletBuilder } from '@midnight-ntwrk/testkit-js';
+import {
+  DustWallet, InMemoryTransactionHistoryStorage, ShieldedWallet, UnshieldedWallet, WalletEntrySchema, WalletFacade,
+  mergeWalletEntries,
+} from '@midnight-ntwrk/wallet-sdk';
 
 // The indexer client needs a global WebSocket.
 globalThis.WebSocket = WebSocket;
@@ -107,21 +113,90 @@ const env = {
   proofServer: CONFIG.proofServer,
 };
 
-// Build an un-started wallet from the secret.
+const DUST_OPTIONS = {
+  ledgerParams: LedgerParameters.initialParameters(),
+  additionalFeeOverhead: 1_000n,
+  feeBlocksMargin: 5,
+};
+
+// The same wallet configuration the builder derives from `env`, for restoring.
+function walletConfig() {
+  return {
+    indexerClientConnection: { indexerHttpUrl: CONFIG.indexer, indexerWsUrl: CONFIG.indexerWS },
+    provingServerUrl: new URL(CONFIG.proofServer),
+    networkId: NETWORK,
+    relayURL: new URL(CONFIG.nodeWS),
+    txHistoryStorage: new InMemoryTransactionHistoryStorage(WalletEntrySchema, mergeWalletEntries),
+    costParameters: { feeBlocksMargin: 5 },
+  };
+}
+
+// A wallet's synced state is saved here after each sync, so the next run only
+// catches up from where it left off. It holds the wallet's keys and coins: keep it
+// private like the seed. Deleting it is always safe; the next run syncs in full.
+const stateDir = path.resolve(here, '..', 'wallet-state');
+const stateFile = (keystore) =>
+  path.join(stateDir, `${createHash('sha256').update(keystore.getBech32Address().asString()).digest('hex').slice(0, 16)}.json`);
+
+function readSavedState(file) {
+  try {
+    const saved = JSON.parse(readFileSync(file, 'utf8'));
+    return saved?.version === 1 && saved.network === NETWORK ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+function restoredWallet(saved) {
+  const config = walletConfig();
+  const shielded = ShieldedWallet(config).restore(saved.shielded);
+  const unshielded = UnshieldedWallet(config).restore(saved.unshielded);
+  const dust = DustWallet({ ...config, costParameters: DUST_OPTIONS }).restore(saved.dust);
+  return WalletFacade.init({ configuration: config, shielded: () => shielded, unshielded: () => unshielded, dust: () => dust });
+}
+
+// Build an un-started wallet from the secret, restoring its saved state if there is any.
 export async function buildWallet(secret) {
-  const base = FluentWalletBuilder.forEnvironment(env).withDustOptions({
-    ledgerParams: LedgerParameters.initialParameters(),
-    additionalFeeOverhead: 1_000n,
-    feeBlocksMargin: 5,
-  });
+  const base = FluentWalletBuilder.forEnvironment(env).withDustOptions(DUST_OPTIONS);
   const builder = secret.kind === 'mnemonic' ? base.withMnemonic(secret.value) : base.withSeed(secret.value);
-  const { wallet, seeds, keystore } = await builder.buildWithoutStarting();
+  const { wallet: fresh, seeds, keystore } = await builder.buildWithoutStarting();
+  const file = stateFile(keystore);
+  const saved = readSavedState(file);
+  let wallet = fresh;
+  if (saved) {
+    try {
+      wallet = await restoredWallet(saved);
+    } catch (e) {
+      console.log(`Saved wallet state not usable (${e?.message ?? e}); syncing in full.`);
+    }
+  }
   return {
     wallet,
     keystore,
+    stateFile: file,
+    restored: wallet !== fresh,
     zswapSecretKeys: ZswapSecretKeys.fromSeed(seeds.shielded),
     dustSecretKey: DustSecretKey.fromSeed(seeds.dust),
   };
+}
+
+// Save the wallet's synced state for the next run. A failure only costs speed.
+export async function saveWalletState(w) {
+  try {
+    const saved = {
+      version: 1,
+      network: NETWORK,
+      shielded: await w.wallet.shielded.serializeState(),
+      unshielded: await w.wallet.unshielded.serializeState(),
+      dust: await w.wallet.dust.serializeState(),
+    };
+    mkdirSync(stateDir, { recursive: true, mode: 0o700 });
+    const tmp = `${w.stateFile}.tmp`;
+    writeFileSync(tmp, JSON.stringify(saved), { mode: 0o600 });
+    renameSync(tmp, w.stateFile);
+  } catch (e) {
+    console.log(`Could not save the wallet state (${e?.message ?? e}); the next run syncs in full.`);
+  }
 }
 
 function complete(progress) {
@@ -129,11 +204,13 @@ function complete(progress) {
 }
 
 // Start the wallet and wait until it has caught up with the chain. A wallet's
-// first sync on Preview can take half an hour or more; later runs are no faster,
-// because this kit keeps no sync state between runs.
+// first sync on Preview can take half an hour or more. After that, its saved state
+// means a run only catches up on new blocks.
 export async function startAndSync(w, log = console.log) {
   await w.wallet.start(w.zswapSecretKeys, w.dustSecretKey);
-  log('Syncing your wallet with Midnight Preview. The first sync can take a long time...');
+  log(w.restored
+    ? 'Catching your wallet up with Midnight Preview from its saved state...'
+    : 'Syncing your wallet with Midnight Preview. The first sync can take a long time...');
   const started = Date.now();
   let last = 0;
   const state = await Rx.firstValueFrom(
@@ -149,6 +226,7 @@ export async function startAndSync(w, log = console.log) {
     ),
   );
   log(`Wallet synced in ${Math.round((Date.now() - started) / 1000)}s.`);
+  await saveWalletState(w);
   return state;
 }
 

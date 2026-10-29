@@ -1,16 +1,18 @@
 # Hidden-word hunt kit
 
-Tools to check and claim a kwigbo **hidden-word hunt** on **Midnight Preview**, Midnight's
-public testnet. The prize is **tNIGHT**, test tokens with no monetary value.
+Tools to sign up for, check and claim a kwigbo **hidden-word hunt** on **Midnight
+Preview**, Midnight's public testnet. The prize is **tNIGHT**, test tokens with no
+monetary value.
 
-A hunt is a small Midnight contract. It holds the prize and a hash of the answer, and
-nothing else. The first person to prove they know the answer is paid automatically:
-no judge, no sign-up, no messages. The proof is zero-knowledge, so your answer never
-leaves your machine and never appears on-chain. Each claim is bound to the address it
-pays, so nobody can copy a pending claim and redirect the prize.
+A hunt is a small Midnight contract. It holds the prize, a hash of the answer and the
+list of signed-up players. The first signed-up player to prove they know the answer is
+paid automatically: no judge and no messages. The proof is zero-knowledge, so your
+answer never leaves your machine and never appears on-chain. Each claim is bound to the
+address it pays, so nobody can copy a pending claim and redirect the prize.
 
-The current hunt, its clues and its contract address are on the
-[challenge page](https://kwigbo.com/challenges/hidden-word/).
+The current hunt, its clues and its contract address are on its challenge page, listed
+at [kwigbo.com/challenges](https://kwigbo.com/challenges/). This kit is for hunts from #2
+on. Hunt #1's kit is the `hidden-word-1` tag of this repo.
 
 ## What you need
 
@@ -22,7 +24,7 @@ The current hunt, its clues and its contract address are on the
   then run `compact update 0.31.1`.
 - **A Midnight Preview wallet with DUST.** Fees on Midnight are paid in DUST, which
   your tNIGHT generates once it's registered. Free tNIGHT comes from the
-  [Preview faucet](https://midnight-tmnight-preview.nethermind.dev/). See step 3.
+  [Preview faucet](https://midnight-tmnight-preview.nethermind.dev/). See step 2.
 
 ## 1. Build
 
@@ -35,19 +37,7 @@ sha256sum contract/managed/hidden-word/keys/claim.verifier
 The compile is deterministic, so your `claim.verifier` hash must match the one on the
 challenge page. A match means you built exactly the contract that is deployed.
 
-## 2. Check your answer (free, no wallet needed)
-
-```sh
-node check.mjs <contract-address> "12-river 31-ash 7-yard 55-lantern 3-crate"
-```
-
-This shows whether the hunt is open, the prize and the deadline, and whether your
-answer is **CORRECT**. It reads the chain and sends nothing.
-
-Answers are normalized before hashing: lowercased, trimmed, and every run of spaces
-collapsed to one. `lib/answer.mjs` has the exact rule.
-
-## 3. Get a wallet ready
+## 2. Get a wallet ready
 
 The scripts read your wallet secret from the environment, never from the command line:
 
@@ -64,12 +54,46 @@ node wallet.mjs address              # your Preview address
 
 Use a fresh testnet wallet for this, not one that holds anything of value.
 
-**Syncing is slow.** Every command that touches your balance first syncs your wallet
-with Preview. The first sync can take **30 minutes or more**, and the kit keeps no
-sync state, so each run syncs again. Get your wallet ready before you solve the
-puzzle.
+**The first sync is slow.** The first command that touches your balance syncs your
+wallet with Preview from the start, which can take **30 minutes or more**. The kit then
+saves the synced state in `wallet-state/`, so later runs only catch up on new blocks.
+`wallet-state/` holds your wallet's keys and coins: keep it private, like the seed.
+Deleting it is always safe, and the next run syncs in full. Get your wallet ready before
+you solve the puzzle.
 
-## 4. Claim
+## 3. Sign up
+
+Only signed-up players can win. Signing up is free and takes a minute:
+
+```sh
+node sign.mjs "Hidden Word #2 sign-up: <your name>"
+```
+
+This signs the message with your wallet's key. It's offline: nothing is sent and the
+wallet doesn't sync. Open a **sign-up issue** in this repo (Issues, then New issue, then
+"Hidden Word sign-up") and paste the whole output. kwigbo checks the signature, adds your
+address to the hunt's contract, and replies on the issue, usually within minutes. The
+name you sign is the name a winner is listed under.
+
+Sign up before you start solving. Check that you're on the list:
+
+```sh
+node check.mjs <contract-address> "anything" --player <your mn_addr_preview1...>
+```
+
+## 4. Check your answer (free, no wallet needed)
+
+```sh
+node check.mjs <contract-address> "12-river 31-ash 7-yard 55-lantern 3-crate"
+```
+
+This shows whether the hunt is open, the prize, the deadline and how many players have
+signed up, and whether your answer is **CORRECT**. It reads the chain and sends nothing.
+
+Answers are normalized before hashing: lowercased, trimmed, and every run of spaces
+collapsed to one. `lib/answer.mjs` has the exact rule.
+
+## 5. Claim
 
 Start the proof server in another terminal and leave it running:
 
@@ -85,50 +109,44 @@ Then claim:
 
 ```sh
 node claim.mjs <contract-address> "<your answer>"
-# or pay a different address:
+# or pay a different signed-up address:
 node claim.mjs <contract-address> "<your answer>" --to mn_addr_preview1...
 ```
 
 The claim script:
 1. Checks your answer against the chain first, so a wrong answer costs nothing.
-2. Syncs your wallet and checks you have DUST.
-3. Proves the claim locally, using the proof server on your machine.
-4. Submits the claim.
+2. Checks that the payout address is signed up.
+3. Syncs your wallet and checks you have DUST.
+4. Proves the claim locally, using the proof server on your machine.
+5. Submits the claim.
 
 If you're first, the whole pot lands in your wallet in the same block. That's at
 least the listed prize, more if anyone added to it.
 
-## 5. Prove you won (optional)
+## Proving an address is yours
 
-The contract pays an address, not a name, so a winner can stay anonymous. To be named
-on the result page, prove the address is yours by signing a message with its key. It's
-free and offline: nothing is sent and the wallet doesn't sync.
+`sign.mjs` signs any message, and `verify.mjs` lets anyone check it with no wallet:
 
 ```sh
-export MIDNIGHT_SEED=<the seed of the wallet that was paid>
-node sign.mjs "I am <your name> and I won Hidden Word #1"
-```
-
-Post or send the output. Anyone can check it, with no wallet:
-
-```sh
+node sign.mjs "<message>"
 node verify.mjs <mn_addr_preview1...> "<the message>" <key> <signature>
 ```
 
 `VERIFIED` means the key belongs to that address and the signature is valid for that
-exact message. If you claimed with `--to`, sign with the wallet that `--to` named.
+exact message. `sign.mjs` also prints the full `verify.mjs` command, quoted and safe to
+paste.
 
 ## Files
 
 | File | What it does |
 |---|---|
-| `contract/hidden-word.compact` | The contract: `fund` (until the deadline), `claim` (pays the whole pot), and `reclaim` for the owner after the deadline |
+| `contract/hidden-word.compact` | The contract: `register` (the owner signs players up), `fund` (until the deadline), `claim` (pays a signed-up player the whole pot), and `reclaim` for the owner after the deadline |
 | `lib/answer.mjs` | Answer normalization and hashing |
-| `lib/midnight.mjs` | Preview endpoints, wallet, and providers |
-| `check.mjs` | Checks an answer for free |
+| `lib/midnight.mjs` | Preview endpoints, the wallet and its saved state, and providers |
+| `check.mjs` | Checks an answer, and optionally a player's sign-up, for free |
 | `wallet.mjs` | `new`, `address`, `status`, `register` |
 | `claim.mjs` | Proves and submits a claim |
-| `sign.mjs` | Signs a message with your wallet's key, to prove an address is yours |
+| `sign.mjs` | Signs a message with your wallet's key: for signing up, or to prove an address is yours |
 | `verify.mjs` | Checks a signature from `sign.mjs` |
 
 ## Checking the kit itself
@@ -143,10 +161,12 @@ sha256sum SEAL.sha256
 
 ## Rules
 
+- **Sign up to win.** The contract pays only addresses kwigbo has signed up, after
+  checking a signed sign-up. Winners are named by the name they signed.
 - **One winner:** the first valid claim on-chain wins the whole pot. Anyone can add to the
   pot while the hunt runs, but not after the deadline.
-- **The deadline is enforced by the contract.** After it, nobody can claim, and the
-  owner can take the prize back.
+- **The deadline is enforced by the contract.** After it, nobody can claim or sign up, and
+  the owner can take the prize back.
 - **Testnet only.** tNIGHT has no value.
 - The kit is built on Midnight's official SDK (Midnight.js 4.1.1, wallet SDK 1.2.0,
   compiler 0.31.1, proof server 8.1.3). Read it before you run it; it's short.
