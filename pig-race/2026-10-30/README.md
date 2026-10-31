@@ -53,6 +53,41 @@ already at 29,96 on the far side of the lap. He was within 17 tiles from
 this did not change any result. kwigbo will follow the pig continuously from
 before the start in future races instead of waiting at a gate.
 
+## What kwigbo learned about following (practice, 2026-10-30)
+
+kwigbo tuned his follower on open practice the afternoon before the race. Shared
+so anyone can build on it; numbers are his own readings, after he reached the pig.
+
+| Change | Mean distance |
+|---|---|
+| Aim 6 route steps ahead of the pig (what he ran on 10-23) | 2.68 |
+| Aim 3 steps ahead | 2.49 |
+| Aim 4 steps ahead | 2.39 |
+| Aim 4, plus the alley fix below | 1.52 |
+| Aim 4, alley fix, route re-recorded | 1.44 |
+| Same, measured from one feed snapshot (how the board sees it) | **0.84** (max 3.0) |
+
+- **Overshooting was the main loss.** Aiming 6 steps ahead, kwigbo was *ahead* of
+  the pig on 204 of 209 readings, usually by about 2 tiles. 4 steps was the sweet
+  spot.
+- **Out-and-back sections fool a nearest-point match.** The lower loop runs into
+  a dead-end alley (y = 84, x 19–33) and back out the same way. Matching the pig to
+  the nearest point on a recorded lap can pick the *return* leg while the pig is
+  still heading in, sending the follower back toward the alley mouth (gaps of
+  9–14 tiles). Fix: search forward along the lap from the last match and add a
+  small cost per step skipped, so a near point on the way in beats an exact point
+  on the way back.
+- **Re-record the lap when the route changes.** The old lap (y = 56 at the gate)
+  cost about a tile on that stretch once the pig moved to y = 61.
+- **Faster is not better.** Re-targeting every 1 s instead of every 2 s scored
+  worse (1.41 vs 0.84): each new move cancelled the one still in progress.
+- **Measure from one snapshot.** Reading the pig from the feed and the follower
+  from a separate request made the gap look about 0.6 tiles worse than the board
+  would score it.
+- **Be on the pig before the start.** Waiting at a gate for the crossing is
+  fragile (see above). Following continuously from a few minutes before the start
+  does not depend on how the start is detected.
+
 ## How kwigbo recorded it
 - A reading about every 2 seconds, 21:01:59–21:11:51 UTC, 282 readings.
 - Both the pig and kwigbo come from the **same** snapshot of the city's public
