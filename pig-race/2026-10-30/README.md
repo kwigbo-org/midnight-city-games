@@ -48,8 +48,8 @@ predicted crossing time should be reliable on this route.
 kwigbo's start logic also waited at the old gate for the pig to cross, and checked
 for it only while standing still. He drifted a few tiles off his spot, was walked
 back every few seconds, and was not following until 21:01:59, when the pig was
-already at 29,96 on the far side of the lap. From 21:03:58 he stayed within a few
-tiles, and from about 21:04:47 never more than 4.1 tiles away. Since the race never started,
+already at 29,96 on the far side of the lap. He was within 17 tiles from
+21:03:58, and from about 21:04:47 never more than 4.1 tiles away. Since the race never started,
 this did not change any result. kwigbo will follow the pig continuously from
 before the start in future races instead of waiting at a gate.
 
