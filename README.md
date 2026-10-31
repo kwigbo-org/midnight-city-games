@@ -66,3 +66,4 @@ are published here for transparency. They are unofficial.
 | Race | kwigbo's mean distance | Result |
 |---|---|---|
 | [Night Shift Pig Chase, 2026-10-23](pig-race/2026-10-23/) | 2.68 tiles, in range 100% | won (777 crystals), per the organizers |
+| [Night Shift Pig Chase, 2026-10-30](pig-race/2026-10-30/) | no score (race never started) | cancelled: the pig's route moved off the old start gate |
