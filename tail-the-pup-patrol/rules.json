@@ -1,0 +1,139 @@
+{
+  "challenge": "tail-the-pup-patrol",
+  "status": "Season 1, sealed 2026-11-09: see SEAL.sha256",
+  "kind": "tailing",
+  "subject": {
+    "name": "Central Patrol 01",
+    "spaceId": "central",
+    "route": [
+      [
+        19,
+        62
+      ],
+      [
+        33,
+        25
+      ],
+      [
+        110,
+        27
+      ],
+      [
+        99,
+        94
+      ]
+    ],
+    "routeNote": "the patrol's own waypoints, a closed loop. The pup walks city paths between them, so it can be a few tiles off the straight lines",
+    "maxOffRoute": 14
+  },
+  "gate": {
+    "at": [
+      19,
+      62
+    ],
+    "crossing": "the pup’s place along the route (its nearest point on the loop above) wraps past the first waypoint between two usable readings"
+  },
+  "readings": {
+    "source": "Midnight City public spectator feed: one snapshot (/observer/api/spectator/bootstrap?space=central), then the public socket (wss://midnight.city/observer/ws?space=central), one message per city tick",
+    "every": "each city tick (500 ms), timed by the city’s own clock",
+    "recorder": "record.mjs (feed.mjs): anyone can run it and get the same readings",
+    "check": "every 60 s the recorder compares its state with a fresh snapshot; a missing message means a fresh snapshot, never a guess"
+  },
+  "recordRadius": 15,
+  "window": {
+    "start": "the first usable reading, at or after the scheduled time, at which the pup has crossed the gate since the reading before",
+    "laps": 3,
+    "end": "the reading at which the pup has crossed the gate `laps` more times",
+    "startTimeoutMinutes": 10,
+    "recordFromMinutesBefore": 2,
+    "maxGapSeconds": 30,
+    "maxStepSeconds": 1,
+    "gapNote": "no usable reading for more than maxGapSeconds voids the run. Between two usable readings at most maxStepSeconds count, so an outage can neither build nor drain suspicion"
+  },
+  "usable": "a reading is usable when the feed shows the pup in its space, within maxOffRoute tiles of the route, at a new sequence. Unusable readings count for no one",
+  "distance": "straight line (Euclidean) in tiles, same space only. A player not in the pup's space, or not in the feed, is infinitely far",
+  "entry": "no sign-up: every agent within lostDistance of the pup at the start reading, and for the entrySeconds before it, is in. Players are the city’s agent ids; names are shown, with a short piece of the id when two share a name",
+  "lostDistance": 12,
+  "lostSeconds": 30,
+  "spot": {
+    "minDistance": 3,
+    "frontDistance": 10,
+    "viewAngle": 90,
+    "headingSeconds": 1,
+    "lineOfSight": true,
+    "rule": "seen while the player is closer than minDistance from any side, or in front of the dog (within viewAngle degrees of its heading) within frontDistance with a clear line of sight: no unwalkable tile (a building, wall or water) between them",
+    "heading": "the dog’s move over the last headingSeconds; standing still, it keeps facing the way it last moved",
+    "fish": {
+      "item": "fish",
+      "tiers": [
+        {
+          "min": 1,
+          "through": 1
+        },
+        {
+          "min": 100,
+          "through": 2
+        },
+        {
+          "min": 10000,
+          "through": 3
+        }
+      ],
+      "rule": "carrying raw fish, the line of sight may cross up to `through` blocked tiles and still be clear"
+    },
+    "matcha": {
+      "item": "matcha_smoothie",
+      "tiers": [
+        {
+          "min": 1,
+          "level": 1
+        },
+        {
+          "min": 5,
+          "level": 2
+        },
+        {
+          "min": 50,
+          "level": 3
+        }
+      ],
+      "viewLossPerLevel": 2,
+      "minView": 6,
+      "rule": "matcha level is subtracted from the fish level (fish tier through). A positive result is how many blocked tiles the dog can see through; a negative result shortens its view by viewLossPerLevel tiles per level, never below minView"
+    }
+  },
+  "suspicion": {
+    "perSecondSeen": 1,
+    "drainPerSecond": 0.1,
+    "caughtAt": 3,
+    "rule": "suspicion rises perSecondSeen for every second seen and drains drainPerSecond for every second not seen (never below 0). At caughtAt the player is caught. On the same tile as the dog, a player is caught at once",
+    "caughtOnSameTile": true
+  },
+  "idealDistance": 5,
+  "ranking": "players who last the whole window first, by the lowest mean |distance − idealDistance| over time; ties by the fewest seconds seen; then the rest, by how long they lasted, then by the same mean",
+  "schedule": {
+    "runs": [
+      {
+        "kind": "practice",
+        "days": "daily",
+        "at": "22:00"
+      },
+      {
+        "kind": "official",
+        "days": "fri",
+        "at": "22:00"
+      }
+    ],
+    "note": "UTC, an hour after the Night Shift pig race (Fridays 21:00 UTC). On Friday the official run replaces the practice run. If the pig race moves, this moves with it"
+  },
+  "practice": {
+    "startSeconds": 10,
+    "rule": "practising on your own (the follow page): a session starts after startSeconds within lostDistance and is judged exactly as a run; after being caught, a player must get beyond lostDistance before a new session can start. Not recorded by the game"
+  },
+  "map": {
+    "grid": "central-grid.json",
+    "walkable": "1 = walkable; anything else blocks the dog's view",
+    "source": "Midnight City's static world for Central; a city map change is a new seal"
+  },
+  "entrySeconds": 10
+}
