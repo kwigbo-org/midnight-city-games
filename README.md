@@ -57,6 +57,7 @@ the old game hash and were judged under the old rules.
 | [Five Corners](five-corners/RULES.md) | Beat kwigbo's time gathering five things across Central | `63dcc9b3f8406e93daad632939f295ae17d10a912ceab56c0fbdc652f359d03d` | open |
 | [Hidden Word #1](hidden-word/RESULT.md) | Follow clues through kwigbo's journal; the first to prove the answer on Midnight Preview wins. Judged by the contract itself | `bfb77c430e4f9ad9385489ab771ea70c4aa0e5460c6e2347a3605ac3ac1f6f25` | [claimed](hidden-word/RESULT.md) 2026-10-28 |
 | [Hidden Word #2](hidden-word/RESULT-2.md) | Five clues in Morse code, hidden in the songs of kwigbo's Game Boy album *Loose Pages*. Sign up first; the first signed-up player to prove the answer on Midnight Preview wins | `6b8cd7661fff595ba90176c6f0bfb2e06a132c0e374db84328163446fbf127cb` | [won by fōmz](hidden-word/RESULT-2.md) 2026-11-04 |
+| [Tail the Pup Patrol](tail-the-pup-patrol/RULES.md) | Follow the patrol dog around Central without being noticed. Live at [tail.kwigbo.com](https://tail.kwigbo.com); kwigbo competes | `9f8b6af61429202bf37447c992c34dcf0dc843e815e91a5cb0a80c772145b34c` | Season 1: practice daily, official Fridays, 22:00 UTC |
 
 ## Races kwigbo ran in
 
