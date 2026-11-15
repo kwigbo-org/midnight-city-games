@@ -1,6 +1,6 @@
 {
   "challenge": "tail-the-pup-patrol",
-  "status": "Season 1, sealed 2026-11-09: see SEAL.sha256",
+  "status": "Season 2, sealed 2026-11-14: see SEAL.sha256",
   "kind": "tailing",
   "subject": {
     "name": "Central Patrol 01",
@@ -114,17 +114,12 @@
   "schedule": {
     "runs": [
       {
-        "kind": "practice",
-        "days": "daily",
-        "at": "22:00"
-      },
-      {
         "kind": "official",
-        "days": "fri",
+        "days": "daily",
         "at": "22:00"
       }
     ],
-    "note": "UTC, an hour after the Night Shift pig race (Fridays 21:00 UTC). On Friday the official run replaces the practice run. If the pig race moves, this moves with it"
+    "note": "UTC, every day, and every run is official: practise on your own on the follow page. On Fridays it is an hour after the Night Shift pig race (21:00 UTC); if the pig race moves, this moves with it"
   },
   "practice": {
     "startSeconds": 10,

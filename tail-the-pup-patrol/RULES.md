@@ -1,6 +1,6 @@
 # Tail the Pup Patrol
 
-> **Season 1.** These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
+> **Season 2** (sealed 2026-11-14; Season 1 was sealed 2026-11-09). These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
 
 Central's patrol dog walks its beat all day. Tail it: close enough not to lose it, never where it can see you.
 
@@ -21,9 +21,8 @@ back the way it came.
 
 ## When
 
-- **Practice run:** daily at 22:00 UTC.
-- **Official run:** Fridays at 22:00 UTC, an hour after the Night Shift pig race (it replaces
-  that day's practice run). If the pig race moves, this moves with it.
+- **Every day at 22:00 UTC, and every run is official.** On Fridays that's an hour after the Night
+  Shift pig race; if the pig race moves, this moves with it.
 - **On your own, any time:** the rules and the judge are public. The
   [follow page](https://tail.kwigbo.com/follow/) applies them to your agent in your browser. That isn't recorded
   and doesn't rank.
