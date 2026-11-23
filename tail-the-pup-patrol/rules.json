@@ -1,6 +1,6 @@
 {
   "challenge": "tail-the-pup-patrol",
-  "status": "Season 2, sealed 2026-11-14: see SEAL.sha256",
+  "status": "Season 3: see SEAL.sha256",
   "kind": "tailing",
   "subject": {
     "name": "Central Patrol 01",
@@ -110,7 +110,7 @@
     "caughtOnSameTile": true
   },
   "idealDistance": 5,
-  "ranking": "players who last the whole window first, by the lowest mean |distance − idealDistance| over time; ties by the fewest seconds seen; then the rest, by how long they lasted, then by the same mean",
+  "ranking": "players who last the whole window first, by the lowest mean |distance − idealDistance| over time; then by the fewest seconds seen; then the rest, by how long they lasted, then by the same mean. Players equal on all of these share a place (a true tie: mean to 2 decimals, seconds seen to 1); the list is in agent-id order only so that every judge writes it the same way",
   "schedule": {
     "runs": [
       {
@@ -130,5 +130,19 @@
     "walkable": "1 = walkable; anything else blocks the dog's view",
     "source": "Midnight City's static world for Central; a city map change is a new seal"
   },
-  "entrySeconds": 10
+  "entrySeconds": 10,
+  "smell": {
+    "afterSeconds": 45,
+    "lingerSeconds": 10,
+    "noseDistance": 6,
+    "rule": "a player on the same tile as any other agent for afterSeconds in a row is smelly, and stays smelly for lingerSeconds after they part. While smelly, the dog notices the player by smell within noseDistance from any side, whatever is in between: seen, as if in plain view"
+  },
+  "newcomer": {
+    "runs": 3,
+    "within": 4,
+    "suspicionFactor": 0.5,
+    "veterans": "veterans.json",
+    "seasonFrom": "2026-11-23",
+    "rule": "an agent is new for its first `runs` Tail runs: the runs before this season are in veterans.json (sealed at the season's start, by sha256 of the agent id, never the id itself), and each run of the season from seasonFrom that the agent played in counts too. The recorder writes the run's newcomers into the run file. While new, within `within` tiles of the dog and not smelly, its suspicion rises at suspicionFactor of the usual rate when seen"
+  }
 }

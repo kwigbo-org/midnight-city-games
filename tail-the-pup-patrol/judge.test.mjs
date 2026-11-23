@@ -2,13 +2,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { judge, practice, routeOf, sightFrom, labels, fishThrough, senses } from './judge.mjs';
+import { judge, practice, routeOf, sightFrom, labels, fishThrough, senses, newcomersFor } from './judge.mjs';
 import { fromSnapshot, applyDelta, drift, clone } from './citystate.mjs';
 
 const file = JSON.parse(fs.readFileSync(new URL('./rules.json', import.meta.url), 'utf8'));
 // The synthetic dog walks straight lines with no city map, so these tests turn sight off; the
 // line-of-sight test below uses a small map of its own.
-const rules = { ...file, spot: { ...file.spot, lineOfSight: false } };
+// The older tests also put several synthetic players on one tile, so smell (Season 3) is off for them;
+// the Season 3 tests at the end turn it on.
+const rules = { ...file, spot: { ...file.spot, lineOfSight: false }, smell: undefined };
 const route = routeOf(rules.subject.route);
 const SPEED = 1.8, STEP = 0.5; // tiles a second; seconds a reading
 const T0 = Date.parse('2026-11-08T21:00:00Z');
@@ -317,4 +319,77 @@ test('feed: drift counts the agents that disagree', () => {
   assert.equal(drift(a, b, 'central'), 0);
   applyDelta(b, delta(100, 101, { agentPatches: [{ id: 'a', merge: { position: { x: 3 } } }], removedAgentIds: ['b'] }));
   assert.equal(drift(a, b, 'central'), 2);
+});
+
+// ---- Season 3: smell, newcomers, shared places ----------------------------------------------
+const s3 = { ...rules, smell: file.smell, newcomer: file.newcomer };
+const beside = (tiles, dx) => (sec, s) => { const p = at(s - tiles); return { ...p, x: p.x + dx }; };
+
+test('smell: a short shared tile is nothing; a long one makes both smelly, and the nose finds them', () => {
+  // Two on one tile 5 behind (inside the 6-tile nose), for the whole run.
+  const twins = byId(judge(s3, run({ a: behind(5), b: behind(5) })));
+  assert.equal(twins.a.status, 'caught'); assert.equal(twins.b.status, 'caught');
+  assert.ok(twins.a.smellySeconds > 0);
+  // The same two, a tile apart: never smelly, and a 5-tile tail at the side isn't seen.
+  const apart = byId(judge(s3, run({ a: behind(5), b: beside(5, 1) })));
+  assert.equal(apart.a.smellySeconds, undefined);
+  assert.notEqual(apart.a.status, 'caught');
+  // Sharing for less than afterSeconds, then apart: never smelly.
+  const brief = byId(judge(s3, run({ a: behind(5), b: (sec, s) => (sec < 30 ? at(s - 5) : beside(5, 1)(sec, s)) })));
+  assert.equal(brief.a.smellySeconds, undefined);
+});
+
+test('smell: the nose reaches noseDistance only; beyond it, a smelly pair is not smelled', () => {
+  // 8 tiles back along the route: further than the nose in a straight line except where the route
+  // turns. Behind the dog, so only the nose can see them: every row seen is smelly and within it.
+  const far = byId(judge(s3, run({ a: behind(8), b: behind(8) }, { seconds: 300 })));
+  const rows = far.a.trace;
+  assert.ok(rows.some((r) => r[5] === 1), 'smelly at some point');
+  for (const [sec, d, seen, , , smelly] of rows) {
+    if (seen) assert.ok(smelly === 1 && d <= file.smell.noseDistance, `seen at ${sec}s only by the nose (d ${d})`);
+    if (smelly && d > file.smell.noseDistance) assert.equal(seen, 0, `beyond the nose at ${sec}s`);
+  }
+});
+
+test('smell lingers lingerSeconds after the pair parts', () => {
+  // Together for afterSeconds + 20 (judged seconds), then a tile apart; 9 back, so rarely smelled.
+  const togetherFor = file.smell.afterSeconds + 20;
+  const r = judge(s3, run({ a: behind(9), b: (sec, s) => (sec < 30 + togetherFor ? at(s - 9) : beside(9, 1)(sec, s)) }, { seconds: 200 }));
+  const tr = byId(r).a.trace;
+  const smellyRows = tr.filter((row) => row[5] === 1).map((row) => row[0]);
+  assert.ok(smellyRows.length, 'smelly');
+  // The last smelly second is lingerSeconds (±1 for whole seconds) after the last together second.
+  const lastSmelly = smellyRows.at(-1);
+  const startMs = Date.parse(r.startedAt), lastTogetherSec = (T0 + (30 + togetherFor) * 1000 - startMs) / 1000;
+  assert.ok(Math.abs(lastSmelly - (lastTogetherSec + file.smell.lingerSeconds)) <= 1.5, `last smelly ${lastSmelly}s, parted ${lastTogetherSec}s`);
+});
+
+test('newcomer: suspicion builds at half speed within `within` tiles, full speed further out or when smelly', () => {
+  // 2.5 tiles behind: inside minDistance (3), so seen every reading.
+  const plain = byId(judge(s3, run({ n: behind(2.5) }, { seconds: 120 })));
+  const fresh = byId(judge(s3, run({ n: behind(2.5) }, { seconds: 120 }), { newcomers: new Set(['n']) }));
+  assert.equal(plain.n.status, 'caught'); assert.equal(fresh.n.status, 'caught');
+  assert.ok(fresh.n.lastedSeconds > plain.n.lastedSeconds, `a newcomer lasts longer (${fresh.n.lastedSeconds} > ${plain.n.lastedSeconds})`);
+  assert.equal(fresh.n.newcomer, true);
+});
+
+test('newcomer: worked out from the veterans list and the season\'s runs; written in the run file wins', () => {
+  const key = (id) => `k:${id}`;
+  const vets = { 'k:old': 5, 'k:two': 2 };
+  const season = [{ result: { players: [{ id: 'two' }, { id: 'once' }] } }];
+  const nc = newcomersFor(s3, vets, season, ['old', 'two', 'once', 'brand'], key);
+  assert.deepEqual([...nc].sort(), ['brand', 'once']); // two: 2 before + 1 this season = 3, not new
+  const r = run({ n: behind(2.5) }, { seconds: 120 }); r.newcomers = ['n'];
+  assert.equal(byId(judge(s3, r)).n.newcomer, true);
+});
+
+test('places: a true tie shares a place; the next player takes the place after both', () => {
+  // x and y on one tile all run (smell off here): exactly equal, a forced true tie. z further back.
+  const r = judge({ ...s3, smell: undefined }, run({ x: behind(6), y: behind(6), z: behind(9) }, { seconds: 700 }));
+  const p = byId(r);
+  assert.equal(p.x.meanTail, p.y.meanTail); assert.equal(p.x.seenSeconds, p.y.seenSeconds);
+  assert.equal(p.x.status, 'tailed to the end');
+  assert.equal(p.x.place, 1); assert.equal(p.y.place, 1);
+  assert.equal(p.z.place, p.z.status === 'tailed to the end' ? 3 : p.z.place);
+  assert.ok(r.players.every((q, i) => q.place <= i + 1));
 });

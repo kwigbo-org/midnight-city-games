@@ -13,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { judge, checks } from './judge.mjs';
 import { CityFeed } from './feed.mjs';
-import { readingOf } from './record.mjs';
+import { readingOf, newcomerChecker } from './record.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -75,7 +75,8 @@ const recent = [];           // the last 8 s of readings
 let health = null, lastPublish = 0;
 
 function finish(id, rec, health_) {
-  const run = { game: rules.challenge, id, kind: rec.race.kind, scheduled: rec.race.at, recorder: 'watch.mjs', grid, readings: rec.readings };
+  const run = { game: rules.challenge, id, kind: rec.race.kind, scheduled: rec.race.at, recorder: 'watch.mjs', grid,
+    ...(rec.nc ? { newcomersFrom: rec.nc.from, newcomers: rec.newcomers } : {}), readings: rec.readings };
   const v = rec.verdict; // the verdict already judged from these readings
   write(raceFile(id), { ...run, rules, health: health_, result: v }); // the rules it was judged under: they can change between runs
   const idx = readJSON(path.join(WEB, 'runs', 'index.json'), []);
@@ -93,11 +94,19 @@ function ingest(s, everyone) {
 
   for (const race of dueRaces(now)) {
     const id = raceId(race);
-    if (!recording.has(id)) recording.set(id, { race, readings: readLines(path.join(DATA, 'runs', `${id}.jsonl`)), verdict: null });
+    if (!recording.has(id)) {
+      const readings = readLines(path.join(DATA, 'runs', `${id}.jsonl`));
+      // Season 3: who's new, from the veterans list and this recorder's earlier runs (the site's run files).
+      const nc = newcomerChecker(rules, here, path.join(WEB, 'runs'), race.at);
+      let newcomers = [];
+      for (const r of readings) newcomers = nc ? nc.check(r) : [];
+      recording.set(id, { race, readings, verdict: null, nc, newcomers });
+    }
   }
   for (const [id, rec] of recording) {
     if (rec.readings.at(-1)?.seq >= s.seq) continue;
     rec.readings.push(s);
+    if (rec.nc) rec.newcomers = rec.nc.check(s);
     fs.appendFileSync(path.join(DATA, 'runs', `${id}.jsonl`), JSON.stringify(s) + '\n');
   }
 
@@ -106,7 +115,7 @@ function ingest(s, everyone) {
   lastPublish = now;
   let race = null;
   for (const [id, rec] of recording) {
-    rec.verdict = judge(rules, { scheduled: rec.race.at, readings: rec.readings }, { grid });
+    rec.verdict = judge(rules, { scheduled: rec.race.at, readings: rec.readings, ...(rec.nc ? { newcomers: rec.newcomers } : {}) }, { grid });
     if (['finished', 'void', 'cancelled'].includes(rec.verdict.status) || now > Date.parse(rec.race.at) + closeMs) { finish(id, rec, health); continue; }
     race = { id, kind: rec.race.kind, scheduled: rec.race.at, ...rec.verdict, players: (rec.verdict.players ?? []).map((p) => ({ ...noTrace(p), spotsAt: undefined, trace: p.trace.slice(-60) })) };
   }

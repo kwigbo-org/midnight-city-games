@@ -115,13 +115,29 @@ function headings(rules) {
   };
 }
 
-const newPlayer = (id, name, ms) => ({ id, name, t0: ms, out: null, far: false, farFor: 0, seen: false, sus: 0, maxSus: 0,
-  seenSeconds: 0, sightings: 0, tailSum: 0, tailT: 0, spotsAt: [], trace: [], lastSec: -1 });
+const newPlayer = (id, name, ms, isNew = false) => ({ id, name, t0: ms, out: null, far: false, farFor: 0, seen: false, sus: 0, maxSus: 0,
+  seenSeconds: 0, sightings: 0, tailSum: 0, tailT: 0, spotsAt: [], trace: [], lastSec: -1,
+  isNew, shareFor: 0, smellyUntil: -Infinity, smellySeconds: 0 });
+
+// Sharing a tile: any other agent in the reading on this player's exact tile (same space).
+function sharing(agents, id, pos) {
+  if (!pos || !agents) return false;
+  for (const [k, a] of Object.entries(agents)) if (k !== id && a && a.spaceId === pos.spaceId && a.x === pos.x && a.y === pos.y) return true;
+  return false;
+}
 
 // One reading for one player. dt: seconds since the previous usable reading (capped).
-function step(rules, p, pos, pup, [hx, hy], ms, dt, sees) {
-  const S = rules.spot, U = rules.suspicion;
+function step(rules, p, pos, pup, [hx, hy], ms, dt, sees, agents = null) {
+  const S = rules.spot, U = rules.suspicion, SM = rules.smell, NC = rules.newcomer;
   const d = dist(pos, pup);
+  // Smell (Season 3): afterSeconds in a row on another agent's tile, then smelly until lingerSeconds after.
+  let smelly = false;
+  if (SM) {
+    if (sharing(agents, p.id, pos)) p.shareFor += dt; else p.shareFor = 0;
+    if (p.shareFor >= SM.afterSeconds - 1e-9) p.smellyUntil = ms + SM.lingerSeconds * 1000;
+    smelly = ms <= p.smellyUntil;
+    if (smelly) p.smellySeconds += dt;
+  }
   // Time beyond the lost line, in the same capped steps as everything else: an outage can't lose you.
   if (d > rules.lostDistance) { if (p.far) p.farFor += dt; p.far = true; } else { p.far = false; p.farFor = 0; }
   // In front: within viewAngle degrees of its heading (90 = the whole half in front of it).
@@ -129,9 +145,12 @@ function step(rules, p, pos, pup, [hx, hy], ms, dt, sees) {
   const front = Number.isFinite(d) && d > 0 && (hx || hy)
     ? (hx * (pos.x - pup.x) + hy * (pos.y - pup.y)) / (Math.hypot(hx, hy) * d) > cosView + 1e-9 : false;
   const { through, reach } = senses(rules, pos);
-  const seen = d < S.minDistance || (d <= reach && front && (!sees || sees(pup, pos, through)));
+  const seen = d < S.minDistance || (d <= reach && front && (!sees || sees(pup, pos, through)))
+    || (smelly && d <= SM.noseDistance); // the nose: from any side, through anything
+  // A newcomer close in (within NC.within) and not smelly: suspicion rises at NC.suspicionFactor.
+  const rate = p.isNew && NC && !smelly && d <= NC.within ? NC.suspicionFactor : 1;
   if (seen) {
-    p.sus += U.perSecondSeen * dt; p.seenSeconds += dt;
+    p.sus += U.perSecondSeen * rate * dt; p.seenSeconds += dt;
     if (!p.seen) { p.sightings++; p.spotsAt.push([pup.x, pup.y]); }
   } else p.sus = Math.max(0, p.sus - U.drainPerSecond * dt);
   p.seen = seen;
@@ -143,7 +162,7 @@ function step(rules, p, pos, pup, [hx, hy], ms, dt, sees) {
   else if (p.sus >= U.caughtAt) p.out = { why: 'caught', ms };
   // The trace, about one row a second: [seconds since this player's start, distance, seen, suspicion, seconds beyond the lost line].
   const sec = Math.floor((ms - p.t0) / 1000);
-  if (sec !== p.lastSec || p.out) { p.trace.push([sec, round(d, 1), seen ? 1 : 0, round(p.sus), p.far ? round(p.farFor, 1) : 0]); p.lastSec = sec; }
+  if (sec !== p.lastSec || p.out) { p.trace.push([sec, round(d, 1), seen ? 1 : 0, round(p.sus), p.far ? round(p.farFor, 1) : 0, smelly ? 1 : 0]); p.lastSec = sec; }
 }
 
 // Names aren't unique. Where two players share one (ignoring case), each shows a short piece of
@@ -161,10 +180,14 @@ const summary = (p, endMs) => ({
   lastedSeconds: round(((p.out ? p.out.ms : endMs) - p.t0) / 1000, 0),
   seenSeconds: round(p.seenSeconds, 1), sightings: p.sightings, maxSuspicion: round(p.maxSus),
   meanTail: p.tailT ? round(p.tailSum / p.tailT) : null,
+  ...(p.isNew ? { newcomer: true } : {}), ...(p.smellySeconds ? { smellySeconds: round(p.smellySeconds, 1) } : {}),
   spotsAt: p.spotsAt, trace: p.trace,
 });
 
-export function judge(rules, run, { grid } = {}) {
+// newcomers: the ids of agents that are new for this run (rules.newcomer). The recorder writes them
+// into the run file (run.newcomers, from newcomersFor below), so the file alone decides the verdict.
+export function judge(rules, run, { grid, newcomers = null } = {}) {
+  newcomers ??= Array.isArray(run.newcomers) ? new Set(run.newcomers) : null;
   // A run file can carry the map it was recorded on, so it stays reproducible if the city changes.
   const sees = sightFor(rules, run.grid ?? grid);
   const readings = run.readings ?? [];
@@ -206,7 +229,7 @@ export function judge(rules, run, { grid } = {}) {
   };
   const players = Object.entries(readings[start.i].agents ?? {})
     .filter(([id]) => settled(id))
-    .map(([id, a]) => newPlayer(id, a.name, start.ms));
+    .map(([id, a]) => newPlayer(id, a.name, start.ms, !!(rules.newcomer && newcomers?.has(id))));
 
   const heading = headings(rules);
   for (const c of usable.slice(Math.max(0, startK - 20), startK)) heading(c.ms, pupAt(c)); // the dog's way at the start
@@ -220,7 +243,7 @@ export function judge(rules, run, { grid } = {}) {
     const pup = pupAt(c);
     const h = heading(c.ms, pup);
     const dt = c === start ? 0 : Math.min(stepCap, Math.max(0, (c.ms - prev.ms) / 1000)); // the run begins at the start reading
-    for (const p of players) if (!p.out) step(rules, p, own(readings[c.i].agents, p.id), pup, h, c.ms, dt, sees);
+    for (const p of players) if (!p.out) step(rules, p, own(readings[c.i].agents, p.id), pup, h, c.ms, dt, sees, readings[c.i].agents);
     prev = c; lastMs = c.ms;
     if (laps >= W.laps) { end = c; break; }
   }
@@ -230,7 +253,11 @@ export function judge(rules, run, { grid } = {}) {
   const result = players.map((p) => ({ ...summary(p, endMs), status: p.out ? p.out.why : end ? 'tailed to the end' : 'still tailing' }));
   const done = (r) => r.status === 'tailed to the end';
   // Finishers first, the lowest tail on top, then fewest seconds seen; the rest by how long they lasted.
-  result.sort((a, b) => (done(b) - done(a)) || (done(a) ? ((a.meanTail ?? 1e9) - (b.meanTail ?? 1e9)) || (a.seenSeconds - b.seenSeconds) : (b.lastedSeconds - a.lastedSeconds) || ((a.meanTail ?? 1e9) - (b.meanTail ?? 1e9))) || (a.id < b.id ? -1 : 1));
+  // Equal on all of that: a true tie, sharing a place. (Agent-id order only keeps the list the same on
+  // every judge; it never decides a place.)
+  const rank = (a, b) => (done(b) - done(a)) || (done(a) ? ((a.meanTail ?? 1e9) - (b.meanTail ?? 1e9)) || (a.seenSeconds - b.seenSeconds) : (b.lastedSeconds - a.lastedSeconds) || ((a.meanTail ?? 1e9) - (b.meanTail ?? 1e9)));
+  result.sort((a, b) => rank(a, b) || (a.id < b.id ? -1 : 1));
+  result.forEach((r, i) => { r.place = i > 0 && rank(result[i - 1], r) === 0 ? result[i - 1].place : i + 1; });
   labels(result);
   return {
     status, ...(voided ? { reason: `no usable reading for more than ${W.maxGapSeconds} s`, voidedAt: voided } : {}),
@@ -238,6 +265,19 @@ export function judge(rules, run, { grid } = {}) {
     usableReadings: list.filter((c) => c.usable && c.i >= start.i && (!end || c.i <= end.i)).length,
     players: result,
   };
+}
+
+// Who is new for a run (rules.newcomer): agents with fewer than NC.runs earlier runs, counting the
+// sealed veterans list (runs before the season, keyed by key(id): sha256 of the id) plus each earlier
+// run of the season they played in.
+//   veterans: { key: runs }; seasonRuns: the season's earlier judged runs ({ result: { players } }).
+export function newcomersFor(rules, veterans, seasonRuns, candidates, key) {
+  const NC = rules.newcomer;
+  if (!NC) return new Set();
+  const season = new Map();
+  for (const r of seasonRuns ?? []) for (const p of r?.result?.players ?? []) season.set(p.id, (season.get(p.id) ?? 0) + 1);
+  const runsOf = (id) => (Number(veterans?.[key(id)]) || 0) + (season.get(id) ?? 0);
+  return new Set([...candidates].filter((id) => runsOf(id) < NC.runs));
 }
 
 // Practice on your own (the follow page): the same rules, any time. A session starts once a
@@ -273,7 +313,7 @@ export function practice(rules, readings, { grid } = {}) {
     const dt = prev ? Math.min(stepCap, Math.max(0, (c.ms - prev.ms) / 1000)) : 0;
     for (const [id, s] of live) {
       if (crossed) s.laps++;
-      step(rules, s.p, own(agents, id), pup, h, c.ms, dt, sees);
+      step(rules, s.p, own(agents, id), pup, h, c.ms, dt, sees, agents);
       if (s.p.out) close(id, s, s.p.out.why, c.ms);
     }
     for (const id of [...shaken]) if (!(dist(own(agents, id), pup) <= rules.lostDistance)) shaken.delete(id);
@@ -285,7 +325,7 @@ export function practice(rules, readings, { grid } = {}) {
         near.delete(id);
         const s = { p: newPlayer(id, a.name, c.ms), laps: 0 };
         live.set(id, s);
-        step(rules, s.p, a, pup, h, c.ms, 0, sees);
+        step(rules, s.p, a, pup, h, c.ms, 0, sees, agents);
       }
     }
     prev = c;
