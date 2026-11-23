@@ -1,0 +1,313 @@
+// Tail the Pup Patrol: the pot, version 2 (contract/V2.md). DRAFT, for tNIGHT on Preview.
+// Compiler 0.36.0, language 0.28.
+//
+// Money leaves only by two judges' agreement: to a run's pot winner, as refunds of a void run, or
+// into a successor pot. There is no owner key and no veto. The operator's share of entry fees (10%,
+// fixed per run when it opens) can only go to the operator address fixed at deploy.
+//
+// - Judges: up to 5 slots, any 2 agreeing. Two judges can put a new key in a slot (add or replace a
+//   judge) or empty one, keeping at least 2.
+// - A run is opened by a judge with its entry fee (a USD amount in tNIGHT, priced when it opens) and
+//   the operator's cut of it. Agents enter before the start, from their own wallet; the operator's
+//   address can't enter. Agents sponsor a run: all of it goes to the pot.
+// - Outcomes: a valid run (fees split: the cut to the operator, the rest to the pot; the pot to the
+//   highest-ranked paid finisher, or it rolls over), void (each entrant can claim their fee back),
+//   or a move of the pot to a successor: the ledger refuses contract-to-contract transfers, so the
+//   pot goes to the migration address fixed at deploy, which funds the successor named in the move.
+
+pragma language_version 0.28;
+
+import CompactStandardLibrary;
+
+export struct Outcome {
+  race: Bytes<32>;       // hash of the run id (or of a move's id, for kind 2)
+  result: Bytes<32>;     // sha256 of the ranked result: [[agent id, status], ...] as JSON
+  kind: Uint<8>;         // 0 a valid run, 1 cancelled or void (refunds), 2 move the pot to a successor
+  hasWinner: Boolean;    // kind 0: a paid entrant tailed to the end
+  winner: Bytes<32>;     // kind 0: the pot winner's wallet (an entrant of this run)
+  successor: Bytes<32>;  // kind 2: the successor pot the migration address must fund (public record)
+}
+
+export struct Run {
+  fee: Uint<128>;        // the entry fee, tNIGHT atomic units
+  cut: Uint<128>;        // the operator's share of each fee: fee / 10, rounded down
+  start: Uint<64>;       // scheduled start, unix seconds: entries close then
+}
+
+export struct Rotation {
+  slot: Uint<8>;         // 0..4
+  key: Bytes<32>;        // the judge key to put there; empty to empty the slot
+  nonce: Bytes<32>;      // makes each proposal distinct
+}
+
+export sealed ledger gameHash: Bytes<32>;  // sha256(SEAL.sha256): the sealed rules this pot follows
+export sealed ledger color: Bytes<32>;     // the pot's token (tNIGHT on Preview)
+export sealed ledger operator: Bytes<32>;  // the operator's address: its share goes only here; can't enter
+export sealed ledger migration: Bytes<32>; // where a judges-agreed move sends the pot, to fund the successor
+export sealed ledger feeMin: Uint<128>;    // bounds for any run's entry fee (a broken price feed can't
+export sealed ledger feeMax: Uint<128>;    // set an absurd one)
+
+export ledger open: Boolean;                     // false once the pot has moved to a successor
+export ledger judges: Map<Uint<8>, Bytes<32>>;   // slot -> judgeKey
+export ledger runs: Map<Bytes<32>, Run>;
+export ledger entries: Map<Bytes<32>, Uint<128>>;   // hash(race, wallet) -> fee paid (0 once refunded)
+export ledger entrants: Map<Bytes<32>, Uint<64>>;   // race -> number of entries
+export ledger fees: Map<Bytes<32>, Uint<128>>;      // race -> entry fees held until its outcome
+export ledger cuts: Map<Bytes<32>, Uint<128>>;      // race -> the operator's share of them
+export ledger sponsored: Map<Bytes<32>, Uint<128>>; // hash(race, wallet) -> amount sponsored
+// Who: the wallet behind each entry and each sponsorship, so anyone can list a run's entrants and
+// sponsors (a key is hash(race, wallet), which can't be reversed on its own).
+export ledger entryWallets: Map<Bytes<32>, Bytes<32>>;   // hash(race, wallet) -> wallet
+export ledger sponsorWallets: Map<Bytes<32>, Bytes<32>>; // hash(race, wallet) -> wallet
+export ledger pot: Uint<128>;                       // what the next pot winner gets
+export ledger operatorDue: Uint<128>;               // the operator's share, until swept
+export ledger votes: Map<Bytes<32>, Bytes<32>>;     // hash(key, judge key) -> outcome hash: one vote per judge
+export ledger tally: Map<Bytes<32>, Uint<8>>;       // hash(key, outcome hash) -> judges who posted it
+export ledger agreed: Map<Bytes<32>, Bytes<32>>;    // race -> the outcome two judges agreed on
+export ledger settled: Set<Bytes<32>>;
+export ledger refundable: Set<Bytes<32>>;           // void runs: entrants claim their fees
+export ledger rotationVotes: Set<Bytes<32>>;        // hash(rotation, judge key)
+export ledger rotationsDone: Set<Bytes<32>>;        // rotations already carried out
+export ledger rotationTally: Map<Bytes<32>, Uint<8>>; // rotation -> judges who backed it
+export ledger payouts: Counter;
+export ledger rollovers: Counter;
+export ledger voids: Counter;
+
+export pure circuit judgeKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "tail-pot:judge:v1"), sk]);
+}
+export pure circuit outcomeHash(o: Outcome): Bytes<32> {
+  return persistentHash<Outcome>(o);
+}
+export pure circuit pairKey(a: Bytes<32>, b: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([a, b]);
+}
+// Runs and moves are judged in separate keyspaces (each id hashed with its own prefix), so a move can
+// never collide with a run, however the ids are chosen.
+export pure circuit runKey(race: Bytes<32>): Bytes<32> {
+  return pairKey(pad(32, "tail-pot:run:v1"), race);
+}
+export pure circuit moveKey(id: Bytes<32>): Bytes<32> {
+  return pairKey(pad(32, "tail-pot:move:v1"), id);
+}
+pure circuit outcomeKey(o: Outcome): Bytes<32> {
+  return o.kind == 2 ? moveKey(o.race) : runKey(o.race);
+}
+pure circuit rotationHash(r: Rotation): Bytes<32> {
+  return persistentHash<Rotation>(r);
+}
+
+// ---- judges ------------------------------------------------------------------------------------
+
+circuit inSlot(slot: Uint<8>, k: Bytes<32>): Boolean {
+  return judges.member(slot) && judges.lookup(slot) == k;
+}
+circuit isJudge(k: Bytes<32>): Boolean {
+  return inSlot(0, k) || inSlot(1, k) || inSlot(2, k) || inSlot(3, k) || inSlot(4, k);
+}
+// The caller names its own slot: one lookup instead of five (smaller circuits, cheaper proofs).
+circuit judgeAt(sk: Bytes<32>, slot: Uint<8>): Bytes<32> {
+  const k = disclose(judgeKey(sk)); // public: it sits in the judge slots
+  const s = disclose(slot);
+  assert(s < 5 && judges.member(s) && judges.lookup(s) == k, "not a judge");
+  return k;
+}
+circuit filled(slot: Uint<8>): Uint<8> {
+  return judges.member(slot) ? 1 : 0;
+}
+circuit judgeCount(): Uint<8> {
+  return (filled(0) + filled(1) + filled(2) + filled(3) + filled(4)) as Uint<8>;
+}
+// Agreement is a running tally per outcome (and per rotation): each judge's vote adds one, two agree.
+// A vote cast by a judge counts even if that judge is later replaced: it was valid when cast.
+
+circuit addressOf(b: Bytes<32>): UserAddress {
+  return UserAddress { bytes: b };
+}
+
+constructor(game: Bytes<32>, token: Bytes<32>, op: Bytes<32>, mig: Bytes<32>, minFee: Uint<128>, maxFee: Uint<128>,
+            j0: Bytes<32>, j1: Bytes<32>, j2: Bytes<32>, j3: Bytes<32>, j4: Bytes<32>) {
+  const zero = default<Bytes<32>>;
+  assert(disclose(op) != zero, "the operator address can't be empty");
+  assert(disclose(mig) != zero, "the migration address can't be empty");
+  assert(disclose(minFee) > 0 && disclose(minFee) <= disclose(maxFee), "fee bounds: 0 < min <= max");
+  // 1e15 atomic = a billion tNIGHT: keeps the cut check's arithmetic far from any limit.
+  assert(disclose(maxFee) <= 1000000000000000, "fee max too large");
+  assert(disclose(j0) != zero && disclose(j1) != zero, "at least two judges");
+  assert(disclose(j0) != disclose(j1), "judges must differ");
+  gameHash = disclose(game);
+  color = disclose(token);
+  operator = disclose(op);
+  migration = disclose(mig);
+  feeMin = disclose(minFee);
+  feeMax = disclose(maxFee);
+  open = true;
+  judges.insert(0, disclose(j0));
+  judges.insert(1, disclose(j1));
+  // Every judge key differs from every other: one key in two slots would count as two judges.
+  const a = disclose(j0); const b = disclose(j1); const c = disclose(j2); const d = disclose(j3); const e = disclose(j4);
+  assert(c == zero || (c != a && c != b), "judges must differ");
+  assert(d == zero || (d != a && d != b && d != c), "judges must differ");
+  assert(e == zero || (e != a && e != b && e != c && e != d), "judges must differ");
+  if (c != zero) { judges.insert(2, c); }
+  if (d != zero) { judges.insert(3, d); }
+  if (e != zero) { judges.insert(4, e); }
+}
+
+// ---- runs, entries, sponsors -------------------------------------------------------------------
+
+// A judge opens a run: its entry fee (within the bounds) and the operator's cut of it, exactly a tenth
+// rounded down (checked by multiplication: Compact has no division). Entries close at `start`.
+export circuit openRun(sk: Bytes<32>, slot: Uint<8>, race: Bytes<32>, start: Uint<64>, fee: Uint<128>, cut: Uint<128>): [] {
+  assert(open, "this pot has moved");
+  judgeAt(sk, slot);
+  const r = disclose(race); const f = disclose(fee); const c = disclose(cut); const s = disclose(start);
+  assert(!runs.member(r), "run already open");
+  assert(!agreed.member(runKey(r)) && !settled.member(runKey(r)), "that id is already used");
+  assert(f >= feeMin && f <= feeMax, "fee out of bounds");
+  assert(c <= f, "the cut must be a tenth of the fee, rounded down"); // bounds c before multiplying
+  assert(c * 10 <= f && f < (c + 1) * 10, "the cut must be a tenth of the fee, rounded down");
+  assert(!blockTimeGte(s), "the run has already started");
+  runs.insert(r, Run { fee: f, cut: c, start: s });
+}
+
+// An agent enters a run, from its own wallet, before the start: pays exactly the run's fee.
+export circuit enter(race: Bytes<32>, wallet: UserAddress): [] {
+  assert(open, "this pot has moved");
+  const r = disclose(race); const w = disclose(wallet).bytes;
+  assert(runs.member(r), "no such run");
+  const run = runs.lookup(r);
+  assert(!blockTimeGte(run.start), "entries are closed");
+  assert(w != operator, "the organizer's agent doesn't enter the pot");
+  const key = pairKey(r, w);
+  assert(!entries.member(key), "already entered");
+  receiveUnshielded(color, run.fee);
+  entries.insert(key, run.fee);
+  entryWallets.insert(key, w);
+  entrants.insert(r, ((entrants.member(r) ? entrants.lookup(r) : 0) + 1) as Uint<64>);
+  fees.insert(r, ((fees.member(r) ? fees.lookup(r) : 0) + run.fee) as Uint<128>);
+  cuts.insert(r, ((cuts.member(r) ? cuts.lookup(r) : 0) + run.cut) as Uint<128>);
+}
+
+// An agent sponsors a run: all of it goes to the pot.
+export circuit sponsor(race: Bytes<32>, wallet: UserAddress, amount: Uint<128>): [] {
+  assert(open, "this pot has moved");
+  const r = disclose(race); const w = disclose(wallet).bytes; const a = disclose(amount);
+  assert(runs.member(r), "no such run");
+  assert(!settled.member(runKey(r)) && !agreed.member(runKey(r)), "this run is judged");
+  assert(a > 0, "nothing to sponsor");
+  receiveUnshielded(color, a);
+  const key = pairKey(r, w);
+  sponsored.insert(key, ((sponsored.member(key) ? sponsored.lookup(key) : 0) + a) as Uint<128>);
+  sponsorWallets.insert(key, w);
+  pot = (pot + a) as Uint<128>;
+}
+
+// ---- judging -----------------------------------------------------------------------------------
+
+// A judge posts its outcome for a run (or a move). Once per judge each. Two the same: agreed.
+export circuit attest(sk: Bytes<32>, slot: Uint<8>, o: Outcome): [] {
+  const k = judgeAt(sk, slot);
+  const out = disclose(o);
+  assert(out.kind <= 2, "unknown kind");
+  assert(out.kind == 2 || runs.member(out.race), "no such run");
+  assert(out.kind != 2 || !runs.member(out.race), "a move can't use a run's id");
+  const r = outcomeKey(out);
+  assert(!settled.member(r), "already settled");
+  const vk = pairKey(r, k);
+  assert(!votes.member(vk), "this judge already attested");
+  const h = outcomeHash(out);
+  votes.insert(vk, h);
+  const tk = pairKey(r, h);
+  const n = ((tally.member(tk) ? tally.lookup(tk) : 0) + 1) as Uint<8>;
+  tally.insert(tk, n);
+  if (!agreed.member(r) && n >= 2) {
+    agreed.insert(r, h);
+  }
+}
+
+// Anyone settles an agreed outcome. Valid run: its fees split (the cut to the operator's due, the
+// rest to the pot), then the whole pot to the pot winner, who must have entered this run; or it rolls
+// over. Void: entrants can claim refunds. Move: the pot goes to the migration address (to fund the
+// successor named in the outcome) and this pot closes.
+export circuit settle(o: Outcome, to: UserAddress): [] {
+  const out = disclose(o);
+  const r = outcomeKey(out);
+  assert(agreed.member(r) && agreed.lookup(r) == outcomeHash(out), "not an agreed outcome");
+  assert(!settled.member(r), "already settled");
+  settled.insert(r);
+  if (out.kind == 1) {
+    refundable.insert(out.race);
+    voids.increment(1);
+  } else if (out.kind == 2) {
+    assert(open, "already moved");
+    open = false;
+    const all = pot;
+    pot = 0;
+    sendUnshielded(color, all, right<ContractAddress, UserAddress>(addressOf(migration)));
+  } else {
+    const id = out.race;
+    const f = fees.member(id) ? fees.lookup(id) : 0;
+    const c = cuts.member(id) ? cuts.lookup(id) : 0;
+    fees.insert(id, 0);
+    cuts.insert(id, 0);
+    operatorDue = (operatorDue + c) as Uint<128>;
+    pot = (pot + f - c) as Uint<128>;
+    if (out.hasWinner) {
+      const dest = disclose(to);
+      assert(dest.bytes == out.winner, "not the pot winner's address");
+      assert(entries.member(pairKey(id, out.winner)), "the pot winner didn't enter this run");
+      const prize = pot;
+      pot = 0;
+      payouts.increment(1);
+      sendUnshielded(color, prize, right<ContractAddress, UserAddress>(dest));
+    } else {
+      rollovers.increment(1);
+    }
+  }
+}
+
+// An entrant of a void run claims their fee back (anyone can call it; the money goes to the entrant).
+export circuit refund(race: Bytes<32>, wallet: UserAddress): [] {
+  const r = disclose(race); const w = disclose(wallet);
+  assert(refundable.member(r), "not a void run");
+  const key = pairKey(r, w.bytes);
+  assert(entries.member(key) && entries.lookup(key) > 0, "nothing to refund");
+  const amount = entries.lookup(key);
+  entries.insert(key, 0);
+  fees.insert(r, ((fees.member(r) ? fees.lookup(r) : 0) - amount) as Uint<128>);
+  sendUnshielded(color, amount, right<ContractAddress, UserAddress>(w));
+}
+
+// Anyone sends the operator's share to the operator's fixed address.
+export circuit sweep(): [] {
+  const due = operatorDue;
+  assert(due > 0, "nothing due");
+  operatorDue = 0;
+  sendUnshielded(color, due, right<ContractAddress, UserAddress>(addressOf(operator)));
+}
+
+// Two judges put a key in a slot (add or replace a judge) or empty it (keeping at least two).
+export circuit rotate(sk: Bytes<32>, slot: Uint<8>, rot: Rotation): [] {
+  const k = judgeAt(sk, slot);
+  const r = disclose(rot);
+  assert(r.slot < 5, "slots are 0..4");
+  const zero = default<Bytes<32>>;
+  const p = rotationHash(r);
+  assert(!rotationsDone.member(p), "already carried out");
+  assert(r.key == zero || !isJudge(r.key), "already a judge");
+  const vk = pairKey(p, k);
+  assert(!rotationVotes.member(vk), "already backed");
+  rotationVotes.insert(vk);
+  const n = ((rotationTally.member(p) ? rotationTally.lookup(p) : 0) + 1) as Uint<8>;
+  rotationTally.insert(p, n);
+  if (n >= 2) {
+    rotationsDone.insert(p);
+    if (r.key == zero) {
+      assert(judgeCount() > 2, "at least two judges must stay");
+      if (judges.member(r.slot)) { judges.remove(r.slot); }
+    } else {
+      judges.insert(r.slot, r.key);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+[
+  { "slot": "A", "runBy": "The operator", "machine": "The games server", "records": "The game's own recorder (tail-watch): the run files the site publishes", "since": "2026-11-11" },
+  { "slot": "B", "runBy": "The operator", "machine": "The lab, a separate server", "records": "Its own copy of the sealed recorder", "since": "2026-11-11" }
+]
