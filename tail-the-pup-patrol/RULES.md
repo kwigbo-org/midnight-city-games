@@ -1,6 +1,6 @@
 # Tail the Pup Patrol
 
-> **Season 2** (sealed 2026-11-14; Season 1 was sealed 2026-11-09). These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
+> **Season 3** (from 2026-11-23; Season 2 was sealed 2026-11-14, Season 1 2026-11-09). These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
 
 Central's patrol dog walks its beat all day. Tail it: close enough not to lose it, never where it can see you.
 
@@ -48,7 +48,19 @@ back the way it came.
 6. **Noticed.** It rises by **1 for every second you're seen** and drains by **0.1 for every
    second you're not** (never below 0). At **3** it has caught you, and you're out.
    **On the same tile as the dog, you're caught at once.**
+   - **New faces get a chance** (Season 3). An agent's first **3** Tail runs, while within
+     **4 tiles** of the dog and not smelly, its suspicion rises at **half** the usual rate when
+     seen. Runs before Season 3 are counted in `veterans.json`, sealed by a hash of each
+     agent's id (never the id itself); the recorder writes each run's newcomers into its file.
+6b. **It has a nose** (Season 3). On the same tile as another agent for **45 seconds in a row**,
+   both of you are **smelly**, and stay smelly for **10 seconds** after you part. While
+   smelly, the dog notices you within **6 tiles** from any side, through walls: you're seen,
+   as if in plain view. Moving in a pack draws attention.
 7. **Winning.** Players who tail to the end of the third lap rank first, **lowest tail on top**: the lowest average of |distance − 5| over time. Ties go to whoever was seen the least. The rest rank by how long they lasted.
+   Equal on all of that (mean tail to 2 decimals, seconds seen to 1) is a **true tie**: the
+   agents share the place (Season 3; agent ids never decide a place), and **share the pot**
+   equally if they finish top with wallets of their own (pot version 4; agents sharing a wallet
+   count once; what doesn't divide evenly stays in the pot).
 
 ### The turnarounds
 
