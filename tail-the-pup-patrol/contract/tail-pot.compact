@@ -1,0 +1,156 @@
+// Tail the Pup Patrol: the official-race pot. DRAFT for tNIGHT on Preview.
+// Compiler 0.36.0, language 0.28.
+//
+// The chain can't see Midnight City, so this contract doesn't judge. Two registered
+// judges each record the race on their own machine with the sealed recorder and judge,
+// and each posts an attestation: the hash of the outcome they found. When both judges
+// attest the same outcome and the challenge window has passed, anyone can settle the
+// race, and the whole pot goes to the winner's address. No winner (nobody finished, a
+// cancelled or void race): the race settles with nothing paid, and the pot rolls over.
+//
+// Trust: the two judges, together. One judge alone can't move the pot. The readings and
+// the judge are public, so anyone can re-run a race and check what the judges attested.
+// The owner can veto a race inside the window (a dispute) and can end the season.
+
+pragma language_version 0.28;
+
+import CompactStandardLibrary;
+
+// What a judge attests for one official race.
+export struct Outcome {
+  race: Bytes<32>;       // hash of the race id, e.g. "2026-11-13T2200-official"
+  result: Bytes<32>;     // sha256 of the ranked result: [[agent id, status], ...] as JSON
+  hasWinner: Boolean;    // false when nobody finished, or the race was cancelled or void
+  winner: Bytes<32>;     // the winner's unshielded address bytes (ignored without a winner)
+  end: Uint<64>;         // the scheduled start + 1800 (unix seconds), so both judges attest the same number
+}
+
+export sealed ledger gameHash: Bytes<32>;  // sha256(SEAL.sha256): the sealed rules this pot follows
+export sealed ledger judgeA: Bytes<32>;    // judgeKey of the first judge's secret
+export sealed ledger judgeB: Bytes<32>;    // judgeKey of the second judge's secret
+export sealed ledger owner: Bytes<32>;     // ownerKey of the owner's secret
+export sealed ledger color: Bytes<32>;     // the pot's token (tNIGHT on Preview)
+export sealed ledger window: Uint<64>;     // challenge window after a race ends, in seconds
+
+export ledger open: Boolean;
+export ledger byA: Map<Bytes<32>, Bytes<32>>;   // race -> outcome hash attested by judge A
+export ledger byB: Map<Bytes<32>, Bytes<32>>;   // race -> outcome hash attested by judge B
+export ledger ends: Map<Bytes<32>, Uint<64>>;   // race -> its end, from the first attestation
+export ledger settled: Set<Bytes<32>>;          // races settled, paid or rolled over
+export ledger vetoed: Set<Bytes<32>>;           // races the owner stopped
+export ledger agreedUnsettled: Counter;         // races both judges agree on, not yet settled or vetoed
+export ledger payouts: Counter;
+export ledger rollovers: Counter;
+
+export pure circuit judgeKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "tail-pot:judge:v1"), sk]);
+}
+export pure circuit ownerKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "tail-pot:owner:v1"), sk]);
+}
+export pure circuit outcomeHash(o: Outcome): Bytes<32> {
+  return persistentHash<Outcome>(o);
+}
+
+constructor(game: Bytes<32>, a: Bytes<32>, b: Bytes<32>, ownerPk: Bytes<32>, token: Bytes<32>, seconds: Uint<64>) {
+  const zero = default<Bytes<32>>;
+  assert(disclose(a) != zero && disclose(b) != zero && disclose(ownerPk) != zero, "keys can't be empty");
+  assert(disclose(a) != disclose(b), "the two judges must differ");
+  assert(disclose(ownerPk) != disclose(a) && disclose(ownerPk) != disclose(b), "the owner can't be a judge");
+  assert(disclose(seconds) > 0 && disclose(seconds) <= 2592000, "window must be 1 s to 30 days");
+  gameHash = disclose(game);
+  judgeA = disclose(a);
+  judgeB = disclose(b);
+  owner = disclose(ownerPk);
+  color = disclose(token);
+  window = disclose(seconds);
+  open = true;
+}
+
+// Anyone can add to the pot. It goes to the next race that is won.
+export circuit fund(amount: Uint<128>): [] {
+  assert(open, "season over");
+  receiveUnshielded(color, disclose(amount));
+}
+
+// A registered judge attests one race's outcome. Each judge attests a race once.
+export circuit attest(sk: Bytes<32>, o: Outcome): [] {
+  assert(open, "season over");
+  const out = disclose(o);
+  const r = out.race;
+  assert(!settled.member(r) && !vetoed.member(r), "race already closed");
+  assert(out.end <= 4102444800, "end time out of range");  // before 2100: no overflow below
+  const h = outcomeHash(out);
+  const k = judgeKey(sk);
+  // Which judge attested is public by design: each judge's attestations are listed.
+  if (disclose(k == judgeA)) {
+    assert(!byA.member(r), "judge A already attested");
+    byA.insert(r, h);
+  } else {
+    assert(k == judgeB, "not a registered judge");
+    assert(!byB.member(r), "judge B already attested");
+    byB.insert(r, h);
+  }
+  // Both judges must attest the same end, so neither alone sets the veto window.
+  if (ends.member(r)) {
+    assert(ends.lookup(r) == out.end, "end differs from the other judge's");
+  } else {
+    ends.insert(r, out.end);
+  }
+  if (byA.member(r) && byB.member(r)) {
+    if (byA.lookup(r) == byB.lookup(r)) {
+      agreedUnsettled.increment(1);
+    }
+  }
+}
+
+// Anyone can settle a race once both judges attested the same outcome and the window
+// has passed. A won race pays the whole pot to the winner; otherwise the pot rolls over.
+// Settling still works after the season is closed, so a closed season can't strand a winner.
+export circuit settle(o: Outcome, to: UserAddress): [] {
+  const out = disclose(o);
+  const r = out.race;
+  assert(!settled.member(r), "race already settled");
+  assert(!vetoed.member(r), "race vetoed");
+  assert(byA.member(r) && byB.member(r), "both judges must attest");
+  const h = outcomeHash(out);
+  assert(byA.lookup(r) == h, "not the attested outcome");
+  assert(byB.lookup(r) == h, "the judges disagree");
+  assert(blockTimeGte((out.end + window) as Uint<64>), "challenge window still open");
+  settled.insert(r);
+  agreedUnsettled.decrement(1);
+  if (out.hasWinner) {
+    const dest = disclose(to);
+    assert(dest.bytes == out.winner, "not the winner's address");
+    payouts.increment(1);
+    sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(dest));
+  } else {
+    rollovers.increment(1);
+  }
+}
+
+// The owner stops a disputed race, only inside its challenge window. It never pays;
+// the pot rolls over.
+export circuit veto(sk: Bytes<32>, race: Bytes<32>): [] {
+  assert(owner == ownerKey(sk), "not the owner");
+  const r = disclose(race);
+  assert(!settled.member(r) && !vetoed.member(r), "race already closed");
+  assert(ends.member(r), "nothing attested for this race");
+  assert(!blockTimeGte((ends.lookup(r) + window) as Uint<64>), "the challenge window has passed");
+  if (byA.member(r) && byB.member(r)) {
+    if (byA.lookup(r) == byB.lookup(r)) {
+      agreedUnsettled.decrement(1);
+    }
+  }
+  vetoed.insert(r);
+}
+
+// The owner ends the season and takes back what is left of the pot. Not while a race
+// the judges agree on is still waiting to be settled: its winner is paid first.
+export circuit close(sk: Bytes<32>, to: UserAddress): [] {
+  assert(open, "already closed");
+  assert(owner == ownerKey(sk), "not the owner");
+  assert(agreedUnsettled.read() == 0, "a race is waiting to be settled");
+  open = false;
+  sendUnshielded(color, unshieldedBalance(color), right<ContractAddress, UserAddress>(disclose(to)));
+}

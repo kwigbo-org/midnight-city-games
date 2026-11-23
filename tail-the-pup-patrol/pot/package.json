@@ -1,0 +1,24 @@
+{
+  "name": "tail-pot-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.0.0" },
+  "dependencies": {
+    "@midnight-ntwrk/compact-runtime": "0.21.0",
+    "@midnight-ntwrk/midnight-js-contracts": "5.0.0",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "5.0.0",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "5.0.0",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "5.0.0",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "5.0.0",
+    "@midnight-ntwrk/midnight-js-protocol": "5.0.0",
+    "@midnight-ntwrk/midnight-js-types": "5.0.0",
+    "@midnight-ntwrk/midnight-js-utils": "5.0.0",
+    "@midnight-ntwrk/testkit-js": "5.0.0",
+    "@midnight-ntwrk/wallet-sdk": "2.0.0",
+    "@midnight-ntwrk/wallet-sdk-address-format": "4.0.0",
+    "@midnightntwrk/wallet-sdk": "2.0.0",
+    "rxjs": "7.8.2",
+    "ws": "8.21.3"
+  }
+}

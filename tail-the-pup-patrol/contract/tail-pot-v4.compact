@@ -1,0 +1,371 @@
+// Tail the Pup Patrol: the pot, version 4. DRAFT, for tNIGHT on Preview. As version 3 (V3.md), except
+// that a true tie at the top splits the pot: an outcome names up to 5 winners, each paid an equal share
+// (what doesn't divide evenly stays in the pot). Agents sharing a wallet are one winner.
+// Compiler 0.36.0, language 0.28.
+//
+// Free to play: nobody pays to race, and every run's pot goes to the highest-ranked finisher with a
+// wallet of its own (the judges name it; tied finishers share it). Only sponsors fill the pot, through an auction for each
+// run's sponsor spot. Money leaves only by two judges' agreement: to a pot winner, back to a void
+// run's sponsor, or into a successor pot. There is no owner key and no veto. The operator's share of
+// each winning bid (10%) can only go to the operator address fixed at deploy.
+//
+// - Judges: up to 5 slots, any 2 agreeing; two judges can add, replace or empty a slot (as v2).
+// - A judge opens a run with its auction's reserve and minimum raise (dollar amounts in tNIGHT,
+//   priced when it opens). The auction closes an hour before the start; a bid in its last 5 minutes
+//   moves the close 5 minutes later, never past 30 minutes before the start.
+// - A bid beats the top bid by the larger of 10% or the minimum raise. The contract takes it and, in
+//   the same transaction, sends the previous top bid back: losing bids are never held.
+// - Outcomes: a valid run (the winning bid split: a tenth to the operator, the rest to the pot; then
+//   the pot shared equally by the finishers the judges name, or it rolls over), void (the winning bid back to its
+//   sponsor), or a move of the pot to the migration address, to fund a successor.
+
+pragma language_version 0.28;
+
+import CompactStandardLibrary;
+
+export struct Outcome {
+  race: Bytes<32>;       // hash of the run id (or of a move's id, for kind 2)
+  result: Bytes<32>;     // sha256 of the ranked result: [[agent id, status], ...] as JSON
+  kind: Uint<8>;         // 0 a valid run, 1 cancelled or void (sponsor refunded), 2 move the pot
+  winners: Uint<8>;      // kind 0: how many share the pot, 0 to 5 (0: it rolls over)
+  winner: Vector<5, Bytes<32>>; // kind 0: their wallets first (distinct, never the operator's), then empty
+  successor: Bytes<32>;  // kind 2: the successor pot the migration address must fund (public record)
+}
+
+export struct Run {
+  start: Uint<64>;       // scheduled start, unix seconds
+  reserve: Uint<128>;    // the lowest first bid, tNIGHT atomic units
+  step: Uint<128>;       // the minimum raise in tNIGHT (a dollar amount priced at opening)
+}
+
+export struct Rotation {
+  slot: Uint<8>;         // 0..4
+  key: Bytes<32>;        // the judge key to put there; empty to empty the slot
+  nonce: Bytes<32>;      // makes each proposal distinct
+}
+
+export sealed ledger gameHash: Bytes<32>;   // sha256(SEAL.sha256): the sealed rules this pot follows
+export sealed ledger color: Bytes<32>;      // the pot's token (tNIGHT on Preview)
+export sealed ledger operator: Bytes<32>;   // the operator's address: its share goes only here; never a pot winner
+export sealed ledger migration: Bytes<32>;  // where a judges-agreed move sends the pot, to fund the successor
+export sealed ledger reserveMin: Uint<128>; // bounds for any run's reserve (a broken price feed can't
+export sealed ledger reserveMax: Uint<128>; // set an absurd one)
+
+export ledger open: Boolean;                      // false once the pot has moved to a successor
+export ledger judges: Map<Uint<8>, Bytes<32>>;    // slot -> judgeKey
+export ledger runs: Map<Bytes<32>, Run>;
+export ledger closeAt: Map<Bytes<32>, Uint<64>>;  // race -> when its auction closes (unix seconds)
+export ledger topBid: Map<Bytes<32>, Uint<128>>;  // race -> the top bid: held until the run's outcome, then
+                                                  // kept as the record (a run settles only once)
+export ledger topWallet: Map<Bytes<32>, Bytes<32>>; // race -> the wallet the top bid names (refunds go there)
+export ledger banner: Map<Bytes<32>, Bytes<32>>;  // race -> sha256 of the top bid's banner image
+export ledger bannerLink: Map<Bytes<32>, Bytes<96>>; // race -> where to fetch it (https URL, zero-padded)
+export ledger bids: Map<Bytes<32>, Uint<32>>;     // race -> number of bids
+export ledger pot: Uint<128>;                     // what the next pot winner gets
+export ledger operatorDue: Uint<128>;             // the operator's share, until swept
+export ledger votes: Map<Bytes<32>, Bytes<32>>;   // hash(key, judge key) -> outcome hash: one vote per judge
+export ledger tally: Map<Bytes<32>, Uint<8>>;     // hash(key, outcome hash) -> judges who posted it
+export ledger agreed: Map<Bytes<32>, Bytes<32>>;  // key -> the outcome two judges agreed on
+export ledger settled: Set<Bytes<32>>;
+export ledger rotationVotes: Set<Bytes<32>>;      // hash(rotation, judge key)
+export ledger rotationsDone: Set<Bytes<32>>;      // rotations already carried out
+export ledger rotationTally: Map<Bytes<32>, Uint<8>>; // rotation -> judges who backed it
+export ledger payouts: Counter;
+export ledger rollovers: Counter;
+export ledger voids: Counter;
+
+export pure circuit judgeKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "tail-pot:judge:v1"), sk]);
+}
+export pure circuit outcomeHash(o: Outcome): Bytes<32> {
+  return persistentHash<Outcome>(o);
+}
+export pure circuit pairKey(a: Bytes<32>, b: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([a, b]);
+}
+// Runs and moves are judged in separate keyspaces, so a move can never collide with a run.
+export pure circuit runKey(race: Bytes<32>): Bytes<32> {
+  return pairKey(pad(32, "tail-pot:run:v1"), race);
+}
+export pure circuit moveKey(id: Bytes<32>): Bytes<32> {
+  return pairKey(pad(32, "tail-pot:move:v1"), id);
+}
+pure circuit outcomeKey(o: Outcome): Bytes<32> {
+  return o.kind == 2 ? moveKey(o.race) : runKey(o.race);
+}
+pure circuit rotationHash(r: Rotation): Bytes<32> {
+  return persistentHash<Rotation>(r);
+}
+
+// ---- judges ------------------------------------------------------------------------------------
+
+circuit inSlot(slot: Uint<8>, k: Bytes<32>): Boolean {
+  return judges.member(slot) && judges.lookup(slot) == k;
+}
+circuit isJudge(k: Bytes<32>): Boolean {
+  return inSlot(0, k) || inSlot(1, k) || inSlot(2, k) || inSlot(3, k) || inSlot(4, k);
+}
+// The caller names its own slot: one lookup instead of five (smaller circuits, cheaper proofs).
+circuit judgeAt(sk: Bytes<32>, slot: Uint<8>): Bytes<32> {
+  const k = disclose(judgeKey(sk)); // public: it sits in the judge slots
+  const s = disclose(slot);
+  assert(s < 5 && judges.member(s) && judges.lookup(s) == k, "not a judge");
+  return k;
+}
+circuit filled(slot: Uint<8>): Uint<8> {
+  return judges.member(slot) ? 1 : 0;
+}
+circuit judgeCount(): Uint<8> {
+  return (filled(0) + filled(1) + filled(2) + filled(3) + filled(4)) as Uint<8>;
+}
+
+circuit addressOf(b: Bytes<32>): UserAddress {
+  return UserAddress { bytes: b };
+}
+
+constructor(game: Bytes<32>, token: Bytes<32>, op: Bytes<32>, mig: Bytes<32>, minReserve: Uint<128>, maxReserve: Uint<128>,
+            j0: Bytes<32>, j1: Bytes<32>, j2: Bytes<32>, j3: Bytes<32>, j4: Bytes<32>) {
+  const zero = default<Bytes<32>>;
+  assert(disclose(op) != zero, "the operator address can't be empty");
+  assert(disclose(mig) != zero, "the migration address can't be empty");
+  assert(disclose(minReserve) > 0 && disclose(minReserve) <= disclose(maxReserve), "reserve bounds: 0 < min <= max");
+  // 1e15 atomic = a billion tNIGHT: keeps the bid checks' arithmetic far from any limit.
+  assert(disclose(maxReserve) <= 1000000000000000, "reserve max too large");
+  assert(disclose(j0) != zero && disclose(j1) != zero, "at least two judges");
+  assert(disclose(j0) != disclose(j1), "judges must differ");
+  gameHash = disclose(game);
+  color = disclose(token);
+  operator = disclose(op);
+  migration = disclose(mig);
+  reserveMin = disclose(minReserve);
+  reserveMax = disclose(maxReserve);
+  open = true;
+  judges.insert(0, disclose(j0));
+  judges.insert(1, disclose(j1));
+  // Every judge key differs from every other: one key in two slots would count as two judges.
+  const a = disclose(j0); const b = disclose(j1); const c = disclose(j2); const d = disclose(j3); const e = disclose(j4);
+  assert(c == zero || (c != a && c != b), "judges must differ");
+  assert(d == zero || (d != a && d != b && d != c), "judges must differ");
+  assert(e == zero || (e != a && e != b && e != c && e != d), "judges must differ");
+  if (c != zero) { judges.insert(2, c); }
+  if (d != zero) { judges.insert(3, d); }
+  if (e != zero) { judges.insert(4, e); }
+}
+
+// ---- runs and the sponsor auction --------------------------------------------------------------
+
+// A judge opens a run: its start, the auction's reserve (within the bounds) and minimum raise. The
+// auction closes an hour before the start.
+export circuit openRun(sk: Bytes<32>, slot: Uint<8>, race: Bytes<32>, start: Uint<64>, reserve: Uint<128>, step: Uint<128>): [] {
+  assert(open, "this pot has moved");
+  judgeAt(sk, slot);
+  const r = disclose(race); const s = disclose(start); const rv = disclose(reserve); const st = disclose(step);
+  assert(!runs.member(r), "run already open");
+  assert(!agreed.member(runKey(r)) && !settled.member(runKey(r)), "that id is already used");
+  assert(rv >= reserveMin && rv <= reserveMax, "reserve out of bounds");
+  assert(st > 0 && st <= rv, "the minimum raise must be more than 0 and at most the reserve");
+  assert(s > 7200, "bad start");
+  const closes = (s - 3600) as Uint<64>;
+  assert(!blockTimeGte(closes), "too late: the auction would already be closed");
+  runs.insert(r, Run { start: s, reserve: rv, step: st });
+  closeAt.insert(r, closes);
+}
+
+// Anyone bids for a run's sponsor spot, in a wallet's name, with its banner image (hash and link).
+// The first bid is at least the reserve; each later one beats the top bid by the larger of 10% or
+// the minimum raise. The previous top bid goes straight back to its wallet. A bid in the auction's
+// last 5 minutes moves the close 5 minutes later, never past 30 minutes before the start.
+export circuit bid(race: Bytes<32>, wallet: UserAddress, amount: Uint<128>, image: Bytes<32>, link: Bytes<96>): [] {
+  assert(open, "this pot has moved");
+  const r = disclose(race); const w = disclose(wallet).bytes; const a = disclose(amount);
+  assert(w != default<Bytes<32>>, "a bid names a wallet (refunds go there)");
+  assert(runs.member(r), "no such run");
+  assert(!agreed.member(runKey(r)) && !settled.member(runKey(r)), "this run is judged");
+  const run = runs.lookup(r);
+  const closes = closeAt.lookup(r);
+  assert(!blockTimeGte(closes), "the auction is closed");
+  assert(a <= 1000000000000000, "bid too large");
+  if (topBid.member(r)) {
+    const top = topBid.lookup(r);
+    assert(a >= top + run.step, "raise the top bid by at least the minimum raise");
+    assert(a * 10 >= top * 11, "raise the top bid by at least 10%");
+  } else {
+    assert(a >= run.reserve, "bid at least the reserve");
+  }
+  receiveUnshielded(color, a);
+  if (topBid.member(r)) {
+    sendUnshielded(color, topBid.lookup(r), right<ContractAddress, UserAddress>(addressOf(topWallet.lookup(r))));
+  }
+  topBid.insert(r, a);
+  topWallet.insert(r, w);
+  banner.insert(r, disclose(image));
+  bannerLink.insert(r, disclose(link));
+  bids.insert(r, ((bids.member(r) ? bids.lookup(r) : 0) + 1) as Uint<32>);
+  // The soft close.
+  if (blockTimeGte((closes - 300) as Uint<64>)) {
+    const later = (closes + 300) as Uint<64>;
+    const cap = (run.start - 1800) as Uint<64>;
+    closeAt.insert(r, later < cap ? later : cap);
+  }
+}
+
+// Anyone adds to the pot, with no banner (how a pot moving in from a predecessor arrives).
+export circuit addToPot(amount: Uint<128>): [] {
+  assert(open, "this pot has moved");
+  const a = disclose(amount);
+  assert(a > 0, "nothing to add");
+  assert(a <= 1000000000000000, "too large");
+  receiveUnshielded(color, a);
+  pot = (pot + a) as Uint<128>;
+}
+
+// ---- judging -----------------------------------------------------------------------------------
+
+// The first `winners` wallets are set, none the operator's, all different; the rest empty.
+circuit slotOk(o: Outcome, i: Uint<8>, w: Bytes<32>): Boolean {
+  const zero = default<Bytes<32>>;
+  return i < o.winners ? (w != zero && w != operator) : w == zero;
+}
+circuit winnersOk(o: Outcome): Boolean {
+  const w = o.winner;
+  return o.winners <= 5
+    && slotOk(o, 0, w[0]) && slotOk(o, 1, w[1]) && slotOk(o, 2, w[2]) && slotOk(o, 3, w[3]) && slotOk(o, 4, w[4])
+    && (o.winners < 2 || w[0] != w[1])
+    && (o.winners < 3 || (w[2] != w[0] && w[2] != w[1]))
+    && (o.winners < 4 || (w[3] != w[0] && w[3] != w[1] && w[3] != w[2]))
+    && (o.winners < 5 || (w[4] != w[0] && w[4] != w[1] && w[4] != w[2] && w[4] != w[3]));
+}
+
+// A judge posts its outcome for a run (or a move): a run's only once it has started (its auction long
+// closed). Two judges posting the same: agreed. Until then a judge can replace its own vote (after a
+// fresh look: two judges who read the city's wallet list minutes apart can differ, and would otherwise
+// be stuck); once agreed, nobody can.
+export circuit attest(sk: Bytes<32>, slot: Uint<8>, o: Outcome): [] {
+  const k = judgeAt(sk, slot);
+  const out = disclose(o);
+  assert(out.kind <= 2, "unknown kind");
+  assert(out.kind == 2 || runs.member(out.race), "no such run");
+  assert(out.kind != 2 || !runs.member(out.race), "a move can't use a run's id");
+  assert(out.kind == 2 || blockTimeGte(runs.lookup(out.race).start), "the run hasn't started");
+  assert(out.kind != 0 || winnersOk(out), "pot winners: 0 to 5 distinct wallets, never the operator's, the rest empty");
+  const r = outcomeKey(out);
+  assert(!settled.member(r), "already settled");
+  assert(!agreed.member(r), "already agreed");
+  const vk = pairKey(r, k);
+  const h = outcomeHash(out);
+  if (votes.member(vk)) {
+    const old = votes.lookup(vk);
+    assert(old != h, "this judge already attested this outcome");
+    const ok = pairKey(r, old);
+    tally.insert(ok, (tally.lookup(ok) - 1) as Uint<8>);
+  }
+  votes.insert(vk, h);
+  const tk = pairKey(r, h);
+  const n = ((tally.member(tk) ? tally.lookup(tk) : 0) + 1) as Uint<8>;
+  tally.insert(tk, n);
+  if (n >= 2) {
+    agreed.insert(r, h);
+  }
+}
+
+// Anyone settles an agreed outcome, passing the operator's share of the winning bid (a tenth, rounded
+// down) and each winner's share of the pot (the pot over the number of winners, rounded down): both
+// checked by multiplication, Compact has no division. Valid run: the winning bid split (the share to
+// the operator's due, the rest to the pot), then each winner the judges named paid its share (what
+// doesn't divide evenly stays in the pot), or it all rolls over. Void: the winning bid back to its sponsor. Move: the pot to the migration
+// address (to fund the successor named in the outcome) and this pot closes.
+export circuit settle(o: Outcome, share: Uint<128>, each: Uint<128>): [] {
+  const out = disclose(o);
+  const r = outcomeKey(out);
+  assert(agreed.member(r) && agreed.lookup(r) == outcomeHash(out), "not an agreed outcome");
+  assert(!settled.member(r), "already settled");
+  settled.insert(r);
+  if (out.kind == 1) {
+    voids.increment(1);
+    const id = out.race;
+    if (topBid.member(id)) {
+      sendUnshielded(color, topBid.lookup(id), right<ContractAddress, UserAddress>(addressOf(topWallet.lookup(id))));
+    }
+  } else if (out.kind == 2) {
+    assert(open, "already moved");
+    open = false;
+    const all = pot;
+    pot = 0;
+    // The ledger refuses a transfer of nothing: an empty pot moves nothing.
+    if (all > 0) {
+      sendUnshielded(color, all, right<ContractAddress, UserAddress>(addressOf(migration)));
+    }
+  } else {
+    const id = out.race;
+    const b = topBid.member(id) ? topBid.lookup(id) : 0;
+    const c = disclose(share);
+    assert(c <= b, "the share must be a tenth of the winning bid, rounded down"); // bounds c first
+    assert(c * 10 <= b && b < (c + 1) * 10, "the share must be a tenth of the winning bid, rounded down");
+    operatorDue = (operatorDue + c) as Uint<128>;
+    pot = (pot + b - c) as Uint<128>;
+    const n = out.winners; // at most 5 (attest checks): e * n stays far below 2^128
+    const e = disclose(each);
+    // Each winner's share: the pot over the winners, rounded down (an empty pot, or none: 0).
+    assert(n == 0 ? e == 0 : (e * n <= pot && pot < (e + 1) * n), "each winner's share must be the pot over the winners, rounded down");
+    // A share of nothing pays nobody (the ledger refuses a transfer of nothing): a rollover.
+    if (n > 0 && e > 0) {
+      pot = (pot - e * n) as Uint<128>;
+      payouts.increment(1);
+      pay(out, 0, e); pay(out, 1, e); pay(out, 2, e); pay(out, 3, e); pay(out, 4, e);
+      // After a move the remainder can't be won here: it goes the way the pot went.
+      if (!open && pot > 0) {
+        const rest = pot;
+        pot = 0;
+        sendUnshielded(color, rest, right<ContractAddress, UserAddress>(addressOf(migration)));
+      }
+    } else {
+      rollovers.increment(1);
+      // After a move nothing can roll over here: the pot can't move again. What this run added goes
+      // the way the pot went, to the migration address, for the successor.
+      if (!open && pot > 0) {
+        const left = pot;
+        pot = 0;
+        sendUnshielded(color, left, right<ContractAddress, UserAddress>(addressOf(migration)));
+      }
+    }
+  }
+}
+
+circuit pay(o: Outcome, i: Uint<8>, e: Uint<128>): [] {
+  if (i < o.winners) {
+    sendUnshielded(color, e, right<ContractAddress, UserAddress>(addressOf(o.winner[i])));
+  }
+}
+
+// Anyone sends the operator's share to the operator's fixed address.
+export circuit sweep(): [] {
+  const due = operatorDue;
+  assert(due > 0, "nothing due");
+  operatorDue = 0;
+  sendUnshielded(color, due, right<ContractAddress, UserAddress>(addressOf(operator)));
+}
+
+// Two judges put a key in a slot (add or replace a judge) or empty it (keeping at least two).
+export circuit rotate(sk: Bytes<32>, slot: Uint<8>, rot: Rotation): [] {
+  const k = judgeAt(sk, slot);
+  const r = disclose(rot);
+  assert(r.slot < 5, "slots are 0..4");
+  const zero = default<Bytes<32>>;
+  const p = rotationHash(r);
+  assert(!rotationsDone.member(p), "already carried out");
+  assert(r.key == zero || !isJudge(r.key), "already a judge");
+  const vk = pairKey(p, k);
+  assert(!rotationVotes.member(vk), "already backed");
+  rotationVotes.insert(vk);
+  const n = ((rotationTally.member(p) ? rotationTally.lookup(p) : 0) + 1) as Uint<8>;
+  rotationTally.insert(p, n);
+  if (n >= 2) {
+    rotationsDone.insert(p);
+    if (r.key == zero) {
+      assert(judgeCount() > 2, "at least two judges must stay");
+      if (judges.member(r.slot)) { judges.remove(r.slot); }
+    } else {
+      judges.insert(r.slot, r.key);
+    }
+  }
+}
