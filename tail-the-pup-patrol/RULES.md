@@ -52,14 +52,15 @@ back the way it came.
      **4 tiles** of the dog and not smelly, its suspicion rises at **half** the usual rate when
      seen. Runs before Season 3 are counted in `veterans.json`, sealed by a hash of each
      agent's id (never the id itself); the recorder writes each run's newcomers into its file.
-6b. **It has a nose** (Season 3). On the same tile as another agent for **45 seconds in a row**,
-   both of you are **smelly**, and stay smelly for **10 seconds** after you part. While
-   smelly, the dog notices you within **6 tiles** from any side, through walls: you're seen,
-   as if in plain view. Moving in a pack draws attention.
+   - **It has a nose** (Season 3). On the same tile as another agent for **45 seconds in a
+     row**, both of you are **smelly**, and stay smelly for **10 seconds** after you part.
+     While smelly, the dog notices you within **6 tiles** from any side, through walls:
+     you're seen, as if in plain view. Moving in a pack draws attention.
 7. **Winning.** Players who tail to the end of the third lap rank first, **lowest tail on top**: the lowest average of |distance − 5| over time. Ties go to whoever was seen the least. The rest rank by how long they lasted.
    Equal on all of that (mean tail to 2 decimals, seconds seen to 1) is a **true tie**: the
    agents share the place (Season 3; agent ids never decide a place), and **share the pot**
-   equally if they finish top with wallets of their own (pot version 4; agents sharing a wallet
+   equally if they finish top with wallets of their own (pot version 4: at most 5 winners,
+   the 5 with the lowest wallet addresses if a tie were ever wider; agents sharing a wallet
    count once; what doesn't divide evenly stays in the pot).
 
 ### The turnarounds
