@@ -28,7 +28,7 @@ export TAIL_POT_KEYS=~/midnight-keys/judge-a.json TAIL_POT_WALLET=~/midnight-key
 cleanup() { docker rm -f judge-a-proof >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 cleanup
-docker run -d --name judge-a-proof --memory 900m --memory-swap 900m -p 127.0.0.1:6300:6300 midnightntwrk/proof-server:9.0.1 >/dev/null
+docker run -d --name judge-a-proof --memory 2g --memory-swap 2g -p 127.0.0.1:6300:6300 midnightntwrk/proof-server:9.0.1 >/dev/null
 for i in $(seq 30); do curl -sf -m 2 http://127.0.0.1:6300/version >/dev/null && break; sleep 2; done
 raw=$(timeout 1500 $node call-v3.mjs settle "$race" 2>&1) && rc=0 || rc=$?
 grep -v "RPC-CORE\|^\s*at \|API/INIT\|INFO" <<<"$raw" || true

@@ -67,9 +67,41 @@ export function matchaLevel(rules, matcha) {
   return level;
 }
 export function senses(rules, pos) {
-  const net = fishThrough(rules, pos?.fish) - matchaLevel(rules, pos?.matcha), M = rules.spot.matcha;
+  const net = fishThrough(rules, pos?.fish) - matchaLevel(rules, pos?.matcha), M = rules.spot.matcha, F = rules.spot.fish;
   const reach = net < 0 && M ? Math.max(M.minView, rules.spot.frontDistance + net * M.viewLossPerLevel) : rules.spot.frontDistance;
-  return { through: Math.max(0, net), reach };
+  // Season 4: fish carried (net of matcha) also widens the ring where it notices you from any side.
+  const ring = F?.ringPerLevel ? Math.min(F.maxRing ?? Infinity, rules.spot.minDistance + Math.max(0, net) * F.ringPerLevel) : rules.spot.minDistance;
+  return { through: Math.max(0, net), reach, ring };
+}
+
+// Season 4, the back glance, from a public randomness beacon (drand quicknet: a value every
+// G.beacon.period seconds that nobody can know before it's published, and anyone can verify). Each round
+// may begin a glance: the chance is G.perAgentPerSecond for every agent within G.crowdDistance of the dog
+// (a crowd draws its attention), at most G.maxPerSecond, over the round's seconds. It takes effect
+// G.cueSeconds after the round's time (the cue) and lasts G.seconds.
+export const roundAt = (B, ms) => Math.floor((ms / 1000 - B.genesis) / B.period) + 1;
+export const roundTime = (B, r) => (B.genesis + (r - 1) * B.period) * 1000;
+export function glanceChance(G, crowd) {
+  const perSecond = Math.min(G.maxPerSecond, G.perAgentPerSecond * crowd);
+  return 1 - (1 - perSecond) ** G.beacon.period;
+}
+// Whether round r begins a glance: its randomness (hex) read as a fraction in [0, 1), against the chance.
+export function glanceBegins(G, randomness, crowd) {
+  if (!G || typeof randomness !== 'string' || !/^[0-9a-f]{64}$/.test(randomness)) return false;
+  return parseInt(randomness.slice(0, 13), 16) / 2 ** 52 < glanceChance(G, crowd);
+}
+// The glances so far, as begin times (ms): 'cue' between a begin and cueSeconds after, 'looking' for
+// the G.seconds after that, else null.
+export function glanceState(G, begins, ms) {
+  if (!G) return null;
+  let state = null;
+  for (let k = begins.length - 1; k >= 0; k--) {
+    const at = ms - begins[k];
+    if (at >= (G.cueSeconds + G.seconds) * 1000) break; // over: cueSeconds + seconds after it began
+    if (at >= G.cueSeconds * 1000) return 'looking';
+    if (at >= 0) state = 'cue';
+  }
+  return state;
 }
 function sightFor(rules, grid) {
   if (!rules.spot.lineOfSight) return null;
@@ -127,9 +159,23 @@ function sharing(agents, id, pos) {
 }
 
 // One reading for one player. dt: seconds since the previous usable reading (capped).
-function step(rules, p, pos, pup, [hx, hy], ms, dt, sees, agents = null) {
-  const S = rules.spot, U = rules.suspicion, SM = rules.smell, NC = rules.newcomer;
+function step(rules, p, pos, pup, [hx, hy], ms, dt, sees, agents = null, { glance = false, pupPrev = null } = {}) {
+  const S = rules.spot, U = rules.suspicion, SM = rules.smell, NC = rules.newcomer, PM = rules.pace;
   const d = dist(pos, pup);
+  // Season 4, pace matching: within PM.distance, stepping the same way as the dog on the same reading,
+  // PM.seconds in a row: it hears you.
+  let heard = false;
+  if (PM) {
+    const mv = (a, b) => (a && b && a.spaceId === b.spaceId ? [Math.sign(b.x - a.x), Math.sign(b.y - a.y)] : null);
+    const me = mv(p.prevPos, pos), it = mv(pupPrev, pup);
+    // Same step (both moving the same way) adds; both standing still keeps the count; anything else resets it.
+    const still = me && it && !me[0] && !me[1] && !it[0] && !it[1];
+    const lock = me && it && (it[0] || it[1]) && me[0] === it[0] && me[1] === it[1] && d <= PM.distance;
+    p.lockFor = lock ? (p.lockFor ?? 0) + dt : still && d <= PM.distance ? (p.lockFor ?? 0) : 0;
+    heard = p.lockFor >= PM.seconds - 1e-9;
+    if (heard) p.heardSeconds = (p.heardSeconds ?? 0) + dt;
+  }
+  p.prevPos = pos;
   // Smell (Season 3): afterSeconds in a row on another agent's tile, then smelly until lingerSeconds after.
   let smelly = false;
   if (SM) {
@@ -144,8 +190,14 @@ function step(rules, p, pos, pup, [hx, hy], ms, dt, sees, agents = null) {
   const cosView = Math.cos(((S.viewAngle ?? 90) * Math.PI) / 180);
   const front = Number.isFinite(d) && d > 0 && (hx || hy)
     ? (hx * (pos.x - pup.x) + hy * (pos.y - pup.y)) / (Math.hypot(hx, hy) * d) > cosView + 1e-9 : false;
-  const { through, reach } = senses(rules, pos);
-  const seen = d < S.minDistance || (d <= reach && front && (!sees || sees(pup, pos, through)))
+  const { through, reach, ring } = senses(rules, pos);
+  // Season 4, the back glance: this second it looks behind too, within G.distance, if nothing blocks it.
+  const G = rules.glance;
+  // Behind needs a heading: a dog standing still faces nowhere in particular.
+  // Newcomers are ignored by glances.
+  const glimpsed = !!(glance && G && !p.isNew && (hx || hy) && Number.isFinite(d) && d > 0 && !front && d <= G.distance && (!sees || sees(pup, pos, through)));
+  if (glimpsed) p.glancedSeconds = (p.glancedSeconds ?? 0) + dt;
+  const seen = d < ring || (d <= reach && front && (!sees || sees(pup, pos, through))) || glimpsed || heard
     || (smelly && d <= SM.noseDistance); // the nose: from any side, through anything
   // A newcomer close in (within NC.within) and not smelly: suspicion rises at NC.suspicionFactor.
   const rate = p.isNew && NC && !smelly && d <= NC.within ? NC.suspicionFactor : 1;
@@ -181,6 +233,7 @@ const summary = (p, endMs) => ({
   seenSeconds: round(p.seenSeconds, 1), sightings: p.sightings, maxSuspicion: round(p.maxSus),
   meanTail: p.tailT ? round(p.tailSum / p.tailT) : null,
   ...(p.isNew ? { newcomer: true } : {}), ...(p.smellySeconds ? { smellySeconds: round(p.smellySeconds, 1) } : {}),
+  ...(p.glancedSeconds ? { glancedSeconds: round(p.glancedSeconds, 1) } : {}), ...(p.heardSeconds ? { heardSeconds: round(p.heardSeconds, 1) } : {}),
   spotsAt: p.spotsAt, trace: p.trace,
 });
 
@@ -235,6 +288,7 @@ export function judge(rules, run, { grid, newcomers = null } = {}) {
   for (const c of usable.slice(Math.max(0, startK - 20), startK)) heading(c.ms, pupAt(c)); // the dog's way at the start
   const gapMs = W.maxGapSeconds * 1000, stepCap = W.maxStepSeconds ?? 1;
   let laps = 0, end = null, voided = null, prev = usable[startK - 1], lastMs = start.ms;
+  const begins = []; let glanceNow = null, lastRound = null; // Season 4: the back glance's begins, its state now
   for (let j = start.i; j < list.length; j++) {
     const c = list[j];
     if (c.ms - lastMs > gapMs) { voided = c.t; break; } // no usable reading for too long
@@ -243,7 +297,18 @@ export function judge(rules, run, { grid, newcomers = null } = {}) {
     const pup = pupAt(c);
     const h = heading(c.ms, pup);
     const dt = c === start ? 0 : Math.min(stepCap, Math.max(0, (c.ms - prev.ms) / 1000)); // the run begins at the start reading
-    for (const p of players) if (!p.out) step(rules, p, own(readings[c.i].agents, p.id), pup, h, c.ms, dt, sees, readings[c.i].agents);
+    // Each beacon round is decided once, at the first usable reading in it: the crowd then, its randomness.
+    if (rules.glance) {
+      const B = rules.glance.beacon, r = roundAt(B, c.ms);
+      if (r !== lastRound) {
+        lastRound = r;
+        const crowd = Object.values(readings[c.i].agents ?? {}).filter((a) => dist(a, pup) <= rules.glance.crowdDistance).length;
+        if (glanceBegins(rules.glance, run.beacon?.[r], crowd)) begins.push(roundTime(B, r));
+      }
+    }
+    glanceNow = glanceState(rules.glance, begins, c.ms);
+    const glance = glanceNow === 'looking', pupPrev = prev ? pupAt(prev) : null;
+    for (const p of players) if (!p.out) step(rules, p, own(readings[c.i].agents, p.id), pup, h, c.ms, dt, sees, readings[c.i].agents, { glance, pupPrev });
     prev = c; lastMs = c.ms;
     if (laps >= W.laps) { end = c; break; }
   }
@@ -262,6 +327,7 @@ export function judge(rules, run, { grid, newcomers = null } = {}) {
   return {
     status, ...(voided ? { reason: `no usable reading for more than ${W.maxGapSeconds} s`, voidedAt: voided } : {}),
     startedAt: start.t, endedAt: end?.t ?? null, laps, routeLength: round(L, 1),
+    ...(rules.glance ? { glance: glanceNow } : {}), // 'cue' (about to look back), 'looking', or null: for the live page
     usableReadings: list.filter((c) => c.usable && c.i >= start.i && (!end || c.i <= end.i)).length,
     players: result,
   };
@@ -271,11 +337,16 @@ export function judge(rules, run, { grid, newcomers = null } = {}) {
 // sealed veterans list (runs before the season, keyed by key(id): sha256 of the id) plus each earlier
 // run of the season they played in.
 //   veterans: { key: runs }; seasonRuns: the season's earlier judged runs ({ result: { players } }).
+// Season 4: a run where the agent was lost or caught within NC.quickExitSeconds doesn't count: it
+// hardly played (the same test builds veterans.json, see veterans.mjs).
+export function countsAsRun(NC, p) {
+  return !(NC.quickExitSeconds && ['lost', 'caught'].includes(p.status) && typeof p.lastedSeconds === 'number' && p.lastedSeconds < NC.quickExitSeconds);
+}
 export function newcomersFor(rules, veterans, seasonRuns, candidates, key) {
   const NC = rules.newcomer;
   if (!NC) return new Set();
   const season = new Map();
-  for (const r of seasonRuns ?? []) for (const p of r?.result?.players ?? []) season.set(p.id, (season.get(p.id) ?? 0) + 1);
+  for (const r of seasonRuns ?? []) for (const p of r?.result?.players ?? []) if (countsAsRun(NC, p)) season.set(p.id, (season.get(p.id) ?? 0) + 1);
   const runsOf = (id) => (Number(veterans?.[key(id)]) || 0) + (season.get(id) ?? 0);
   return new Set([...candidates].filter((id) => runsOf(id) < NC.runs));
 }
@@ -285,7 +356,7 @@ export function newcomersFor(rules, veterans, seasonRuns, candidates, key) {
 // and ends when the player is lost or caught. After being caught, a player must get beyond
 // lostDistance before a new session can start. No usable reading for window.maxGapSeconds
 // ends every session without a verdict ("feed").
-export function practice(rules, readings, { grid } = {}) {
+export function practice(rules, readings, { grid, beacon = null } = {}) {
   const sees = sightFor(rules, grid);
   const { route, list } = checks(rules, readings);
   const L = route.length;
@@ -296,6 +367,7 @@ export function practice(rules, readings, { grid } = {}) {
   const sessions = [];
   const gapMs = rules.window.maxGapSeconds * 1000, stepCap = rules.window.maxStepSeconds ?? 1;
   let heading = headings(rules), prev = null;
+  const pbegins = []; let plast = null; // Season 4: the back glance in practice (from `beacon`, when given)
   const close = (id, s, why, ms) => {
     sessions.push({ ...summary(s.p, ms), start: new Date(s.p.t0).toISOString(), end: new Date(ms).toISOString(), why, laps: s.laps });
     live.delete(id);
@@ -311,9 +383,18 @@ export function practice(rules, readings, { grid } = {}) {
     const crossed = prev && c.s < prev.s - L / 2;
     const h = heading(c.ms, pup);
     const dt = prev ? Math.min(stepCap, Math.max(0, (c.ms - prev.ms) / 1000)) : 0;
+    if (rules.glance && beacon) {
+      const B = rules.glance.beacon, r = roundAt(B, c.ms);
+      if (r !== plast) {
+        plast = r;
+        const crowd = Object.values(agents).filter((a) => dist(a, pup) <= rules.glance.crowdDistance).length;
+        if (glanceBegins(rules.glance, beacon[r], crowd)) pbegins.push(roundTime(B, r));
+      }
+    }
+    const glanceNow = glanceState(rules.glance, pbegins, c.ms);
     for (const [id, s] of live) {
       if (crossed) s.laps++;
-      step(rules, s.p, own(agents, id), pup, h, c.ms, dt, sees, agents);
+      step(rules, s.p, own(agents, id), pup, h, c.ms, dt, sees, agents, { glance: glanceNow === 'looking', pupPrev: prev ? readings[prev.i].pup : null });
       if (s.p.out) close(id, s, s.p.out.why, c.ms);
     }
     for (const id of [...shaken]) if (!(dist(own(agents, id), pup) <= rules.lostDistance)) shaken.delete(id);

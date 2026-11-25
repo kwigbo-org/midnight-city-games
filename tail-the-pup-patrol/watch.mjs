@@ -13,7 +13,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { judge, checks } from './judge.mjs';
 import { CityFeed } from './feed.mjs';
-import { readingOf, newcomerChecker } from './record.mjs';
+import { readingOf, newcomerChecker, beaconFeed } from './record.mjs';
+import { timeSpan } from './beacon.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -74,10 +75,29 @@ const recording = new Map(); // id -> { run, readings, verdict }
 const recent = [];           // the last 8 s of readings
 let health = null, lastPublish = 0;
 
+// Season 4: the drand rounds the back glance uses, polled all the time (see record.mjs beaconFeed).
+const beacon = beaconFeed(rules);
+beacon?.start();
+const beaconFor = (readings) => (beacon && readings.length ? beacon.slice(...timeSpan(readings)) : {});
+const finishing = new Set(); // the finishes under way (--replay waits for them; each is removed only once its file is written or it failed)
+
+// The end of a run: its beacon rounds filled in from the beacon's history, judged once more, written.
+// If any of it fails, the run is left as it was, to be finished again on the next reading.
 function finish(id, rec, health_) {
+  rec.finishing = true;
+  const p = finishRun(id, rec, health_)
+    .catch((e) => { rec.finishing = false; console.error(new Date().toISOString(), `race ${id}: finishing failed, will retry: ${e.message}`); })
+    .finally(() => finishing.delete(p));
+  finishing.add(p);
+}
+async function finishRun(id, rec, health_) {
+  if (beacon && rec.readings.length) {
+    const missing = await beacon.fill(...timeSpan(rec.readings));
+    if (missing) console.log(`${new Date().toISOString()} race ${id}: ${missing} beacon rounds still missing`);
+  }
   const run = { game: rules.challenge, id, kind: rec.race.kind, scheduled: rec.race.at, recorder: 'watch.mjs', grid,
-    ...(rec.nc ? { newcomersFrom: rec.nc.from, newcomers: rec.newcomers } : {}), readings: rec.readings };
-  const v = rec.verdict; // the verdict already judged from these readings
+    ...(rec.nc ? { newcomersFrom: rec.nc.from, newcomers: rec.newcomers } : {}), ...beaconFor(rec.readings), readings: rec.readings };
+  const v = beacon ? judge(rules, run, { grid }) : rec.verdict; // with every round in, the final verdict
   write(raceFile(id), { ...run, rules, health: health_, result: v }); // the rules it was judged under: they can change between runs
   const idx = readJSON(path.join(WEB, 'runs', 'index.json'), []);
   idx.unshift({ id, kind: rec.race.kind, scheduled: rec.race.at, status: v.status, reason: v.reason ?? null, startedAt: v.startedAt ?? null, endedAt: v.endedAt ?? null, players: (v.players ?? []).map(noTrace) });
@@ -104,7 +124,7 @@ function ingest(s, everyone) {
     }
   }
   for (const [id, rec] of recording) {
-    if (rec.readings.at(-1)?.seq >= s.seq) continue;
+    if (rec.finishing || rec.readings.at(-1)?.seq >= s.seq) continue;
     rec.readings.push(s);
     if (rec.nc) rec.newcomers = rec.nc.check(s);
     fs.appendFileSync(path.join(DATA, 'runs', `${id}.jsonl`), JSON.stringify(s) + '\n');
@@ -115,8 +135,12 @@ function ingest(s, everyone) {
   lastPublish = now;
   let race = null;
   for (const [id, rec] of recording) {
-    rec.verdict = judge(rules, { scheduled: rec.race.at, readings: rec.readings, ...(rec.nc ? { newcomers: rec.newcomers } : {}) }, { grid });
-    if (['finished', 'void', 'cancelled'].includes(rec.verdict.status) || now > Date.parse(rec.race.at) + closeMs) { finish(id, rec, health); continue; }
+    if (rec.finishing) continue;
+    rec.verdict = judge(rules, { scheduled: rec.race.at, readings: rec.readings, ...(rec.nc ? { newcomers: rec.newcomers } : {}), ...beaconFor(rec.readings) }, { grid });
+    if (['finished', 'void', 'cancelled'].includes(rec.verdict.status) || now > Date.parse(rec.race.at) + closeMs) {
+      finish(id, rec, health);
+      continue;
+    }
     race = { id, kind: rec.race.kind, scheduled: rec.race.at, ...rec.verdict, players: (rec.verdict.players ?? []).map((p) => ({ ...noTrace(p), spotsAt: undefined, trace: p.trace.slice(-60) })) };
   }
   const c = checks(rules, recent.slice(-2)).list.at(-1);
@@ -140,6 +164,7 @@ if (replay) {
   const n = Number(opt('--readings', list.length));
   for (const s of list.slice(0, n)) ingest(s, null);
   console.log(`replayed ${Math.min(n, list.length)} readings`);
+  while (finishing.size) await Promise.all([...finishing]);
   process.exit(0);
 }
 

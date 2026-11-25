@@ -17,7 +17,7 @@
 // The judge secret is judgeA..judgeE in TAIL_POT_KEYS; the fees are paid by TAIL_POT_WALLET.
 import './pot-version.mjs';
 import { createHash, randomBytes } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 // The contract (v3 or v4) comes from the deployment file: pot-version.mjs, imported above.
 // 0.5 DUST over the wallet's fee estimate (lib/midnight.mjs): calls that take tNIGHT can be underpaid without it.
 process.env.TAIL_POT_FEE_OVERHEAD ??= '500000000000000';
@@ -25,7 +25,8 @@ const { submitCallTx } = await import('@midnight-ntwrk/midnight-js-contracts');
 const { KEYS, walletUp, ledgerNow, PRIVATE_STATE_ID } = await import('./pot.mjs');
 const v3 = await import('./pot-v3.mjs');
 const { chainTime } = await import('./lib/midnight.mjs');
-const V4 = process.env.TAIL_POT_CONTRACT === 'tail-pot-v4';
+const V4 = ['tail-pot-v4', 'tail-pot-v5'].includes(process.env.TAIL_POT_CONTRACT), V5 = process.env.TAIL_POT_CONTRACT === 'tail-pot-v5';
+const noRookie = () => (V5 ? { hasRookie: false, rookie: v3.ZERO } : {});
 
 const RUN_ID = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{4}-[a-z]+$/;
 const MOVE_ID = /^move-[0-9a-z-]{1,40}$/;
@@ -133,15 +134,34 @@ if (cmd === 'open-run') {
   const startsAt = Number(l.runs.lookup(race).start) * 1000;
   const now = (await chainTime()).getTime();
   need(now > startsAt + 60_000, `${runId} starts at ${new Date(startsAt).toISOString()} (chain time now ${new Date(now).toISOString()}): judge after the run`);
-  const r = await v3.outcomeV3(runId, JSON.parse(readFileSync(file, 'utf8')), dep.operator, dep.organizerAgentId ?? null);
+  const runJson = JSON.parse(readFileSync(file, 'utf8'));
+  // Season 4: no attest unless every beacon round of the run is there and verifies (beacon.mjs), so a
+  // missing or forged round can't pass as "no glance". Fix a gap with: node beacon.mjs <run file> --fill
+  {
+    // The beacon comes from this kit's sealed rules.json only, never from the run file (beacon.mjs trustedBeacon).
+    const here = new URL('.', import.meta.url);
+    const sealed = [new URL('rules.json', here), new URL('../rules.json', here)].find((u) => existsSync(u));
+    need(sealed || !V5, 'attest on a v5 pot needs Season 4\'s rules.json (and beacon.mjs) beside the tools');
+    const lib = existsSync(new URL('beacon.mjs', here)) ? './beacon.mjs' : '../beacon.mjs';
+    const { beaconGaps, trustedBeacon } = sealed ? await import(lib) : {};
+    let B = null;
+    try { B = sealed ? trustedBeacon(JSON.parse(readFileSync(sealed, 'utf8')), runJson) : null; } catch (e) { need(false, `${runId}: ${e.message}`); }
+    if (B) {
+      let gaps = []; try { gaps = beaconGaps(B, runJson); } catch (e) { need(false, `${runId}: ${e.message}`); }
+      need(!gaps.length, `${runId}: ${gaps.length} beacon rounds missing or unverified (first ${gaps[0]}): run node beacon.mjs ${file} --fill, then attest`);
+      console.log('beacon: every round of the run verifies');
+    }
+  }
+  const r = await v3.outcomeV3(runId, runJson, dep.operator, dep.organizerAgentId ?? null);
   console.log(`run ${runId}: ${r.kind === 0n ? 'valid' : 'cancelled or void (the sponsor refunded)'}, ranked ${JSON.stringify(r.ranked.map(([id, s]) => [id.slice(-4), s]))}, pot winner ${r.winnerId ? `${r.winnerId.slice(-4)} ${r.winnerAddress.slice(0, 18)}…` : 'none'}${r.skipped.length ? `, passed over ${JSON.stringify(r.skipped.map(([id, why]) => [id.slice(-4), why]))}` : ''}`);
   args = [secretOf(who), v3.slotOf(who), r.o];
   if (V4 && r.winners?.length > 1) console.log(`a true tie: the pot is shared by ${r.winners.length} (${r.winners.map((w) => w.id.slice(-4)).join(', ')})`);
-  after = () => v3.saveOutcomeV3(dep.address, runId, r.o, { winnerId: r.winnerId, winnerIds: (r.winners ?? []).map((w) => w.id), skipped: r.skipped });
+  if (V5 && r.rookie) console.log(`the rookie prize: ${r.rookie.id.slice(-4)} ${r.rookie.address.slice(0, 18)}…`);
+  after = () => v3.saveOutcomeV3(dep.address, runId, r.o, { winnerId: r.winnerId, winnerIds: (r.winners ?? []).map((w) => w.id), rookieId: r.rookie?.id ?? null, skipped: r.skipped });
 } else if (cmd === 'move') {
   const [who, moveId, successor] = a;
   need(MOVE_ID.test(moveId ?? '') && /^[0-9a-f]{64}$/.test(successor ?? ''), 'usage: move <judge A..E> <move id, e.g. move-season-3> <successor contract address>');
-  const o = { race: v3.sha(moveId), result: v3.sha(`move:${successor}`), kind: 2n, ...(V4 ? { winners: 0n, winner: Array(5).fill(v3.ZERO) } : { hasWinner: false, winner: v3.ZERO }), successor: v3.bytes(successor) };
+  const o = { race: v3.sha(moveId), result: v3.sha(`move:${successor}`), kind: 2n, ...(V4 ? { winners: 0n, winner: Array(5).fill(v3.ZERO), ...noRookie() } : { hasWinner: false, winner: v3.ZERO }), successor: v3.bytes(successor) };
   console.log(`move ${moveId}: the whole pot to the migration address, to fund ${successor}`);
   circuitId = 'attest';
   args = [secretOf(who), v3.slotOf(who), o];
@@ -152,7 +172,7 @@ if (cmd === 'open-run') {
   need(RUN_ID.test(runId ?? ''), 'usage: refund-sponsor <judge A..E> <run id>');
   const lv = await ledgerNow(dep.address);
   need(lv.runs.member(v3.sha(runId)), `no run ${runId} on this pot`);
-  const o = { race: v3.sha(runId), result: v3.sha(`void:${runId}`), kind: 1n, ...(V4 ? { winners: 0n, winner: Array(5).fill(v3.ZERO) } : { hasWinner: false, winner: v3.ZERO }), successor: v3.ZERO };
+  const o = { race: v3.sha(runId), result: v3.sha(`void:${runId}`), kind: 1n, ...(V4 ? { winners: 0n, winner: Array(5).fill(v3.ZERO), ...noRookie() } : { hasWinner: false, winner: v3.ZERO }), successor: v3.ZERO };
   console.log(`refund-sponsor ${runId}: this pot's winning bid for it back to its sponsor in full (accepted after the run's start)`);
   circuitId = 'attest';
   args = [secretOf(who), v3.slotOf(who), o];
@@ -163,17 +183,21 @@ if (cmd === 'open-run') {
   const o = v3.savedOutcomeV3(dep.address, runId);
   need(o, `no saved outcome for ${runId}: settle on a judge's machine that attested it`);
   // The operator's share of the winning bid: a tenth, rounded down (the contract checks it).
-  let share = 0n, each = 0n;
+  let share = 0n, each = 0n, tenth = 0n;
   if (o.kind === 0n) {
     const l = await ledgerNow(dep.address);
     const b = l.topBid.member(o.race) ? l.topBid.lookup(o.race) : 0n;
     share = b / v3.SHARE_DIVISOR;
-    // v4: each winner's share, the pot (with this run's bid in) over the winners, rounded down.
-    if (V4 && o.winners > 0n) each = (l.pot + b - share) / o.winners;
+    const after = l.pot + b - share;
+    // v5: the rookie's tenth of the pot (set aside with or without a rookie); v4/v5: each winner's share
+    // of the rest, rounded down.
+    if (V5) tenth = after / 10n;
+    if (V4 && o.winners > 0n) each = (after - tenth) / o.winners;
   }
   const paying = V4 ? (o.winners > 0n ? `pays ${o.winners} pot winner${o.winners > 1n ? 's' : ''} ${tn(each)} each` : 'rolls over') : (o.hasWinner ? 'pays the pot winner' : 'rolls over');
   console.log(`settling ${runId}: ${o.kind === 0n ? `${paying}, operator's share ${tn(share)}` : o.kind === 1n ? 'void: the winning bid back to its sponsor' : 'move'}`);
-  args = V4 ? [o, share, each] : [o, user(o.hasWinner ? o.winner : v3.ZERO), share];
+  if (V5) console.log(o.hasRookie ? `the rookie gets ${tn(tenth)}` : `no rookie: its ${tn(tenth)} stays in the pot`);
+  args = V5 ? [o, share, tenth, each] : V4 ? [o, share, each] : [o, user(o.hasWinner ? o.winner : v3.ZERO), share];
 } else if (cmd === 'sweep') {
   args = [];
 } else if (cmd === 'rotate') {

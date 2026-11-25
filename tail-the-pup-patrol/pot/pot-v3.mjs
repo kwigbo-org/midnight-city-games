@@ -50,7 +50,8 @@ export async function outcomeV3(raceId, run, operatorAddress, organizerAgentId =
   const skipped = [];
   // v4 (Season 3): every eligible finisher in a true tie with the best one shares the pot. A true tie is
   // the same mean tail and seconds seen (as the judge rounds them); agents sharing a wallet are one winner.
-  const v4 = process.env.TAIL_POT_CONTRACT === 'tail-pot-v4';
+  const v4 = ['tail-pot-v4', 'tail-pot-v5'].includes(process.env.TAIL_POT_CONTRACT), v5 = process.env.TAIL_POT_CONTRACT === 'tail-pot-v5';
+  const eligible = []; // v5: every finisher with a wallet of its own (not the organizer's), in the judge's order
   const group = []; // [{ id, wallets }] in the judge's order: every eligible tied finisher
   if (kind === 0n) {
     const list = await walletList();
@@ -58,13 +59,18 @@ export async function outcomeV3(raceId, run, operatorAddress, organizerAgentId =
     let best = null;
     for (const p of v.players ?? []) {
       if (p.status !== 'tailed to the end') continue;
-      if (best && !(p.meanTail === best.meanTail && p.seenSeconds === best.seenSeconds)) break; // past the tie
-      if (organizerAgentId && p.id === organizerAgentId) { skipped.push([p.id, 'organizer']); continue; }
+      const pastTie = !!best && !(p.meanTail === best.meanTail && p.seenSeconds === best.seenSeconds);
+      if (!v5 && pastTie) break; // past the tie (v5 reads on, for the rookie)
+      // Passed over: finishers up to the end of the tie, as in v4 (none below it, read only for the rookie).
+      const pass = (entry) => { if (!pastTie) skipped.push(entry); };
+      if (organizerAgentId && p.id === organizerAgentId) { pass([p.id, 'organizer']); continue; }
       const own = list.filter((w) => w.agentId === p.id && w.network === 'midnight-preview' && w.walletKind === 'external_display' && w.unshieldedAddress)
         .map((w) => w.unshieldedAddress.toLowerCase()).filter((a) => decoded(a) !== null).sort();
-      if (!own.length) { skipped.push([p.id, 'no-wallet']); continue; }
-      if (own.includes(op)) { skipped.push([p.id, 'organizer']); continue; }
+      if (!own.length) { pass([p.id, 'no-wallet']); continue; }
+      if (own.includes(op)) { pass([p.id, 'organizer']); continue; }
       if (!v4) { winnerId = p.id; winnerAddress = own[0]; winner = addressBytes(own[0]); break; }
+      eligible.push({ id: p.id, wallets: own });
+      if (pastTie) continue; // below the winners: a rookie, perhaps
       best ??= p;
       group.push({ id: p.id, wallets: own });
     }
@@ -72,9 +78,20 @@ export async function outcomeV3(raceId, run, operatorAddress, organizerAgentId =
   if (v4) {
     // Agents sharing any wallet are one winner (ties.mjs).
     const ws = tieWinners(group);
+    // v5, the rookie: the best-placed newcomer (the run file's newcomers) among the eligible finishers that
+    // isn't a winner and shares no wallet with one; paid at its smallest wallet.
+    let rookie = null;
+    if (v5 && ws.length) {
+      const newcomers = new Set(Array.isArray(run.newcomers) ? run.newcomers : []);
+      // The paid winners only (at most five): their agents and every wallet they share.
+      const winnerIds = new Set(ws.flatMap((w) => w.ids)), taken = new Set(ws.flatMap((w) => w.wallets));
+      const r = eligible.find((e) => newcomers.has(e.id) && !winnerIds.has(e.id) && !e.wallets.some((w) => taken.has(w)));
+      if (r) rookie = { id: r.id, address: [...r.wallets].sort()[0] };
+    }
     const o = { race, result: sha(JSON.stringify(ranked)), kind, winners: BigInt(ws.length),
-      winner: [...ws.map((w) => addressBytes(w.address)), ...Array(5 - ws.length).fill(ZERO)], successor: ZERO };
-    return { o, ranked, winnerId: ws[0]?.id ?? null, winnerAddress: ws[0]?.address ?? null, winners: ws, kind, skipped };
+      winner: [...ws.map((w) => addressBytes(w.address)), ...Array(5 - ws.length).fill(ZERO)],
+      ...(v5 ? { hasRookie: !!rookie, rookie: rookie ? addressBytes(rookie.address) : ZERO } : {}), successor: ZERO };
+    return { o, ranked, winnerId: ws[0]?.id ?? null, winnerAddress: ws[0]?.address ?? null, winners: ws, rookie, kind, skipped };
   }
   const o = { race, result: sha(JSON.stringify(ranked)), kind, hasWinner: !!winnerAddress, winner, successor: ZERO };
   return { o, ranked, winnerId, winnerAddress, kind, skipped };
@@ -87,18 +104,18 @@ const OUT = fileURLToPath(new URL('./outcomes-v3/', import.meta.url));
 const write = (f, data) => { writeFileSync(`${f}.tmp`, JSON.stringify(data, null, 1)); renameSync(`${f}.tmp`, f); };
 export function saveOutcomeV3(contract, raceId, o, extra = {}) {
   mkdirSync(`${OUT}${contract}`, { recursive: true });
-  const w = 'winners' in o ? { winners: String(o.winners), winner: o.winner.map(hex) } : { hasWinner: o.hasWinner, winner: hex(o.winner) };
+  const w = 'winners' in o ? { winners: String(o.winners), winner: o.winner.map(hex), ...('hasRookie' in o ? { hasRookie: o.hasRookie, rookie: hex(o.rookie) } : {}) } : { hasWinner: o.hasWinner, winner: hex(o.winner) };
   write(`${OUT}${contract}/${raceId}.json`, { race: hex(o.race), result: hex(o.result), kind: String(o.kind), ...w, successor: hex(o.successor), ...extra });
 }
 export function savedOutcomeV3(contract, raceId) {
   const f = `${OUT}${contract}/${raceId}.json`;
   if (!existsSync(f)) return null;
   const s = JSON.parse(readFileSync(f, 'utf8'));
-  const w = 'winners' in s ? { winners: BigInt(s.winners), winner: s.winner.map(bytes) } : { hasWinner: s.hasWinner, winner: bytes(s.winner) };
+  const w = 'winners' in s ? { winners: BigInt(s.winners), winner: s.winner.map(bytes), ...('hasRookie' in s ? { hasRookie: s.hasRookie, rookie: bytes(s.rookie) } : {}) } : { hasWinner: s.hasWinner, winner: bytes(s.winner) };
   return { race: bytes(s.race), result: bytes(s.result), kind: BigInt(s.kind), ...w, successor: bytes(s.successor) };
 }
 export function savedExtraV3(contract, raceId) {
-  try { const s = JSON.parse(readFileSync(`${OUT}${contract}/${raceId}.json`, 'utf8')); return { winnerId: s.winnerId ?? null, winnerIds: s.winnerIds ?? (s.winnerId ? [s.winnerId] : []), skipped: s.skipped ?? [] }; } catch { return { winnerId: null, winnerIds: [], skipped: [] }; }
+  try { const s = JSON.parse(readFileSync(`${OUT}${contract}/${raceId}.json`, 'utf8')); return { winnerId: s.winnerId ?? null, winnerIds: s.winnerIds ?? (s.winnerId ? [s.winnerId] : []), rookieId: s.rookieId ?? null, skipped: s.skipped ?? [] }; } catch { return { winnerId: null, winnerIds: [], rookieId: null, skipped: [] }; }
 }
 export function openedRunsV3(contract) {
   try { return JSON.parse(readFileSync(`${OUT}${contract}/opened.json`, 'utf8')); } catch { return {}; }
