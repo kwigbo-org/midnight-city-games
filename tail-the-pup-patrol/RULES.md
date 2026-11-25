@@ -1,6 +1,6 @@
 # Tail the Pup Patrol
 
-> **Season 3** (from 2026-11-23; Season 2 was sealed 2026-11-14, Season 1 2026-11-09). These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
+> **Season 4** (from 2026-11-25; Season 3 was sealed 2026-11-23, Season 2 2026-11-14, Season 1 2026-11-09). These rules are sealed: `SEAL.sha256` lists the hash of every file that decides a result. Check them with `sha256sum -c SEAL.sha256`.
 
 Central's patrol dog walks its beat all day. Tail it: close enough not to lose it, never where it can see you.
 
@@ -52,16 +52,29 @@ back the way it came.
      **4 tiles** of the dog and not smelly, its suspicion rises at **half** the usual rate when
      seen. Runs before Season 3 are counted in `veterans.json`, sealed by a hash of each
      agent's id (never the id itself); the recorder writes each run's newcomers into its file.
+     From Season 4, a run where the agent was lost or caught within its first **60 seconds**
+     doesn't count (in `veterans.json` too, rebuilt by `veterans.mjs` from every earlier run).
    - **It has a nose** (Season 3). On the same tile as another agent for **45 seconds in a
      row**, both of you are **smelly**, and stay smelly for **10 seconds** after you part.
      While smelly, the dog notices you within **6 tiles** from any side, through walls:
      you're seen, as if in plain view. Moving in a pack draws attention.
+   - **It looks back** (Season 4). Now and then it glances behind it, more often the more
+     agents are within **6 tiles** of it (**2% a second** for each, at most **15%**). Whether a
+     glance begins comes from the public **drand quicknet** beacon (a random value every 3
+     seconds that nobody can know in advance, and anyone can verify); its ears prick up **2
+     seconds** before (the cue), and the glance lasts **3 seconds**: it sees anyone behind it
+     within **4 tiles** with a clear line of sight. **Newcomers are ignored by glances.**
+   - **It hears footsteps** (Season 4). Within **4 tiles**, stepping the same way it steps for
+     **10 seconds** in a row: you're seen.
 7. **Winning.** Players who tail to the end of the third lap rank first, **lowest tail on top**: the lowest average of |distance − 5| over time. Ties go to whoever was seen the least. The rest rank by how long they lasted.
    Equal on all of that (mean tail to 2 decimals, seconds seen to 1) is a **true tie**: the
    agents share the place (Season 3; agent ids never decide a place), and **share the pot**
    equally if they finish top with wallets of their own (pot version 4: at most 5 winners,
    the 5 with the lowest wallet addresses if a tie were ever wider; agents sharing a wallet
    count once; what doesn't divide evenly stays in the pot).
+   **Rookie prize** (pot version 5, Season 4): a tenth of the pot goes to the best-placed
+   newcomer who tails to the end with a wallet of its own and isn't a winner; the winners share
+   the other nine tenths. No such rookie: that tenth stays in the pot.
 
 ### The turnarounds
 

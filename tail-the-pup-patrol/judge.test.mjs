@@ -2,7 +2,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { judge, practice, routeOf, sightFrom, labels, fishThrough, senses, newcomersFor } from './judge.mjs';
+import { judge, practice, routeOf, sightFrom, labels, fishThrough, senses, newcomersFor, glanceBegins, glanceState, glanceChance, roundAt, roundTime } from './judge.mjs';
+import { countsAsRun } from './judge.mjs';
+import { verifyRound, beaconGaps, neededRounds, trustedBeacon } from './beacon.mjs';
 import { fromSnapshot, applyDelta, drift, clone } from './citystate.mjs';
 
 const file = JSON.parse(fs.readFileSync(new URL('./rules.json', import.meta.url), 'utf8'));
@@ -243,7 +245,7 @@ test('raw fish lets the dog see through thin walls, by how much is carried', () 
 });
 
 test('matcha offsets fish; ahead on its own it shortens the dog\'s view', () => {
-  const S = (fish, matcha) => senses(file, { fish, matcha });
+  const S = (fish, matcha) => { const { through, reach } = senses(file, { fish, matcha }); return { through, reach }; };
   assert.deepEqual(S(0, 0), { through: 0, reach: 10 });
   assert.deepEqual(S(500, 0), { through: 2, reach: 10 });      // fish level 2
   assert.deepEqual(S(500, 2), { through: 1, reach: 10 });      // minus matcha level 1
@@ -392,4 +394,129 @@ test('places: a true tie shares a place; the next player takes the place after b
   assert.equal(p.x.place, 1); assert.equal(p.y.place, 1);
   assert.equal(p.z.place, p.z.status === 'tailed to the end' ? 3 : p.z.place);
   assert.ok(r.players.every((q, i) => q.place <= i + 1));
+});
+
+// ---- Season 4: fish ring, back glance, pace matching ---------------------------------------------
+test('fish ring: net fish level widens the any-side ring, matcha cancels it, capped', () => {
+  const ring = (fish, matcha) => senses(file, { fish, matcha }).ring;
+  assert.equal(ring(0, 0), file.spot.minDistance);
+  assert.equal(ring(1, 0), file.spot.minDistance + 1);          // fish level 1
+  assert.equal(ring(500, 0), file.spot.minDistance + 2);        // level 2
+  assert.equal(ring(50000, 0), Math.min(file.spot.fish.maxRing, file.spot.minDistance + 3));
+  assert.equal(ring(500, 2), file.spot.minDistance + 1);        // 2 - 1
+  assert.equal(ring(500, 10), file.spot.minDistance);           // even
+  assert.equal(ring(0, 500), file.spot.minDistance);            // matcha never shrinks it
+});
+
+test('back glance: the beacon round decides it; the chance grows with the crowd, capped; cue, looking, nothing', () => {
+  const G = file.glance, B = G.beacon;
+  assert.equal(glanceChance(G, 0), 0);
+  assert.ok(glanceChance(G, 2) > glanceChance(G, 1));
+  assert.equal(glanceChance(G, 50), glanceChance(G, Math.ceil(G.maxPerSecond / G.perAgentPerSecond)));
+  // A randomness just under / over the chance for one agent nearby.
+  const c1 = glanceChance(G, 1), hex13 = (f) => Math.floor(f * 2 ** 52).toString(16).padStart(13, '0') + '0'.repeat(51);
+  assert.equal(glanceBegins(G, hex13(c1 * 0.99), 1), true);
+  assert.equal(glanceBegins(G, hex13(Math.min(0.999, c1 * 1.01)), 1), false);
+  assert.equal(glanceBegins(G, hex13(c1 * 0.99), 0), false, 'no one near: no glance');
+  assert.equal(glanceBegins(G, 'not a beacon', 5), false);
+  const r = roundAt(B, Date.parse('2026-11-25T22:00:00Z'));
+  assert.ok(roundTime(B, r) <= Date.parse('2026-11-25T22:00:00Z') && Date.parse('2026-11-25T22:00:00Z') < roundTime(B, r + 1));
+  const t = 1_000_000;
+  assert.equal(glanceState(G, [t], t), 'cue');
+  assert.equal(glanceState(G, [t], t + G.cueSeconds * 1000), 'looking');
+  assert.equal(glanceState(G, [t], t + (G.cueSeconds + G.seconds) * 1000 + 1), null);
+});
+
+// A beacon that begins a glance every round (randomness 0), for the synthetic runs.
+const allRounds = (r) => { const B = file.glance.beacon, out = {}; const a = roundAt(B, Date.parse(r.readings[0].t)), b = roundAt(B, Date.parse(r.readings.at(-1).t)); for (let k = a; k <= b; k++) out[k] = '0'.repeat(64); return { ...r, beacon: out }; };
+
+test('back glance: newcomers are ignored by it', () => {
+  const g = { ...rules, pace: undefined };
+  const r = allRounds(run({ n: behind(3.6) }, { seconds: 700 }));
+  const vet = byId(judge(g, r)), fresh = byId(judge(g, r, { newcomers: new Set(['n']) }));
+  assert.ok(vet.n.glancedSeconds > 0);
+  assert.equal(fresh.n.glancedSeconds, undefined);
+});
+
+test('back glance (a glance every round): a too-close follower is caught; one at the ideal distance still finishes', () => {
+  // Behind along the route: on the straights 3.6 is inside the 4-tile glance and 5 is outside; at the
+  // corners the straight-line distance shrinks, so the ideal follower can be glanced at there too.
+  const g = { ...rules, pace: undefined };
+  const close = byId(judge(g, allRounds(run({ c: behind(3.6) }, { seconds: 700 }))));
+  const ideal = byId(judge(g, allRounds(run({ i: behind(5) }, { seconds: 700 }))));
+  assert.equal(close.c.status, 'caught');
+  assert.equal(ideal.i.status, 'tailed to the end');
+});
+
+// A straight street: the dog steps one tile east a reading (two a second).
+function street(players, readingsN = 60) {
+  const out = [];
+  for (let k = 0; k < readingsN; k++) {
+    const pup = { spaceId: 'central', x: 30 + k, y: 40 };
+    const agents = {};
+    for (const [id, f] of Object.entries(players)) agents[id] = { name: id, spaceId: 'central', ...f(k) };
+    out.push({ t: iso(k * STEP), seq: 1000 + k, pup, agents });
+  }
+  return out;
+}
+test('pace matching: in step within its distance for its seconds is heard; further back is not; a shared pause keeps the count', () => {
+  const pr = { ...rules, glance: undefined };
+  const near = (k) => ({ x: 30 + k - 4, y: 40 }), far = (k) => ({ x: 30 + k - 6, y: 40 });
+  const { sessions, open } = practice({ ...pr, practice: { startSeconds: 0 } }, street({ near, far }, 60));
+  const by = Object.fromEntries([...sessions, ...open].map((o) => [o.id, o]));
+  assert.ok(by.near.heardSeconds > 0, 'heard in step at 4 tiles');
+  assert.equal(by.far?.heardSeconds, undefined, 'not at 6 tiles');
+});
+
+test('beacon: a real drand quicknet round verifies; a changed round, randomness or signature does not', () => {
+  const B = file.glance.beacon, r = 34252929, rand = '7da2d90b5b0a8600ddb520f09ecb1e02e6737d07c8ae21ce556afe8a9fff9144', sig = 'aa785d46c7940d279566f2eec0cf18e61b7b4495e321567f7a860a4f92eacdb026a594b34047e057a54ac126abbbb292';
+  assert.equal(verifyRound(B, r, rand, sig), true);
+  assert.equal(verifyRound(B, r + 1, rand, sig), false, 'another round');
+  assert.equal(verifyRound(B, r, rand.replace(/^./, (c) => (c === '0' ? '1' : '0')), sig), false, 'randomness not from the signature');
+  assert.equal(verifyRound(B, r, rand, sig.replace(/.$/, (c) => (c === '0' ? '1' : '0'))), false, 'a changed signature');
+  assert.equal(verifyRound(B, r, rand, undefined), false);
+});
+
+test('newcomers: a run lost or caught within quickExitSeconds does not count', () => {
+  const NC = file.newcomer;
+  assert.equal(countsAsRun(NC, { status: 'lost', lastedSeconds: NC.quickExitSeconds - 1 }), false);
+  assert.equal(countsAsRun(NC, { status: 'caught', lastedSeconds: 3 }), false);
+  assert.equal(countsAsRun(NC, { status: 'caught', lastedSeconds: NC.quickExitSeconds }), true);
+  assert.equal(countsAsRun(NC, { status: 'tailed to the end', lastedSeconds: 30 }), true);
+  const run = (status, lastedSeconds) => ({ result: { players: [{ id: 'q', status, lastedSeconds }] } });
+  const quick = [run('lost', 10), run('caught', 20), run('lost', 59), run('lost', 5)];
+  assert.deepEqual([...newcomersFor(file, {}, quick, ['q'], (id) => id)], ['q'], 'four quick exits: still new');
+  const real = [run('lost', 61), run('caught', 300), run('tailed to the end', 560)];
+  assert.deepEqual([...newcomersFor(file, {}, real, ['q'], (id) => id)], [], 'three real runs: a veteran');
+});
+
+test('beacon: a run file is complete only with every round from its first reading to its last, verified', () => {
+  const B = file.glance.beacon, r = 34252929;
+  const at = (k) => new Date((B.genesis + (k - 1) * B.period) * 1000 + 500).toISOString();
+  const run = { readings: [{ t: at(r) }, { t: at(r) }] };
+  assert.deepEqual(neededRounds(B, run), [r]);
+  assert.deepEqual(beaconGaps(B, run), [r], 'missing');
+  run.beacon = { [r]: '7da2d90b5b0a8600ddb520f09ecb1e02e6737d07c8ae21ce556afe8a9fff9144' };
+  assert.deepEqual(beaconGaps(B, run), [r], 'no signature');
+  run.beaconSignatures = { [r]: 'aa785d46c7940d279566f2eec0cf18e61b7b4495e321567f7a860a4f92eacdb026a594b34047e057a54ac126abbbb292' };
+  assert.deepEqual(beaconGaps(B, run), []);
+  run.readings.push({ t: at(r + 1) });
+  assert.deepEqual(beaconGaps(B, run), [r + 1], 'a later round missing');
+});
+
+test('beacon: the key comes from the sealed rules; a run file naming another beacon is refused', () => {
+  assert.equal(trustedBeacon(file, { readings: [] }), file.glance.beacon);
+  assert.equal(trustedBeacon(file, { rules: file }), file.glance.beacon);
+  const forged = { ...file, glance: { ...file.glance, beacon: { ...file.glance.beacon, publicKey: 'ab'.repeat(96) } } };
+  assert.throws(() => trustedBeacon(file, { rules: forged }), /different beacon/);
+  assert.throws(() => trustedBeacon(file, { rules: { ...file, glance: undefined } }), /different beacon/);
+});
+
+test('beacon: a run file with bad reading times is refused, not passed with no rounds; out of order is fine', () => {
+  const B = file.glance.beacon;
+  assert.throws(() => beaconGaps(B, { readings: [{ t: 'nonsense' }, { t: 'nonsense' }] }), /bad time/);
+  assert.throws(() => beaconGaps(B, { readings: [{ t: '2026-11-25T22:00:00Z' }, {}] }), /bad time/);
+  // Out of order (a reconnect): the range still spans earliest to latest.
+  const at = (k) => new Date((B.genesis + (k - 1) * B.period) * 1000 + 500).toISOString();
+  assert.deepEqual(neededRounds(B, { readings: [{ t: at(10) }, { t: at(12) }, { t: at(9) }] }), [9, 10, 11, 12]);
 });

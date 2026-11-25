@@ -49,7 +49,7 @@ export async function chainTime() {
 const here = path.dirname(fileURLToPath(import.meta.url));
 // Which pot contract: tail-pot (v1), tail-pot-v2 or tail-pot-v3. TAIL_POT_CONTRACT picks.
 export const CONTRACT = process.env.TAIL_POT_CONTRACT ?? 'tail-pot';
-if (!/^(tail-pot(-v[234])?|sponsor-slots)$/.test(CONTRACT)) throw new Error('TAIL_POT_CONTRACT must be tail-pot, tail-pot-v2, tail-pot-v3, tail-pot-v4 or sponsor-slots');
+if (!/^(tail-pot(-v[2-5])?|sponsor-slots)$/.test(CONTRACT)) throw new Error('TAIL_POT_CONTRACT must be tail-pot, tail-pot-v2 to tail-pot-v5, or sponsor-slots');
 export const zkConfigPath = path.resolve(here, '..', 'contract', 'managed', CONTRACT);
 export const PRIVATE_STATE_ID = 'TailPotState';
 

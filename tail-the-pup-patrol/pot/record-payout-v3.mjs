@@ -34,10 +34,11 @@ if (!saved) throw new Error(`no saved outcome for ${race}: record on the judge's
 const run = JSON.parse(readFileSync(runFile, 'utf8'));
 const players = run.result?.players ?? [];
 const first = players[0];
-const { winnerId, winnerIds, skipped } = v3.savedExtraV3(dep.address, race);
+const { winnerId, winnerIds, rookieId, skipped } = v3.savedExtraV3(dep.address, race);
 // v3: one pot winner; v4: up to 5 sharing it (a true tie).
 const V4 = 'winners' in saved;
-const winnerWallets = V4 ? saved.winner.slice(0, Number(saved.winners)).map((w) => v3.hex(w)) : saved.hasWinner ? [v3.hex(saved.winner)] : [];
+const winnerWallets = [...(V4 ? saved.winner.slice(0, Number(saved.winners)).map((w) => v3.hex(w)) : saved.hasWinner ? [v3.hex(saved.winner)] : []),
+  ...(saved.hasRookie ? [v3.hex(saved.rookie)] : [])]; // v5: the rookie's tenth counts as paid too
 const nameOf = (id) => players.find((p) => p.id === id)?.name ?? null;
 // The run's sponsorship, from the pot: the winning bid and the wallet it named.
 const l = await ledgerNow(dep.address);
@@ -52,7 +53,7 @@ const paid = saved.kind === 0n && winnerWallets.length
 const entry = {
   race,
   version: 3, // the record's format (the site reads 3); the pot contract's own version beside it
-  potVersion: V4 ? 4 : 3,
+  potVersion: 'hasRookie' in saved ? 5 : V4 ? 4 : 3,
   settledAt: new Date(t.block.timestamp < 1e12 ? t.block.timestamp * 1000 : t.block.timestamp).toISOString(),
   tx,
   block: t.block.height,
@@ -65,6 +66,8 @@ const entry = {
   potWinner: winnerWallets.length ? nameOf(winnerId) : null,
   // v4, a true tie: everyone who shared the pot (names), in the order the judges named their wallets.
   ...(V4 && winnerIds.length > 1 ? { potWinners: winnerIds.map(nameOf) } : {}),
+  // v5: the newcomer who took the rookie tenth.
+  ...(saved.hasRookie ? { rookie: nameOf(rookieId) } : {}),
   // Finishers ranked above the pot winner who couldn't take it, and why (no-wallet, organizer).
   passedOver: skipped.map(([id, why]) => ({ name: nameOf(id), why })),
   sponsor,

@@ -11,6 +11,6 @@ export function tieWinners(group, max = 5) {
     sets.push(merged);
   }
   // The name: the first of the set's agents in `group` (the judge's order), whatever order s.ids is in.
-  return sets.map((s) => ({ id: group.find((g) => s.ids.includes(g.id)).id, address: [...s.wallets].sort()[0] }))
+  return sets.map((s) => ({ id: group.find((g) => s.ids.includes(g.id)).id, address: [...s.wallets].sort()[0], ids: [...s.ids], wallets: [...s.wallets] }))
     .sort((a, b) => (a.address < b.address ? -1 : 1)).slice(0, max);
 }
