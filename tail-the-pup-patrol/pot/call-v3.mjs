@@ -152,7 +152,9 @@ if (cmd === 'open-run') {
       console.log('beacon: every round of the run verifies');
     }
   }
-  const r = await v3.outcomeV3(runId, runJson, dep.operator, dep.organizerAgentId ?? null);
+  // The organizer: its id (judges A and B) or its hash (the public deployment record).
+  const organizer = dep.organizerAgentId ?? (dep.organizerAgentIdHash ? `sha256:${dep.organizerAgentIdHash}` : null);
+  const r = await v3.outcomeV3(runId, runJson, dep.operator, organizer);
   console.log(`run ${runId}: ${r.kind === 0n ? 'valid' : 'cancelled or void (the sponsor refunded)'}, ranked ${JSON.stringify(r.ranked.map(([id, s]) => [id.slice(-4), s]))}, pot winner ${r.winnerId ? `${r.winnerId.slice(-4)} ${r.winnerAddress.slice(0, 18)}…` : 'none'}${r.skipped.length ? `, passed over ${JSON.stringify(r.skipped.map(([id, why]) => [id.slice(-4), why]))}` : ''}`);
   args = [secretOf(who), v3.slotOf(who), r.o];
   if (V4 && r.winners?.length > 1) console.log(`a true tie: the pot is shared by ${r.winners.length} (${r.winners.map((w) => w.id.slice(-4)).join(', ')})`);

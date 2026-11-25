@@ -1,0 +1,16 @@
+{
+ "address": "9292d1cddb4025c7e4cb2401b31a929528f02ce52d0ad4b732e4539a1af725d4",
+ "version": 5,
+ "operator": "mn_addr_preview1s8gdut80rlj03m7h6xctg8sk8ca32msevhzy8zrx0v4dnptmry5s7l454e",
+ "migration": "mn_addr_preview1awrgl32t7rw0ny56v9tx3y09al0xk4spnw4shrdyt3v063gfdmlsqhdejs",
+ "reserveMin": "1000000",
+ "reserveMax": "10000000000",
+ "judges": [
+  "9eee698eaab64d03aec8aa068fd55f74685a1c4891e482beeae272358ba01b35",
+  "e7cfed6878061dab13a39bc44eb1be4daead9ca2077226ed09df142c6899bb4b"
+ ],
+ "gameHash": "ea28e47228c1896b25fe76caa7b44e3495ba72b9c6a2cd762a0697617dce3c9c",
+ "tx": "b5b486fd5e206373f9e158f4e8587f80af440860f277fe7bdf8a12886b6e36dd",
+ "at": "2026-11-25T00:55:39.260Z",
+ "organizerAgentIdHash": "8d31d8d70d303c7b6a04213343430842e3bbd1186e780ca62159bf293a764226"
+}

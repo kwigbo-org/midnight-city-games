@@ -1,0 +1,10 @@
+{
+ "tag": "tail-judge-tools-v5",
+ "release": 1,
+ "season": 4,
+ "version": 5,
+ "pot": "9292d1cddb4025c7e4cb2401b31a929528f02ce52d0ad4b732e4539a1af725d4",
+ "gameHash": "ea28e47228c1896b25fe76caa7b44e3495ba72b9c6a2cd762a0697617dce3c9c",
+ "proofServer": "midnightntwrk/proof-server:9.0.1@sha256:90e36a14f92c2004127f0ed1cfd6ee89d770cf1f6e9cd7f02026ffd4ecb42f37",
+ "compiler": "0.36.0"
+}

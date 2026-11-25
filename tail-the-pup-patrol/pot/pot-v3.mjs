@@ -4,6 +4,7 @@
 // judge keeps. Load with TAIL_POT_CONTRACT=tail-pot-v3 (call-v3.mjs and deploy-v3.mjs set it).
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { addressBytes, bytes, feeFor, hex, sha, ZERO, walletList } from './pot-v2.mjs';
 import { tieWinners } from './ties.mjs';
 
@@ -35,7 +36,16 @@ export const saveDeploymentV3 = (d) => { writeFileSync(`${DEPLOYMENT_V3}.tmp`, J
 // the deployment, and by the operator's address: it races but never takes the pot; the next such
 // finisher does). With several, the first sorted,
 // so two judges reading the same list pick the same one.
+// The organizer's agent, by its id or (in a public deployment record) by "sha256:<hex of the id>": either
+// way the same agent is passed over, so a judge with the public record agrees with one holding the id.
+export function organizerMatcher(organizer) {
+  if (!organizer) return null;
+  const want = String(organizer).startsWith('sha256:') ? String(organizer).slice(7) : createHash('sha256').update(String(organizer)).digest('hex');
+  if (!/^[0-9a-f]{64}$/.test(want)) throw new Error('outcome: the organizer hash must be sha256:<64 hex>');
+  return (id) => createHash('sha256').update(String(id)).digest('hex') === want;
+}
 export async function outcomeV3(raceId, run, operatorAddress, organizerAgentId = null) {
+  const isOrganizer = organizerMatcher(organizerAgentId);
   if (!/^mn_addr_preview1[0-9a-z]+$/.test(String(operatorAddress ?? ''))) throw new Error('outcome: no operator address in the deployment');
   // The organizer's agent id must be known (deployment-v3.json), so it's passed over whatever wallets it
   // lists; only a rehearsal on a test pot may go without (TAIL_POT_NO_ORGANIZER=1).
@@ -63,7 +73,7 @@ export async function outcomeV3(raceId, run, operatorAddress, organizerAgentId =
       if (!v5 && pastTie) break; // past the tie (v5 reads on, for the rookie)
       // Passed over: finishers up to the end of the tie, as in v4 (none below it, read only for the rookie).
       const pass = (entry) => { if (!pastTie) skipped.push(entry); };
-      if (organizerAgentId && p.id === organizerAgentId) { pass([p.id, 'organizer']); continue; }
+      if (isOrganizer && isOrganizer(p.id)) { pass([p.id, 'organizer']); continue; }
       const own = list.filter((w) => w.agentId === p.id && w.network === 'midnight-preview' && w.walletKind === 'external_display' && w.unshieldedAddress)
         .map((w) => w.unshieldedAddress.toLowerCase()).filter((a) => decoded(a) !== null).sort();
       if (!own.length) { pass([p.id, 'no-wallet']); continue; }
