@@ -1,5 +1,5 @@
 // A judge's key, made on the judge's own machine.
-//   node judge-key.mjs <keys file> <A|B|C>
+//   node judge-key.mjs <keys file> <A|B|C|D|E>
 // Creates <keys file> (mode 600) with a new random secret for that judge if it has none, and prints
 // only the PUBLIC key: the hash a pot contract is deployed with. Send the operator that, never the
 // file. The secret never leaves this machine; it proves your attestations.
@@ -8,7 +8,7 @@ import { chmodSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { loadContract } from './lib/midnight.mjs';
 
 const [file, who] = process.argv.slice(2);
-if (!file || !['A', 'B', 'C'].includes(who)) { console.log('usage: node judge-key.mjs <keys file> <A|B|C>'); process.exit(1); }
+if (!file || !['A', 'B', 'C', 'D', 'E'].includes(who)) { console.log('usage: node judge-key.mjs <keys file> <A|B|C|D|E>'); process.exit(1); }
 const field = `judge${who}`;
 let keys = {};
 if (existsSync(file)) {
